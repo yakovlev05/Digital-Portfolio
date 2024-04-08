@@ -8,7 +8,7 @@ public class PasswordService : IPasswordService
 {
     public string HashPassword(string password, string login)
     {
-        var pbkdf2 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(login), 10000, HashAlgorithmName.MD5);
+        var pbkdf2 = new Rfc2898DeriveBytes(password, Encoding.UTF8.GetBytes(login), 10000, HashAlgorithmName.SHA3_256);
         var hash = pbkdf2.GetBytes(20);
         return Convert.ToBase64String(hash);
     }
