@@ -25,6 +25,9 @@ public static class Program
         app.MapControllers();
         app.UseRouting();
         app.UseAuthenticationAndAuthorization();
+        
+        app.UseSwagger();
+        app.UseSwaggerUI(); //на время разработки
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -33,6 +36,8 @@ public static class Program
 
         app.UseHttpsRedirection();
 
+        app.MapGet("/", () => "В разработке");
+        
         app.Run();
     }
 }
