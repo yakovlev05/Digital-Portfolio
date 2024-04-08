@@ -12,7 +12,7 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>
         {
-            new Claim("login", login),
+            new Claim("Login", login),
             new Claim("id", id)
         };
         var jwt = new JwtSecurityToken(
