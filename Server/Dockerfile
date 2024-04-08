@@ -1,4 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER root
+RUN mkdir -p /files && chmod 777 /files # Делаем доступ к докер волюм
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
