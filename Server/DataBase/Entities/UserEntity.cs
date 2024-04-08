@@ -3,8 +3,8 @@
 public class UserEntity
 {
     public int Id { get; init; }
-    public string Login { get; set; } = null!;
-    public string HashedPassword { get; set; } = null!;
+    public string Login { get; set; } = null!; // Не меньше 5 символов
+    public string HashedPassword { get; set; } = null!; // Пароль не меньше 8 символов
     public string Email { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string SecondName { get; set; } = null!;
