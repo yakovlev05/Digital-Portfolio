@@ -2,8 +2,7 @@
 
 public interface ITokenService
 {
-    public string CreateToken(string login);
-    
-    public string GetId(string token);
-    
+    public string CreateToken(string login, string id);
+
+    public string GetId(HttpContext httpContext);
 }
