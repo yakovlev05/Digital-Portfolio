@@ -11,11 +11,15 @@ public static class Program
         var builder = WebApplication.CreateBuilder();
 
         builder.AddAuthenticationAndAuthorization();
+        builder.Services.AddControllers();
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
+        app.MapControllers();
+        app.UseRouting();
         app.UseAuthenticationAndAuthorization();
         if (app.Environment.IsDevelopment())
         {
