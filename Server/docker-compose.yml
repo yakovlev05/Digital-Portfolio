@@ -46,5 +46,18 @@ services:
       - "8082:5432"
     volumes:
       - digitalPortfolioDB:/var/lib/postgresql/data
-    networks: 
+    networks:
       - digitalPortfolio
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - ./:/etc/nginx/conf.d
+    networks:
+      - digitalPortfolio
+    depends_on:
+      - portfolioServer
