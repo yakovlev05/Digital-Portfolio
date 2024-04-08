@@ -11,13 +11,13 @@ namespace Server.Controllers;
 [Route("api/v1/[controller]")]
 public class AuthController : Controller
 {
-    private readonly DataContext _dbContext;
+    private readonly DataContext _dbContext = new();
     private readonly ITokenService _tokenService;
     private readonly IPasswordService _passwordService;
 
-    public AuthController(DataContext dataContext, ITokenService tokenService, IPasswordService passwordService)
+    public AuthController(ITokenService tokenService, IPasswordService passwordService)
     {
-        _dbContext = dataContext;
+        // _dbContext = dataContext;
         _tokenService = tokenService;
         _passwordService = passwordService;
     }
@@ -29,7 +29,7 @@ public class AuthController : Controller
             .Users
             .FirstOrDefaultAsync(x =>
                 (x.Login == request.Login || x.Email == request.Login) &&
-                _passwordService.VerifyPassword(request.Password, x.HashedPassword));
+                _passwordService.VerifyPassword(request.Password, request.Login, x.HashedPassword));
 
         if (user is null) return BadRequest("User not found");
 
@@ -58,7 +58,7 @@ public class AuthController : Controller
         var user = new UserEntity()
         {
             Login = request.Login,
-            HashedPassword = _passwordService.HashPassword(request.Password),
+            HashedPassword = _passwordService.HashPassword(request.Password, request.Login),
             Email = request.Email,
             Name = request.Name,
             SecondName = request.SecondName
