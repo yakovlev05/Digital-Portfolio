@@ -16,4 +16,5 @@ public class UserEntity
     public string? ProfilePhoto { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Suspended;
     public UserRole Role { get; set; } = UserRole.User;
+    public ICollection<FileEntity> Files { get; set; } = new List<FileEntity>();
 }
