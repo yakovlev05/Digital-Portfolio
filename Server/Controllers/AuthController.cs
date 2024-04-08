@@ -27,11 +27,12 @@ public class AuthController : Controller
     {
         var user = await _dbContext
             .Users
-            .FirstOrDefaultAsync(x =>
-                (x.Login == request.Login || x.Email == request.Login) &&
-                _passwordService.VerifyPassword(request.Password, request.Login, x.HashedPassword));
+            .FirstOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
 
         if (user is null) return BadRequest("User not found");
+
+        var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
+        if (!verifyPassword) return BadRequest("Invalid password");
 
         var token = _tokenService.CreateToken(user.Login, user.Id.ToString());
 
