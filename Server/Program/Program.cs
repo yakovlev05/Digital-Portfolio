@@ -1,4 +1,6 @@
 using System.Collections;
+using Server.Services;
+using Server.Services.Interfaces;
 
 namespace Server.Program;
 
@@ -15,6 +17,7 @@ public static class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddScoped<ITokenService, TokenService>();
 
         var app = builder.Build();
 

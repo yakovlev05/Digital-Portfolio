@@ -25,11 +25,4 @@ public class TokenService : ITokenService
                 SecurityAlgorithms.HmacSha256));
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
-
-    public string GetId(HttpContext httpContext)
-    {
-        var userId = httpContext.User.FindFirstValue("id");
-        // TODO: Сделать бд
-        throw new NotImplementedException();
-    }
 }
