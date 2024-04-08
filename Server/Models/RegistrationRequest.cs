@@ -3,8 +3,8 @@
 public record RegistrationRequest(
     string Login,
     string Email,
-    string SecondName,
     string Name,
+    string SecondName,
     string Password,
     string ConfirmPassword
 );
