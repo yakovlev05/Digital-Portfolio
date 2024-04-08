@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  portfolioServer:
+    build:
+      context: "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Server.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "server:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\alexe\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server:/app:rw"
+    - "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server:/src:rw"
+    working_dir: "/app"

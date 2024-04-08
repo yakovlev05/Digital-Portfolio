@@ -1,0 +1,50 @@
+﻿version: '3.8'
+
+name: digital_portfolio
+
+networks:
+  digitalPortfolio:
+    external: true
+
+volumes:
+  digitalPortfolioDB:
+    external: true
+  digitalPortfolioFiles:
+    external: true
+
+services:
+  portfolioServer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: portfolioServer
+    ports:
+      - "8081:8080"
+    environment:
+      - Jwt:Issuer=😘
+      - Jwt:Audience=😘
+      - Jwt:Key=😘 # Для шаблона, чтобы потом я мог посмотреть как делал настройку докера. Далее файл не отлсеживается в гите.
+      - POSTGRES_USER=😘
+      - POSTGRES_PASSWORD=😘
+      - POSTGRES_DB=😘
+    volumes:
+      - digitalPortfolioFiles:/files
+    networks:
+      - digitalPortfolio
+    depends_on:
+      - portfolioDB
+  portfolioDB:
+    image: postgres:latest
+    restart: always
+    container_name: db
+    environment:
+      - POSTGRES_USER=😘😘
+      - POSTGRES_PASSWORD=😘😘😘😘😘😘😘
+      - POSTGRES_DB=😘😘😘
+    ports:
+      - "8082:5432"
+    volumes:
+      - digitalPortfolioDB:/var/lib/postgresql/data
+    networks: 
+      - digitalPortfolio
