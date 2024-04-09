@@ -36,7 +36,7 @@ public static class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/", () => "В разработке \n Документация: https://pp.yakovlev05.ru/swagger/index.html");
+        app.MapGet("/", () => "В разработке 🛠️ \n Документация: https://pp.yakovlev05.ru/swagger/index.html");
         
         app.Run();
     }
