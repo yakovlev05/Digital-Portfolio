@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:8082/digitalPortfolioDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="digitalPortfolioDB@147.45.102.216" uuid="a554f750-ba0f-464c-a9c2-aeaf5c9aa2b8">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://147.45.102.216:5432/digitalPortfolioDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
