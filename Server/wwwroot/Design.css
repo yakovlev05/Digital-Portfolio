@@ -20,7 +20,7 @@ p {
 }
 
 main {
-    background-image: url(img/bodywallpaper.png);
+    background-image: url(bodywallpaper.png);
     background-repeat: no-repeat;
     background-position: inherit;
 }
