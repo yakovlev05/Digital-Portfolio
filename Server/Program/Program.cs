@@ -19,13 +19,14 @@ public static class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
+        builder.Services.AddScoped<IEmailService, EmailService>();
 
         var app = builder.Build();
 
         app.MapControllers();
         app.UseRouting();
         app.UseAuthenticationAndAuthorization();
-        
+
         app.UseSwagger();
         app.UseSwaggerUI(); //на время разработки
         if (app.Environment.IsDevelopment())
@@ -37,7 +38,7 @@ public static class Program
         app.UseHttpsRedirection();
 
         app.MapGet("/", () => "В разработке 🛠️ \n Документация: https://pp.yakovlev05.ru/swagger/index.html");
-        
+
         app.Run();
     }
 }
