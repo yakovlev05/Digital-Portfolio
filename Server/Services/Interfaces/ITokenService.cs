@@ -2,5 +2,7 @@
 
 public interface ITokenService
 {
-    public string CreateToken(string login, string id);
+    public string CreateAuthToken(string login, string id);
+    public string CreatePasswordResetToken(string login, string id);
+    public string CreateEmailConfirmationToken(string login, string id);
 }

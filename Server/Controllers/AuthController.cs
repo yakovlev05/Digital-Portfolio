@@ -34,7 +34,7 @@ public class AuthController : Controller
         var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
         if (!verifyPassword) return BadRequest("Invalid password");
 
-        var token = _tokenService.CreateToken(user.Login, user.Id.ToString());
+        var token = _tokenService.CreateAuthToken(user.Login, user.Id.ToString());
 
         return new LoginResponse(token);
     }
@@ -69,6 +69,6 @@ public class AuthController : Controller
         await _dbContext.SaveChangesAsync();
 
         var id = _dbContext.Users.First(x => x.Login == user.Login).Id;
-        return new RegistrationResponse(_tokenService.CreateToken(user.Login, id.ToString()));
+        return new RegistrationResponse(_tokenService.CreateAuthToken(user.Login, id.ToString()));
     }
 }

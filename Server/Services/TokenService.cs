@@ -8,12 +8,13 @@ namespace Server.Services;
 
 public class TokenService : ITokenService
 {
-    public string CreateToken(string login, string id)
+    private string CreateToken(string login, string id, string tokenType)
     {
         var claims = new List<Claim>
         {
-            new Claim("Login", login),
-            new Claim("id", id)
+            new Claim("login", login),
+            new Claim("id", id),
+            new Claim("token_type", tokenType)
         };
         var jwt = new JwtSecurityToken(
             issuer: AuthenticationOptions.Issuer,
@@ -25,4 +26,10 @@ public class TokenService : ITokenService
                 SecurityAlgorithms.HmacSha256));
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }
+
+    public string CreateAuthToken(string login, string id) => CreateToken(login, id, "auth");
+
+    public string CreatePasswordResetToken(string login, string id) => CreateToken(login, id, "password_reset");
+
+    public string CreateEmailConfirmationToken(string login, string id) => CreateToken(login, id, "email_confirmation");
 }

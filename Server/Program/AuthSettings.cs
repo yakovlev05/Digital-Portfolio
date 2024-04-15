@@ -42,7 +42,8 @@ public static class AuthenticationExtensions
     public static void AddAuthenticationAndAuthorization(this WebApplicationBuilder builder)
     {
         AuthSettings.AddAuthentication(builder);
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy("token_type", policy => policy.RequireClaim("token_type"));
     }
 
     public static void UseAuthenticationAndAuthorization(this WebApplication app)
