@@ -43,7 +43,7 @@ public static class AuthenticationExtensions
     {
         AuthSettings.AddAuthentication(builder);
         builder.Services.AddAuthorizationBuilder()
-            .AddPolicy("token_type", policy => policy.RequireClaim("token_type"));
+            .AddPolicy("password_reset", policy => policy.RequireClaim("token_type", "password_reset"));
     }
 
     public static void UseAuthenticationAndAuthorization(this WebApplication app)

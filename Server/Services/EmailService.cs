@@ -23,19 +23,35 @@ public class EmailService : IEmailService
         await client.ConnectAsync("smtp.mail.ru", 25, false);
         await client.AuthenticateAsync(Program.Program.Config["Email"].ToString(),
             Program.Program.Config["EmailPassword"].ToString());
-        await client.SendAsync(emailMessage);
+        try
+        {
+            await client.SendAsync(emailMessage);
+        }
+        catch
+        {
+            Console.WriteLine($"Ошибка отправки email на {email}");
+        }
+
 
         await client.DisconnectAsync(true);
     }
 
-    public async Task SendConfirmationUrl(string email, string url)
+    public async Task SendConfirmationUrl(string email, string token)
     {
         await SendEmailAsync(email, "Подтвердите почту",
-            $"Чтобы активировать свой аккаунт на сайте pp.yakovlev05.ru, <a href='{url}'>перейдите по ссылке</a>");
+            $"Чтобы активировать свой аккаунт на сайте pp.yakovlev05.ru, " +
+            $"<a href='https://pp.yakovlev05.ru/confirm?token={token}&email={email}'>перейдите по ссылке</a>");
     }
 
     public async Task SendNewPassword(string email, string password)
     {
         await SendEmailAsync(email, "Сброс пароля pp.yakovlev05.ru", $"<h3>Ваш новый пароль: {password}</h3>");
+    }
+
+    public async Task SendPasswordResetUrl(string email, string token)
+    {
+        await SendEmailAsync(email,
+            "Ссылка на сброс пароля",
+            $"Для сброса пароля перейдите по ссылке: <a href='https://pp.yakovlev05.ru/reset?token={token}&email={email}'>ссылка</a>");
     }
 }
