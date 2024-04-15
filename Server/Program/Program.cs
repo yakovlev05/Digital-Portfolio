@@ -46,6 +46,7 @@ public static class Program
                 }
             });
         });
+        
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
