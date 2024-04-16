@@ -8,7 +8,7 @@ public class DataContext : DbContext
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<FileEntity> Files { get; set; }
 
-    public DataContext()
+    public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
         Database.Migrate();
     }
@@ -21,10 +21,5 @@ public class DataContext : DbContext
     public DbSet<T> DbSet<T>() where T : class
     {
         return Set<T>();
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql(DatabaseSettings.CreateConnectionString());
     }
 }

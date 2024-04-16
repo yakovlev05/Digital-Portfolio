@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Server.Program;
 using Server.Services.Interfaces;
@@ -8,6 +9,13 @@ namespace Server.Services;
 
 public class TokenService : ITokenService
 {
+    private readonly IConfiguration _configuration;
+
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     private string CreateToken(string login, string id, string tokenType)
     {
         var claims = new List<Claim>
@@ -17,12 +25,15 @@ public class TokenService : ITokenService
             new Claim("token_type", tokenType)
         };
         var jwt = new JwtSecurityToken(
-            issuer: AuthenticationOptions.Issuer,
-            audience: AuthenticationOptions.Audience,
+            issuer: _configuration["Jwt:Issuer"],
+            audience: _configuration["Jwt:Audience"],
             claims: claims,
             expires: DateTime.UtcNow.Add(TimeSpan.FromDays(7)),
             notBefore: DateTime.UtcNow,
-            signingCredentials: new SigningCredentials(AuthenticationOptions.GetSymmetricSecurityKey(),
+            signingCredentials: new SigningCredentials(
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ??
+                                                                throw new InvalidOperationException(
+                                                                    "Jwt:Key is not set in configuration."))),
                 SecurityAlgorithms.HmacSha256));
         return new JwtSecurityTokenHandler().WriteToken(jwt);
     }

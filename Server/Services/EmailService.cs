@@ -6,12 +6,18 @@ namespace Server.Services;
 
 public class EmailService : IEmailService
 {
+    private readonly IConfiguration _configuration;
+
+    public EmailService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     private async Task SendEmailAsync(string email, string subject, string message)
     {
         using var emailMessage = new MimeMessage();
 
-        emailMessage.From.Add(new MailboxAddress("Система безопасности",
-            Program.Program.Config["Email"].ToString()));
+        emailMessage.From.Add(new MailboxAddress("Система безопасности", _configuration["Email"]));
         emailMessage.To.Add(new MailboxAddress("", email));
         emailMessage.Subject = subject;
         emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -21,8 +27,7 @@ public class EmailService : IEmailService
 
         using var client = new SmtpClient();
         await client.ConnectAsync("smtp.mail.ru", 25, false);
-        await client.AuthenticateAsync(Program.Program.Config["Email"].ToString(),
-            Program.Program.Config["EmailPassword"].ToString());
+        await client.AuthenticateAsync(_configuration["Email"], _configuration["EmailPassword"]);
         try
         {
             await client.SendAsync(emailMessage);

@@ -1,4 +1,8 @@
 using System.Collections;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.DataBase;
 using Server.Services;
@@ -8,13 +12,12 @@ namespace Server.Program;
 
 public static class Program
 {
-    public static readonly IDictionary Config = Environment.GetEnvironmentVariables();
+    // public static readonly IDictionary Config = Environment.GetEnvironmentVariables();
 
     private static void Main()
     {
         var builder = WebApplication.CreateBuilder();
 
-        builder.AddAuthenticationAndAuthorization();
         builder.Services.AddControllers();
 
         builder.Services.AddEndpointsApiExplorer();
@@ -48,7 +51,31 @@ public static class Program
             });
         });
 
-        builder.Services.AddDbContext<DataContext>();
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
+                    ValidateLifetime = true,
+                    IssuerSigningKey =
+                        new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key") ??
+                                                   throw new InvalidOperationException(
+                                                       "Jwt:Key is not set in configuration."))),
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero // Истечение токена строго по времени
+                };
+            });
+
+        builder.Services.AddAuthorizationBuilder()
+            .AddPolicy("password_reset", policy => policy.RequireClaim("token_type", "password_reset"));
+
+        builder.Services.AddDbContext<DataContext>(o =>
+            o.UseNpgsql(builder.Configuration.GetValue<string>("DB_CONNECTION_STRING")));
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
@@ -60,7 +87,8 @@ public static class Program
 
         app.MapControllers();
         app.UseRouting();
-        app.UseAuthenticationAndAuthorization();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         app.UseSwagger();
         app.UseSwaggerUI(); //на время разработки
