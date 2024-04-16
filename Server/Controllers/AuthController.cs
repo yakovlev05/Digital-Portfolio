@@ -121,4 +121,17 @@ public class AuthController : Controller
 
         return Ok("Password changed");
     }
+
+    [Authorize(Policy = "confirm_email")]
+    [HttpGet("confirm-email")]
+    public async Task<ActionResult> ConfirmEmail()
+    {
+        var userIdRequest = User.FindFirstValue("id");
+        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+
+        var user = await _dbContext.Users.FirstAsync(x => x.Id == int.Parse(userIdRequest));
+        user.Status = UserStatus.Active;
+        await _dbContext.SaveChangesAsync();
+        return Ok("Email confirmed");
+    }
 }
