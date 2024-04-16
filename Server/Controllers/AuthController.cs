@@ -14,14 +14,15 @@ namespace Server.Controllers;
 [Route("api/v1/auth")] // [controller]
 public class AuthController : Controller
 {
-    private readonly DataContext _dbContext = new();
+    private readonly DataContext _dbContext;
     private readonly ITokenService _tokenService;
     private readonly IPasswordService _passwordService;
     private readonly IEmailService _emailService;
 
-    public AuthController(ITokenService tokenService, IPasswordService passwordService, IEmailService emailService)
+    public AuthController(DataContext dataContext, ITokenService tokenService, IPasswordService passwordService,
+        IEmailService emailService)
     {
-        // _dbContext = dataContext;
+        _dbContext = dataContext;
         _tokenService = tokenService;
         _passwordService = passwordService;
         _emailService = emailService;

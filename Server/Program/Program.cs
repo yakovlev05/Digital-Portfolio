@@ -1,5 +1,6 @@
 using System.Collections;
 using Microsoft.OpenApi.Models;
+using Server.DataBase;
 using Server.Services;
 using Server.Services.Interfaces;
 
@@ -46,7 +47,8 @@ public static class Program
                 }
             });
         });
-        
+
+        builder.Services.AddDbContext<DataContext>();
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
