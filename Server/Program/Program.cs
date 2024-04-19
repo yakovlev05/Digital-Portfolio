@@ -73,7 +73,8 @@ public static class Program
 
         builder.Services.AddAuthorizationBuilder()
             .AddPolicy("password_reset", policy => policy.RequireClaim("token_type", "password_reset"))
-            .AddPolicy("confirm_email", policy => policy.RequireClaim("token_type", "email_confirmation"));
+            .AddPolicy("confirm_email", policy => policy.RequireClaim("token_type", "email_confirmation"))
+            .AddPolicy("auth", policy => policy.RequireClaim("token_type", "auth"));
 
         builder.Services.AddDbContext<DataContext>(o =>
             o.UseNpgsql(builder.Configuration.GetValue<string>("DB_CONNECTION_STRING")));
