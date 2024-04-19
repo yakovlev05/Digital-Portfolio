@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 
@@ -51,5 +52,15 @@ public class ContentController : Controller
 
         await _dbContext.SaveChangesAsync();
         return Ok();
+    }
+
+    [AllowAnonymous]
+    [HttpGet("image/{imageName}")]
+    public async Task<ActionResult> GetImage(string imageName)
+    {
+        var image = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == imageName);
+        if (image is null) return BadRequest("Image not found");
+
+        return File(new FileStream(image.Path, FileMode.Open), "image/jpeg");
     }
 }
