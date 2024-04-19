@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +80,7 @@ public static class Program
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
-
+        builder.Services.AddScoped<IImageService, ImageService>();
         var app = builder.Build();
 
         app.UseDefaultFiles();

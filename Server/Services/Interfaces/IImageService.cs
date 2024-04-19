@@ -2,6 +2,5 @@
 
 public interface IImageService
 {
-    public Task<MemoryStream> ResizeImage(Stream image, int width, int height);
-    public Task<FileStream> CompressImage(FileStream image);
+    public Task ResizeImage(string inputPath, string outputPath, int width, int height, int quality = 100);
 }
