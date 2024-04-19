@@ -44,7 +44,6 @@ public class ContentController : Controller
                 Path = filePath,
                 Name = fileName,
                 Url = "",
-                Type = FileType.Image,
                 Extension = fileExtension
             };
             await _dbContext.Images.AddAsync(imageEntity);
