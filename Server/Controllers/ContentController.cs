@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
+using Server.Services;
+using SixLabors.ImageSharp;
 
 namespace Server.Controllers;
 
@@ -37,8 +39,11 @@ public class ContentController : Controller
             var fileExtension = Path.GetExtension(file.FileName);
             var fileName = Guid.NewGuid().ToString() + fileExtension;
             var filePath = Path.Combine(path, fileName);
+
             await using var fileStream = new FileStream(filePath, FileMode.Create);
-            await file.CopyToAsync(fileStream);
+            var resizedImageStream = await new ImageService().ResizeImage(file.OpenReadStream(), 1920, 1080);
+            // await file.CopyToAsync(fileStream);
+            await resizedImageStream.CopyToAsync(fileStream);
 
             var imageEntity = new ImageEntity()
             {
