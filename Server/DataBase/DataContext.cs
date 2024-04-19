@@ -6,7 +6,7 @@ namespace Server.DataBase;
 public class DataContext : DbContext
 {
     public DbSet<UserEntity> Users { get; set; }
-    public DbSet<FileEntity> Files { get; set; }
+    public DbSet<ImageEntity> Images { get; set; }
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
