@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.DataBase;
@@ -11,7 +10,7 @@ namespace Server.Controllers;
 [Route("api/v1/user")]
 public class UserController : Controller
 {
-    public readonly DataContext _dbContext;
+    private readonly DataContext _dbContext;
 
     public UserController(DataContext dataContext)
     {
