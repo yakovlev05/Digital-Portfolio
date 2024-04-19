@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
+using Server.Models;
 
 namespace Server.Controllers;
 
@@ -20,7 +21,7 @@ public class ContentController : Controller
 
     [Authorize(Policy = "auth")]
     [HttpPost("upload-images")]
-    public async Task<ActionResult> UploadImages([FromForm] IFormFileCollection fileRequest)
+    public async Task<ActionResult<UploadImagesResponse>> UploadImages([FromForm] IFormFileCollection fileRequest)
     {
         var userIdRequest = User.FindFirstValue("id");
         if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
@@ -28,6 +29,7 @@ public class ContentController : Controller
         var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
         if (user is null) return BadRequest("User not found");
 
+        var response = new UploadImagesResponse(new List<string>());
         var path = "/files/images";
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         foreach (var file in fileRequest)
@@ -47,10 +49,11 @@ public class ContentController : Controller
                 Extension = fileExtension
             };
             await _dbContext.Images.AddAsync(imageEntity);
+            response.ImagesUrls.Add($"api/v1/content/image/{fileName}");
         }
 
         await _dbContext.SaveChangesAsync();
-        return Ok();
+        return response;
     }
 
     [AllowAnonymous]
