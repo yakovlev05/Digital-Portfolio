@@ -1,0 +1,47 @@
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Server.DataBase;
+using Server.DataBase.Entities;
+using Server.Models;
+
+namespace Server.Controllers;
+
+[ApiController]
+[Route("api/v1/comment")]
+public class CommentController : Controller
+{
+    private readonly DataContext _dbContext;
+
+    public CommentController(DataContext dataContext)
+    {
+        _dbContext = dataContext;
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpPost("add")]
+    public async Task<ActionResult> AddComment(AddCommentRequest request)
+    {
+        var userIdRequest = User.FindFirstValue("id");
+        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+
+        var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
+        if (user is null) return BadRequest("User not found");
+
+        if (await _dbContext.Recipes.FindAsync(request.RecipeId) is null) return BadRequest("Recipe not found");
+        if (request.Rating < 1 || request.Rating > 5) return BadRequest("Rating must be from 1 to 5");
+        if (request.Description.Contains('<') || request.Description.Contains('>'))
+            return BadRequest("Characters '<' and '>' are prohibited");
+
+        await _dbContext.Comments.AddAsync(new CommentEntity()
+        {
+            UserEntityId = user.Id,
+            RecipeEntityId = request.RecipeId,
+            Description = request.Description,
+            Rating = request.Rating
+        });
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Comment has been added");
+    }
+}
