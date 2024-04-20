@@ -3,7 +3,7 @@
 public class RecipeEnergyEntity
 {
     public int Id { get; init; }
-    public int RecipeId { get; init; }
+    public int RecipeEntityId { get; init; }
     public int CaloriesFrom { get; set; }
     public int CaloriesTo { get; set; }
     public int FatsFrom { get; set; }
@@ -12,4 +12,5 @@ public class RecipeEnergyEntity
     public int CarbohydratesTo { get; set; }
     public int ProteinsFrom { get; set; }
     public int ProteinsTo { get; set; }
+    public RecipeEntity RecipeEntity { get; set; }
 }

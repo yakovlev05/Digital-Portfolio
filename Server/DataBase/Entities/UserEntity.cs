@@ -18,4 +18,5 @@ public class UserEntity
     public UserRole Role { get; set; } = UserRole.User;
     public ICollection<ImageEntity> Files { get; set; } = new List<ImageEntity>();
     public ICollection<RecipeEntity> Recipes { get; set; } = new List<RecipeEntity>();
+    public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
 }

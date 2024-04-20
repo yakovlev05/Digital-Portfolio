@@ -11,6 +11,7 @@ public class DataContext : DbContext
     public DbSet<RecipeStepEntity> RecipeSteps { get; set; }
     public DbSet<RecipeIngredientEntity> RecipeIngredients { get; set; }
     public DbSet<RecipeEnergyEntity> RecipeEnergies { get; set; }
+    public DbSet<CommentEntity> Comments { get; set; }
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

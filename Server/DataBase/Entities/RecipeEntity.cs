@@ -11,4 +11,5 @@ public class RecipeEntity
     public ICollection<RecipeIngredientEntity> Ingredients = new List<RecipeIngredientEntity>();
     public ICollection<RecipeEnergyEntity> Energies = new List<RecipeEnergyEntity>();
     public ICollection<RecipeStepEntity> Steps = new List<RecipeStepEntity>();
+    public ICollection<CommentEntity> Comments = new List<CommentEntity>();
 }

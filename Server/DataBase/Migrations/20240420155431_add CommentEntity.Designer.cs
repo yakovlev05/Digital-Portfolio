@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Server.DataBase;
@@ -11,9 +12,11 @@ using Server.DataBase;
 namespace Server.DataBase.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240420155431_add CommentEntity")]
+    partial class addCommentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +50,6 @@ namespace Server.DataBase.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipeEntityId");
 
                     b.HasIndex("UserEntityId");
 
@@ -129,8 +130,6 @@ namespace Server.DataBase.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeEntityId");
-
                     b.ToTable("RecipeEnergies");
                 });
 
@@ -190,8 +189,6 @@ namespace Server.DataBase.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeEntityId");
-
                     b.ToTable("RecipeIngredients");
                 });
 
@@ -218,8 +215,6 @@ namespace Server.DataBase.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RecipeEntityId");
 
                     b.ToTable("RecipeSteps");
                 });
@@ -283,19 +278,11 @@ namespace Server.DataBase.Migrations
 
             modelBuilder.Entity("Server.DataBase.Entities.CommentEntity", b =>
                 {
-                    b.HasOne("Server.DataBase.Entities.RecipeEntity", "RecipeEntity")
-                        .WithMany()
-                        .HasForeignKey("RecipeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Server.DataBase.Entities.UserEntity", null)
                         .WithMany("Comments")
                         .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("RecipeEntity");
                 });
 
             modelBuilder.Entity("Server.DataBase.Entities.ImageEntity", b =>
@@ -307,17 +294,6 @@ namespace Server.DataBase.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Server.DataBase.Entities.RecipeEnergyEntity", b =>
-                {
-                    b.HasOne("Server.DataBase.Entities.RecipeEntity", "RecipeEntity")
-                        .WithMany()
-                        .HasForeignKey("RecipeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecipeEntity");
-                });
-
             modelBuilder.Entity("Server.DataBase.Entities.RecipeEntity", b =>
                 {
                     b.HasOne("Server.DataBase.Entities.UserEntity", null)
@@ -325,28 +301,6 @@ namespace Server.DataBase.Migrations
                         .HasForeignKey("UserEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Server.DataBase.Entities.RecipeIngredientEntity", b =>
-                {
-                    b.HasOne("Server.DataBase.Entities.RecipeEntity", "RecipeEntity")
-                        .WithMany()
-                        .HasForeignKey("RecipeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecipeEntity");
-                });
-
-            modelBuilder.Entity("Server.DataBase.Entities.RecipeStepEntity", b =>
-                {
-                    b.HasOne("Server.DataBase.Entities.RecipeEntity", "RecipeEntity")
-                        .WithMany()
-                        .HasForeignKey("RecipeEntityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecipeEntity");
                 });
 
             modelBuilder.Entity("Server.DataBase.Entities.UserEntity", b =>
