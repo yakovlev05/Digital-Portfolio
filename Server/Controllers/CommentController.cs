@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
@@ -20,7 +21,7 @@ public class CommentController : Controller
 
     [Authorize(Policy = "auth")]
     [HttpPost("add")]
-    public async Task<ActionResult> AddComment(AddCommentRequest request)
+    public async Task<ActionResult<AddCommentResponse>> AddComment(AddCommentRequest request)
     {
         var userIdRequest = User.FindFirstValue("id");
         if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
@@ -42,6 +43,25 @@ public class CommentController : Controller
         });
         await _dbContext.SaveChangesAsync();
 
-        return Ok("Comment has been added");
+        return new AddCommentResponse(new Guid().ToString());
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpDelete("delete")]
+    public async Task<ActionResult> DeleteComment(DeleteCommentRequest request)
+    {
+        var userIdRequest = User.FindFirstValue("id");
+        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+
+        var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
+        if (user is null) return BadRequest("User not found");
+
+        var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Guid == request.CommentGuid);
+        if (comment is null) return BadRequest("CommentGuid not found");
+
+        comment.Status = CommentStatus.Deleted;
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Comment has been deleted");
     }
 }
