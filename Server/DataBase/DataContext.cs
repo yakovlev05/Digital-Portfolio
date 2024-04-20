@@ -7,6 +7,10 @@ public class DataContext : DbContext
 {
     public DbSet<UserEntity> Users { get; set; }
     public DbSet<ImageEntity> Images { get; set; }
+    public DbSet<RecipeEntity> Recipes { get; set; }
+    public DbSet<RecipeStepEntity> RecipeSteps { get; set; }
+    public DbSet<RecipeIngredientEntity> RecipeIngredients { get; set; }
+    public DbSet<RecipeEnergyEntity> RecipeEnergies { get; set; }
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {

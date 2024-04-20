@@ -76,7 +76,7 @@ public static class Program
             .AddPolicy("auth", policy => policy.RequireClaim("token_type", "auth"));
 
         builder.Services.AddDbContext<DataContext>(o =>
-            o.UseNpgsql(builder.Configuration.GetValue<string>("DB_CONNECTION_STRING")));
+            o.UseNpgsql("Host=localhost;Port=8082;Username=root;Password=fds#Ds25d#cV5s;Database=digitalPortfolioDB"));
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
