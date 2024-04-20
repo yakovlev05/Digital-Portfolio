@@ -8,5 +8,6 @@ public class CommentEntity
     public DateTime Published { get; init; } = DateTime.Now.ToUniversalTime();
     public int Rating { get; set; }
     public string Description { get; set; }
+    public CommentStatus Status { get; set; } = CommentStatus.RequireModeration;
     public RecipeEntity RecipeEntity { get; set; }
 }
