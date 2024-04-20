@@ -34,16 +34,17 @@ public class CommentController : Controller
         if (request.Description.Contains('<') || request.Description.Contains('>'))
             return BadRequest("Characters '<' and '>' are prohibited");
 
-        await _dbContext.Comments.AddAsync(new CommentEntity()
+        var newCommentEntity = new CommentEntity()
         {
             UserEntityId = user.Id,
             RecipeEntityId = request.RecipeId,
             Description = request.Description,
             Rating = request.Rating
-        });
+        };
+        await _dbContext.Comments.AddAsync(newCommentEntity);
         await _dbContext.SaveChangesAsync();
 
-        return new AddCommentResponse(new Guid().ToString());
+        return new AddCommentResponse(newCommentEntity.Guid);
     }
 
     [Authorize(Policy = "auth")]
