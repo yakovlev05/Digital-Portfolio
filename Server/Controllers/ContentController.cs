@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Crypto.Digests;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
-using Server.Services;
 using Server.Services.Interfaces;
-using SixLabors.ImageSharp;
 
 namespace Server.Controllers;
 
@@ -17,12 +14,12 @@ namespace Server.Controllers;
 public class ContentController : Controller
 {
     private readonly DataContext _dbContext;
-    public readonly IImageService _ImageService;
+    private readonly IImageService _imageService;
 
     public ContentController(DataContext dataContext, IImageService imageService)
     {
         _dbContext = dataContext;
-        _ImageService = imageService;
+        _imageService = imageService;
     }
 
     [Authorize(Policy = "auth")]
@@ -41,11 +38,12 @@ public class ContentController : Controller
         if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         foreach (var file in fileRequest)
         {
+            if (file.ContentType.Split('/')[0] != "image") return BadRequest("Only images are allowed");
             var inputPath = Path.Combine(path, Guid.NewGuid() + Path.GetExtension(file.FileName));
             await file.CopyToAsync(new FileStream(inputPath, FileMode.Create));
 
             var outputPath = Path.Combine(path, Guid.NewGuid() + ".jpg");
-            await _ImageService.ResizeImage(inputPath, outputPath, width, height, quality);
+            await _imageService.ResizeImage(inputPath, outputPath, width, height, quality);
 
             var imageEntity = new ImageEntity()
             {
