@@ -1,4 +1,4 @@
-﻿version: '3.8'
+﻿#version: '3.8'
 
 name: digital_portfolio
 
@@ -48,6 +48,18 @@ services:
       - digitalPortfolioDB:/var/lib/postgresql/data
     networks:
       - digitalPortfolio
+  portfolio_frontend:
+    build:
+      context: ../client
+      dockerfile: Dockerfile
+    restart: always
+    container_name: portfolioFrontend
+    ports:
+      - "8083:80"
+    networks:
+      - digitalPortfolio
+    depends_on:
+      - portfolioServer
   nginx:
     image: nginx:latest
     container_name: nginx
