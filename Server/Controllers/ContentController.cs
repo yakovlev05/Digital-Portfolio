@@ -50,7 +50,6 @@ public class ContentController : Controller
                 UserEntityId = user.Id,
                 Path = outputPath,
                 Name = Path.GetFileName(outputPath),
-                Url = "",
                 Extension = Path.GetExtension(outputPath)
             };
             await _dbContext.Images.AddAsync(imageEntity);
@@ -70,4 +69,16 @@ public class ContentController : Controller
 
         return File(new FileStream(image.Path, FileMode.Open), "image/jpeg");
     }
+
+    // [Authorize(Policy = "auth")]
+    // [HttpDelete("delete-image/{imageName}")]
+    // public async Task<ActionResult> DeleteImage(string imageName)
+    // {
+    //     var userIdRequest = User.FindFirstValue("id");
+    //     if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+    //     
+    //     var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
+    //     if (user is null) return BadRequest("User not found");
+    //     
+    // }
 }
