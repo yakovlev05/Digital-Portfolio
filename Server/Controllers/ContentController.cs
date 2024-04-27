@@ -70,15 +70,22 @@ public class ContentController : Controller
         return File(new FileStream(image.Path, FileMode.Open), "image/jpeg");
     }
 
-    // [Authorize(Policy = "auth")]
-    // [HttpDelete("delete-image/{imageName}")]
-    // public async Task<ActionResult> DeleteImage(string imageName)
-    // {
-    //     var userIdRequest = User.FindFirstValue("id");
-    //     if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
-    //     
-    //     var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
-    //     if (user is null) return BadRequest("User not found");
-    //     
-    // }
+    [Authorize(Policy = "auth")]
+    [HttpDelete("delete-image/{imageName}")]
+    public async Task<ActionResult> DeleteImage(string imageName)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users.Include(x => x.Files).FirstOrDefaultAsync(x => x.Id == userId);
+        if (user is null) return BadRequest("User not found");
+
+        var image = user.Files.FirstOrDefault(x => x.Name == imageName);
+        if (image is null) return BadRequest("File not found");
+
+        _dbContext.Images.Remove(image);
+        await _dbContext.SaveChangesAsync();
+
+        if (System.IO.File.Exists(image.Path)) System.IO.File.Delete(image.Path);
+
+        return Ok("File deleted successfully");
+    }
 }
