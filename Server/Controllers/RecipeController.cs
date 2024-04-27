@@ -41,9 +41,6 @@ public class RecipeController : Controller
             CookingTime = TimeSpan.FromMinutes(model.CookingTimeMinutes),
             Description = model.Description
         };
-        await _dbContext.Recipes.AddAsync(recipe);
-        await _dbContext.SaveChangesAsync();
-
 
         var recipeIngredients = new List<RecipeIngredientEntity>();
         foreach (var ingredient in model.Ingredients)
@@ -53,11 +50,8 @@ public class RecipeController : Controller
                 Name = ingredient.Name,
                 Quantity = ingredient.Quantity,
                 Unit = ingredient.Unit,
-                RecipeEntityId = recipe.Id
             });
         }
-
-        _dbContext.RecipeIngredients.AddRange(recipeIngredients);
 
         var recipeSteps = new List<RecipeStepEntity>();
         foreach (var step in model.Steps)
@@ -67,11 +61,8 @@ public class RecipeController : Controller
                 StepNumber = step.StepNumber,
                 Description = step.Description,
                 ImageName = step.ImageName,
-                RecipeEntityId = recipe.Id
             });
         }
-
-        _dbContext.RecipeSteps.AddRange(recipeSteps);
 
         var recipeEnergy = new RecipeEnergyEntity()
         {
@@ -83,11 +74,13 @@ public class RecipeController : Controller
             CarbohydratesTo = model.EnergyModel.CarbohydratesTo,
             ProteinsFrom = model.EnergyModel.ProteinsFrom,
             ProteinsTo = model.EnergyModel.ProteinsTo,
-            RecipeEntity = recipe,
-            RecipeEntityId = recipe.Id
         };
-        await _dbContext.RecipeEnergy.AddAsync(recipeEnergy);
 
+        recipe.Energy = recipeEnergy;
+        recipe.Ingredients = recipeIngredients;
+        recipe.Steps = recipeSteps;
+
+        await _dbContext.Recipes.AddAsync(recipe);
         await _dbContext.SaveChangesAsync();
 
         return Ok("Recipe added");
