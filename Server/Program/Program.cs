@@ -81,6 +81,7 @@ public static class Program
         builder.Services.AddScoped<IPasswordService, PasswordService>();
         builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Services.AddScoped<IImageService, ImageService>();
+        builder.Services.AddScoped<IUrlService, UrlService>();
         var app = builder.Build();
 
         app.UseDefaultFiles();
