@@ -4,7 +4,10 @@ public class RecipeEntity
 {
     public int Id { get; init; }
     public int UserEntityId { get; init; }
+    public string NameUrl { get; set; }
     public string Name { get; set; } = null!;
+    public string MainImageName { get; set; } = null!;
+    public string Category { get; set; } = null!;
     public TimeSpan CookingTime { get; set; }
     public DateTime DateCreate { get; init; } = DateTime.Now.ToUniversalTime();
     public string Description { get; set; } = null!;
