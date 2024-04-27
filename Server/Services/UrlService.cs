@@ -7,6 +7,7 @@ public class UrlService : IUrlService
 {
     public string GetUrlFromString(string str)
     {
-        return str.ToSlug("-").ToLower();
+        var r = new Random();
+        return str.ToSlug("-").ToLower() + "-" + (int)(r.NextDouble() * 10000000);
     }
 }
