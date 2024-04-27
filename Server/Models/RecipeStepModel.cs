@@ -1,6 +1,6 @@
 namespace Server.Models;
 
-public record RecipeStepRequest(
+public record RecipeStepModel(
     int StepNumber,
     string Description,
     string ImageName

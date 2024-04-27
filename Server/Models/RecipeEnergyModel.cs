@@ -1,6 +1,6 @@
 namespace Server.Models;
 
-public record RecipeEnergyRequest(
+public record RecipeEnergyModel(
     int CaloriesFrom,
     int CaloriesTo,
     int FatsFrom,
