@@ -48,8 +48,8 @@ public class CommentController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpDelete("delete")]
-    public async Task<ActionResult> DeleteComment(DeleteCommentRequest request)
+    [HttpDelete("{commentGuid}")]
+    public async Task<ActionResult> DeleteComment(string commentGuid)
     {
         var userIdRequest = User.FindFirstValue("id");
         if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
@@ -57,7 +57,7 @@ public class CommentController : Controller
         var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
         if (user is null) return BadRequest("User not found");
 
-        var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Guid == request.CommentGuid);
+        var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Guid == commentGuid);
         if (comment is null) return BadRequest("CommentGuid not found");
 
         comment.Status = CommentStatus.Deleted;
