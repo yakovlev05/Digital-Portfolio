@@ -83,7 +83,7 @@ public class RecipeController : Controller
         await _dbContext.Recipes.AddAsync(recipe);
         await _dbContext.SaveChangesAsync();
 
-        return new AddRecipeResponse(recipe.NameUrl);
+        return new AddRecipeResponse(recipe.NameUrl, recipe.Id);
     }
 
     [AllowAnonymous]
@@ -98,6 +98,8 @@ public class RecipeController : Controller
 
         if (recipe is null) return BadRequest("Recipe not found");
         var response = new RecipeModel(
+            recipe.Id,
+            recipe.NameUrl,
             recipe.Name,
             recipe.MainImageName,
             recipe.Category,
@@ -211,6 +213,6 @@ public class RecipeController : Controller
 
         await _dbContext.SaveChangesAsync();
 
-        return new UpdateRecipeResponse(recipe.NameUrl);
+        return new UpdateRecipeResponse(recipe.NameUrl, recipe.Id);
     }
 }

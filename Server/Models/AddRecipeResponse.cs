@@ -1,3 +1,3 @@
 namespace Server.Models;
 
-public record AddRecipeResponse(string recipeUrl);
+public record AddRecipeResponse(string recipeUrl, int recipeId);

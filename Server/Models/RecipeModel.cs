@@ -1,6 +1,8 @@
 namespace Server.Models;
 
 public record RecipeModel(
+    int RecipeId,
+    string RecipeUrl,
     string Name,
     string MainImageName,
     string Category,

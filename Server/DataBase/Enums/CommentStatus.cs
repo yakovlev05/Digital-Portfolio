@@ -4,6 +4,5 @@ public enum CommentStatus
 {
     Published,
     RequireModeration,
-    Banned,
-    Deleted
+    Banned
 }
