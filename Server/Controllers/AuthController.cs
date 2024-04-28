@@ -88,7 +88,7 @@ public class AuthController : Controller
         return new RegistrationResponse(_tokenService.CreateAuthToken(user.Login, id.ToString()));
     }
 
-    [HttpPost("password-reset")]
+    [HttpPost("password/reset")]
     public async Task<ActionResult> PasswordReset([FromBody] PasswordResetRequest request)
     {
         var regex = new Regex("^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$");
@@ -104,7 +104,7 @@ public class AuthController : Controller
     }
 
     [Authorize(Policy = "password_reset")]
-    [HttpPut("change-password")]
+    [HttpPut("password/change")]
     public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
     {
         if (request.Password != request.ConfirmPassword) return BadRequest("Passwords do not match");
@@ -123,7 +123,7 @@ public class AuthController : Controller
     }
 
     [Authorize(Policy = "confirm_email")]
-    [HttpGet("confirm-email")]
+    [HttpGet("email/confirm")]
     public async Task<ActionResult> ConfirmEmail()
     {
         var userIdRequest = User.FindFirstValue("id");

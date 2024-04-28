@@ -23,7 +23,7 @@ public class ContentController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpPost("upload-images")]
+    [HttpPost("images/add")]
     public async Task<ActionResult<UploadImagesResponse>> UploadImages([FromForm] IFormFileCollection fileRequest,
         [FromQuery] int width = 1920, [FromQuery] int height = 1080, [FromQuery] int quality = 50)
     {
@@ -71,7 +71,7 @@ public class ContentController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpDelete("delete-image/{imageName}")]
+    [HttpDelete("image/{imageName}")]
     public async Task<ActionResult> DeleteImage(string imageName)
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);

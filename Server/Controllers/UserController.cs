@@ -18,7 +18,7 @@ public class UserController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpGet("get-my-info")]
+    [HttpGet("me")]
     public async Task<ActionResult<GetMyInfoResponse>> GetMyInfo()
     {
         var userIdRequest = User.FindFirstValue("id");
