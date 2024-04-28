@@ -142,7 +142,8 @@ public class RecipeController : Controller
 
         foreach (var step in recipe.Steps)
         {
-            if (System.IO.File.Exists($"/files/images/{step.ImageName}")) System.IO.File.Delete($"/files/images/{step.ImageName}");
+            if (System.IO.File.Exists($"/files/images/{step.ImageName}"))
+                System.IO.File.Delete($"/files/images/{step.ImageName}");
             var image = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == step.ImageName);
             if (image != null) _dbContext.Remove(image);
         }
@@ -150,5 +151,66 @@ public class RecipeController : Controller
         await _dbContext.SaveChangesAsync();
 
         return Ok("Recipe deleted");
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpPut("{recipeUrl}")]
+    public async Task<ActionResult<UpdateRecipeResponse>> UpdateRecipe(RecipeModel request, string recipeUrl)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Ingredients)
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Energy)
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Steps)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+
+        if (user is null) return BadRequest("User not found");
+
+        var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == recipeUrl);
+        if (recipe is null) return BadRequest("Recipe not found");
+
+        recipe.NameUrl = _urlService.GetUrlFromString(request.Name);
+        recipe.Name = request.Name;
+        recipe.MainImageName = request.MainImageName;
+        recipe.Category = request.Category;
+        recipe.CookingTime = TimeSpan.FromMinutes(request.CookingTimeMinutes);
+        recipe.Description = request.Description;
+
+        // Можно не создавать новые объекты, а искать в бд: объект нашёлся - обновить, не нашёлся - создать
+        var recipeIngredients = request.Ingredients
+            .Select(x => new RecipeIngredientEntity()
+                { Name = x.Name, Quantity = x.Quantity, Unit = x.Unit })
+            .ToList();
+
+        // При удалении некоторых шагов, изображение тоже должно удаляться в бд и в файловой системе
+        // Ну это дополнительный цикл нужен, который сопоставляет имеющиеся шаги с новыми (ключ поиска - имя изоражения)
+        var recipeSteps = request.Steps
+            .Select(x => new RecipeStepEntity()
+                { StepNumber = x.StepNumber, Description = x.Description, ImageName = x.ImageName })
+            .ToList();
+
+        var recipeEnergy = new RecipeEnergyEntity()
+        {
+            CaloriesFrom = request.EnergyModel.CaloriesFrom,
+            CaloriesTo = request.EnergyModel.CaloriesTo,
+            CarbohydratesFrom = request.EnergyModel.CarbohydratesFrom,
+            CarbohydratesTo = request.EnergyModel.CarbohydratesTo,
+            FatsFrom = request.EnergyModel.FatsFrom,
+            FatsTo = request.EnergyModel.FatsTo,
+            ProteinsFrom = request.EnergyModel.ProteinsFrom,
+            ProteinsTo = request.EnergyModel.ProteinsTo
+        };
+
+
+        recipe.Ingredients = recipeIngredients;
+        recipe.Energy = recipeEnergy;
+        recipe.Steps = recipeSteps;
+
+        await _dbContext.SaveChangesAsync();
+
+        return new UpdateRecipeResponse(recipe.NameUrl);
     }
 }
