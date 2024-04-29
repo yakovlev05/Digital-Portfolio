@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import App from "../App";
-import IndexPage from "./index"
+import IndexPage from './index/ui'
 
 const AppRouter = () => {
     return (

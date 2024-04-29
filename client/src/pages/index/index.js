@@ -1,1 +1,2 @@
-export {default as IndexPage} from './ui/index.jsx';
+import IndexPage from './ui'
+export default IndexPage
