@@ -5,4 +5,5 @@ public interface IEmailService
     public Task SendConfirmationUrl(string email, string token);
     public Task SendNewPassword(string email, string password);
     public Task SendPasswordResetUrl(string email, string token);
+    public bool ValidateEmail(string email);
 }

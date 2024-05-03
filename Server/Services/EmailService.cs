@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using System.Text.RegularExpressions;
+using MailKit.Net.Smtp;
 using MimeKit;
 using Server.Services.Interfaces;
 
@@ -58,5 +59,11 @@ public class EmailService : IEmailService
         await SendEmailAsync(email,
             "Ссылка на сброс пароля",
             $"Для сброса пароля перейдите по ссылке: <a href='https://pp.yakovlev05.ru/reset?token={token}&email={email}'>ссылка</a>");
+    }
+
+    public bool ValidateEmail(string email)
+    {
+        var regex = new Regex("^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$");
+        return regex.IsMatch(email);
     }
 }
