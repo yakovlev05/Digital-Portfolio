@@ -1,0 +1,106 @@
+.body {
+    background: linear-gradient(180deg, #3853B4 0%, #00145A 100%) no-repeat;
+    /*min-height: 100vh;*/
+    /*background: #190E64;*/
+    font-family: "Montserrat", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+    text-align: center;
+
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    background: #FFFFFF;
+    border-radius: 113px;
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.photo {
+    width: 630px;
+    height: 867px;
+}
+
+.form-container {
+    margin: auto;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+}
+
+.form .header {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 49px;
+    text-align: center;
+    padding-bottom: 38px;
+}
+
+.form input {
+    width: 398px;
+    height: 48px;
+    border: 1px solid #696969;
+    font-size: 32px;
+    line-height: 39px;
+    border-radius: 10px;
+}
+
+.form .button button {
+    border: none;
+    width: 398px;
+    height: 95px;
+    background: #32B857;
+    border-radius: 101px;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 49px;
+    color: #FFFFFF;
+}
+
+.form a {
+    color: #32B857;
+    text-decoration: none;
+}
+
+.form .email {
+    padding-bottom: 29px;
+}
+
+.form .password {
+    padding-bottom: 38px;
+}
+
+.form .button {
+    padding-bottom: 32px;
+}
+
+.form .account-url {
+    padding-bottom: 38px;
+}
+
+.form .label {
+    margin-right: auto;
+    font-weight: 500;
+    font-size: 20px;
+    color: dimgrey;
+}
+
+.form .button button:hover {
+    background: #217336;
+}
