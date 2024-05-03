@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
+using Server.Models.Comment;
 
 namespace Server.Controllers;
 
@@ -47,24 +48,28 @@ public class CommentController : Controller
         return new AddCommentResponse(newCommentEntity.Guid);
     }
 
-    [Authorize(Policy = "auth")]
-    [HttpDelete("{commentGuid}")]
-    public async Task<ActionResult> DeleteComment(string commentGuid)
+    [AllowAnonymous]
+    [HttpGet("{commentGuid}")]
+    public async Task<ActionResult<GetCommentResponse>> GetComment(string commentGuid)
     {
-        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
-        var user = await _dbContext.Users
-            .Include(x => x.Comments)
-            .FirstOrDefaultAsync(x => x.Id == userId);
-        if (user is null) return BadRequest("User not found");
-
-
-        var comment = user.Comments.FirstOrDefault(x => x.Guid == commentGuid);
+        var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Guid == commentGuid);
         if (comment is null) return BadRequest("Comment not found");
 
-        _dbContext.Remove(comment);
-        await _dbContext.SaveChangesAsync();
+        var user = await _dbContext.Users.FindAsync(comment.UserEntityId);
+        if (user is null) return BadRequest("User not found");
 
-        return Ok("Comment has been deleted");
+        var response = new GetCommentResponse(
+            comment.Guid,
+            comment.Rating,
+            comment.Description,
+            comment.Published.ToString("dd.MM.yyyy HH:mm:ss"),
+            user.Name,
+            user.SecondName,
+            user.ProfilePhoto,
+            user.Login
+        );
+
+        return response;
     }
 
     [Authorize(Policy = "auth")]
@@ -91,27 +96,23 @@ public class CommentController : Controller
         return Ok("Comment has been updated");
     }
 
-    [AllowAnonymous]
-    [HttpGet("{commentGuid}")]
-    public async Task<ActionResult<GetCommentResponse>> GetComment(string commentGuid)
+    [Authorize(Policy = "auth")]
+    [HttpDelete("{commentGuid}")]
+    public async Task<ActionResult> DeleteComment(string commentGuid)
     {
-        var comment = await _dbContext.Comments.FirstOrDefaultAsync(x => x.Guid == commentGuid);
-        if (comment is null) return BadRequest("Comment not found");
-
-        var user = await _dbContext.Users.FindAsync(comment.UserEntityId);
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Comments)
+            .FirstOrDefaultAsync(x => x.Id == userId);
         if (user is null) return BadRequest("User not found");
 
-        var response = new GetCommentResponse(
-            comment.Guid,
-            comment.Rating,
-            comment.Description,
-            comment.Published.ToString("dd.MM.yyyy HH:mm:ss"),
-            user.Name,
-            user.SecondName,
-            user.ProfilePhoto,
-            user.Login
-        );
 
-        return response;
+        var comment = user.Comments.FirstOrDefault(x => x.Guid == commentGuid);
+        if (comment is null) return BadRequest("Comment not found");
+
+        _dbContext.Remove(comment);
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Comment has been deleted");
     }
 }

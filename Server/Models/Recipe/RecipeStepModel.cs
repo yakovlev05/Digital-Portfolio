@@ -1,4 +1,4 @@
-namespace Server.Models;
+namespace Server.Models.Recipe;
 
 public record RecipeStepModel(
     int StepNumber,

@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
+using Server.Models.Content;
 using Server.Services.Interfaces;
 
 namespace Server.Controllers;

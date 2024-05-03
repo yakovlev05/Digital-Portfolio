@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
+using Server.Models.Recipe;
 using Server.Services.Interfaces;
 
 namespace Server.Controllers;
@@ -122,40 +123,6 @@ public class RecipeController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpDelete("{recipeUrl}")]
-    public async Task<ActionResult> DeleteRecipe(string recipeUrl)
-    {
-        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
-        var user = await _dbContext.Users
-            .Include(x => x.Recipes)
-            .ThenInclude(recipeEntity => recipeEntity.Steps)
-            .FirstOrDefaultAsync(x => x.Id == userId);
-
-        if (user is null) return BadRequest("User not found");
-
-        var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == recipeUrl);
-        if (recipe is null) return BadRequest("Recipe not found");
-
-        _dbContext.Recipes.Remove(recipe);
-        if (System.IO.File.Exists($"/files/images/{recipe.MainImageName}"))
-            System.IO.File.Delete($"/files/images/{recipe.MainImageName}");
-        var mainImage = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == recipe.MainImageName);
-        if (mainImage != null) _dbContext.Remove(mainImage);
-
-        foreach (var step in recipe.Steps)
-        {
-            if (System.IO.File.Exists($"/files/images/{step.ImageName}"))
-                System.IO.File.Delete($"/files/images/{step.ImageName}");
-            var image = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == step.ImageName);
-            if (image != null) _dbContext.Remove(image);
-        }
-
-        await _dbContext.SaveChangesAsync();
-
-        return Ok("Recipe deleted");
-    }
-
-    [Authorize(Policy = "auth")]
     [HttpPut("{recipeUrl}")]
     public async Task<ActionResult<UpdateRecipeResponse>> UpdateRecipe(RecipeModel request, string recipeUrl)
     {
@@ -214,5 +181,39 @@ public class RecipeController : Controller
         await _dbContext.SaveChangesAsync();
 
         return new UpdateRecipeResponse(recipe.NameUrl, recipe.Id);
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpDelete("{recipeUrl}")]
+    public async Task<ActionResult> DeleteRecipe(string recipeUrl)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .ThenInclude(recipeEntity => recipeEntity.Steps)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+
+        if (user is null) return BadRequest("User not found");
+
+        var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == recipeUrl);
+        if (recipe is null) return BadRequest("Recipe not found");
+
+        _dbContext.Recipes.Remove(recipe);
+        if (System.IO.File.Exists($"/files/images/{recipe.MainImageName}"))
+            System.IO.File.Delete($"/files/images/{recipe.MainImageName}");
+        var mainImage = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == recipe.MainImageName);
+        if (mainImage != null) _dbContext.Remove(mainImage);
+
+        foreach (var step in recipe.Steps)
+        {
+            if (System.IO.File.Exists($"/files/images/{step.ImageName}"))
+                System.IO.File.Delete($"/files/images/{step.ImageName}");
+            var image = await _dbContext.Images.FirstOrDefaultAsync(x => x.Name == step.ImageName);
+            if (image != null) _dbContext.Remove(image);
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Recipe deleted");
     }
 }

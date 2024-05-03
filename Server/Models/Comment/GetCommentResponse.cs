@@ -1,4 +1,4 @@
-namespace Server.Models;
+namespace Server.Models.Comment;
 
 public record GetCommentResponse(
     string CommentGuid,
