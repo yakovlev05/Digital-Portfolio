@@ -18,7 +18,11 @@
     align-items: center;
 }
 
-.login-form {
+.photoElement{
+    border-radius: 113px;
+}
+
+.loginForm {
     background: #FFFFFF;
     border-radius: 113px;
     width: 80vw;
@@ -32,7 +36,7 @@
     height: 867px;
 }
 
-.form-container {
+.formContainer {
     margin: auto;
 }
 
@@ -44,7 +48,7 @@
     list-style: none;
 }
 
-.form .header {
+.header {
     font-weight: 700;
     font-size: 40px;
     line-height: 49px;
@@ -52,7 +56,7 @@
     padding-bottom: 38px;
 }
 
-.form input {
+.input {
     width: 398px;
     height: 48px;
     border: 1px solid #696969;
@@ -61,7 +65,7 @@
     border-radius: 10px;
 }
 
-.form .button button {
+.buttonElement {
     border: none;
     width: 398px;
     height: 95px;
@@ -73,34 +77,38 @@
     color: #FFFFFF;
 }
 
-.form a {
+.url {
     color: #32B857;
     text-decoration: none;
 }
 
-.form .email {
+.email {
     padding-bottom: 29px;
 }
 
-.form .password {
+.password {
     padding-bottom: 38px;
 }
 
-.form .button {
+.button {
     padding-bottom: 32px;
 }
 
-.form .account-url {
+.account-url {
     padding-bottom: 38px;
 }
 
-.form .label {
+.label {
     margin-right: auto;
     font-weight: 500;
     font-size: 20px;
     color: dimgrey;
 }
 
-.form .button button:hover {
+.passwordQuestion{
+    padding-top: 20px;
+}
+
+.button button:hover {
     background: #217336;
 }

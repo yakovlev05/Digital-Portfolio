@@ -1,4 +1,4 @@
-import './index.css'
+import styles from './styles.module.css'
 import {Helmet} from "react-helmet";
 
 const LoginPage = () => {
@@ -7,25 +7,29 @@ const LoginPage = () => {
             <Helmet>
                 <title>Войти</title>
             </Helmet>
-            <div className="body">
-                <section className="login-form">
-                    <div className="photo">
-                        <img src="/img/pizza.png" alt="Сочный кусок пиццы" width="630" height="867"/>
+            <div className={styles.body}>
+                <section className={styles.loginForm}>
+                    <div className={styles.photo}>
+                        <img className={styles.photoElement} src="/img/pizza.jpg" alt="Сочный кусок пиццы" width="630"
+                             height="867"/>
                     </div>
-                    <div className="form-container">
-                        <ul className="form">
-                            <li className="header"><h1>Войти</h1></li>
-                            <li className="label">Логин или почта</li>
-                            <li className="email"><input type="email" placeholder="" required/></li>
-                            <li className="label">Пароль</li>
-                            <li className="password"><input type="password" placeholder="" required/></li>
-                            <li className="button">
-                                <button type="submit">Войти</button>
+                    <div className={styles.formContainer}>
+                        <ul className={styles.form}>
+                            <li className={styles.header}><h1>Войти</h1></li>
+                            <li className={styles.label}>Логин или почта</li>
+                            <li className={styles.email}><input className={styles.input} type="email" placeholder=""
+                                                                required/></li>
+                            <li className={styles.label}>Пароль</li>
+                            <li className={styles.password}><input className={styles.input} type="password"
+                                                                   placeholder="" required/></li>
+                            <li className={styles.button}>
+                                <button className={styles.buttonElement} type="submit">Войти</button>
                             </li>
-                            <li className="account-question">Нет аккаунта?</li>
-                            <li className="account-url"><a href="">Зарегистрироваться</a></li>
-                            <li className="password-question">Забыли пароль?</li>
-                            <li className="password-url"><a href="">Сбросить</a></li>
+                            <li>Нет аккаунта?</li>
+                            <li className={styles.accountUrl}><a className={styles.url} href="">Зарегистрироваться</a>
+                            </li>
+                            <li className={styles.passwordQuestion}>Забыли пароль?</li>
+                            <li><a className={styles.url}>Сбросить</a></li>
                         </ul>
                     </div>
                 </section>
