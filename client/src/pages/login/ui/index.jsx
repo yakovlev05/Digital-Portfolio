@@ -26,7 +26,7 @@ const LoginPage = () => {
                                 <button className={styles.buttonElement} type="submit">Войти</button>
                             </li>
                             <li>Нет аккаунта?</li>
-                            <li className={styles.accountUrl}><a className={styles.url} href="">Зарегистрироваться</a>
+                            <li className={styles.accountUrl}><a className={styles.url} href="/registration">Зарегистрироваться</a>
                             </li>
                             <li className={styles.passwordQuestion}>Забыли пароль?</li>
                             <li><a className={styles.url}>Сбросить</a></li>
