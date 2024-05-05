@@ -3,6 +3,7 @@ import App from "../App";
 import IndexPage from './index/ui'
 import LoginPage from "./login";
 import RegistrationPage from "./registration";
+import ResetPasswordPage from "./reset-password";
 
 const AppRouter = () => {
     return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
                     <Route path='/index' element={<IndexPage/>}/>
                     <Route path='login' element={<LoginPage/>}/>
                     <Route path='registration' element={<RegistrationPage/>}/>
+                    <Route path='reset-password' element={<ResetPasswordPage/>}/>
                 </Routes>
             </Router>
         </>
