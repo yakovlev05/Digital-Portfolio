@@ -2,35 +2,21 @@
 services:
   portfolioServer:
     build:
-      context: "/home/alexey/RiderProjects/Nah-we-d-make-web-repository/Server"
+      context: "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server"
       dockerfile: "Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Server.dll"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/Server.staticwebassets.runtime.CT.json"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "server:dev"
-    ports:
-    - "127.0.0.1:57000:57100"
-    - "127.0.0.1:57200:57300"
+    ports: []
     volumes:
-    - "/home/alexey/.nuget/packages:/home/app/.nuget/packages"
-    - "/home/alexey/RiderProjects/Nah-we-d-make-web-repository/Server:/app:rw"
-    - "/home/alexey/RiderProjects/Nah-we-d-make-web-repository/Server:/src:rw"
-    - "/home/alexey/.local/share/JetBrains/RiderRemoteDebugger/2024.1.1/Linux64:/opt/rider-debugger"
-    - "/home/alexey/.local/share/JetBrains/Toolbox/apps/rider/bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "/home/alexey/.cache/JetBrains/Rider2024.1/log/DebuggerWorker/JetBrains.Debugger.Worker.2024_4_27_18_03_10:/var/opt/rider-debugger:rw"
+    - "C:\\Users\\alexe\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server:/app:rw"
+    - "C:\\Users\\alexe\\RiderProjects\\Nah-we-d-make-web-repository\\Server:/src:rw"
     working_dir: "/app"

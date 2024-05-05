@@ -29,7 +29,7 @@ const LoginPage = () => {
                             <li className={styles.accountUrl}><a className={styles.url} href="/registration">Зарегистрироваться</a>
                             </li>
                             <li className={styles.passwordQuestion}>Забыли пароль?</li>
-                            <li><a className={styles.url}>Сбросить</a></li>
+                            <li><a className={styles.url} href="/reset-password">Сбросить</a></li>
                         </ul>
                     </div>
                 </section>
