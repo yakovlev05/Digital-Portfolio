@@ -1,7 +1,13 @@
 import styles from './styles.module.css'
 import {Helmet} from "react-helmet";
+import React, {useState} from "react";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginPage = () => {
+    const handleNotify = () => toast.error("Пока не ворк")
+
+
     return (
         <>
             <Helmet>
@@ -23,7 +29,7 @@ const LoginPage = () => {
                             <li className={styles.password}><input className={styles.input} type="password"
                                                                    placeholder="" required/></li>
                             <li className={styles.button}>
-                                <button className={styles.buttonElement} type="submit">Войти</button>
+                                <button className={styles.buttonElement} type="submit" onClick={handleNotify}>Войти</button>
                             </li>
                             <li>Нет аккаунта?</li>
                             <li className={styles.accountUrl}><a className={styles.url} href="/registration">Зарегистрироваться</a>
