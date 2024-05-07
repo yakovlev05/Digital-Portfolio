@@ -3,10 +3,19 @@ import {Helmet} from "react-helmet";
 import React, {useState} from "react";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoginRequestApi from '../../../apiServices/Auth/login'
 
 const LoginPage = () => {
-    const handleNotify = () => toast.error("Пока не ворк")
+    const handleNotify = () => toast.error("Пока не ворк!!!!")
 
+    const handleLogin = async()=>{
+        const response = await LoginRequestApi('login', 'password');
+        if (response.status === 200) {
+            toast.success('Успешно');
+        } else {
+            toast.error('Ошибка');
+        }
+    }
 
     return (
         <>
