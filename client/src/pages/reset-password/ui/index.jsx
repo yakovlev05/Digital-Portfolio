@@ -50,6 +50,12 @@ const ResetPasswordPage = () => {
                         isLoading: false,
                         autoClose: 5000
                     });
+                    else toast.update(id, {
+                            render: `Error ${error.message}`,
+                            type: 'error',
+                            isLoading: false,
+                            autoClose: 5000
+                        });
                 }
             })
             .catch(() => {

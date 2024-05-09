@@ -52,6 +52,7 @@ const LoginPage = () => {
                     }
                     else if (error.message==="Email confirmation is required")
                         updateToast('error', 'Подтвердите почту', id)
+                    else updateToast('error', `Error: ${error.message}`, id);
                 }
             })
             .catch(() => {

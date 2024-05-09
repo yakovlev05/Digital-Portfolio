@@ -78,12 +78,14 @@ const RegistrationPage = () => {
                 } else {
                     const error = await response.json();
                     if (error.message === 'Passwords do not match') updateToast('error', 'Пароли не совпадают', id);
-                    if (error.message === 'Password is too short, need at least 8 characters') updateToast('error', 'Пароль должен быть не менее 8 символов', id);
-                    if (error.message === 'Login is too short, need at least 5 characters') updateToast('error', 'Логин должен быть не менее 5 символов', id);
-                    if (error.message === 'Invalid email') updateToast('error', 'Некорректный email', id);
-                    if (error.message === 'Name or second name is empty') updateToast('error', 'Имя или фамилия пустые', id);
-                    if (error.message === 'Login already exists') updateToast('error', 'Логин занят', id);
-                    if (error.message === 'Email already exists') updateToast('error', 'Email занят', id);
+                    else if (error.message === 'Password is too short, need at least 8 characters') updateToast('error', 'Пароль должен быть не менее 8 символов', id);
+                    else if (error.message === 'Login is too short, need at least 5 characters') updateToast('error', 'Логин должен быть не менее 5 символов', id);
+                    else if (error.message === 'Invalid email') updateToast('error', 'Некорректный email', id);
+                    else if (error.message === 'Name or second name is empty') updateToast('error', 'Имя или фамилия пустые', id);
+                    else if (error.message === 'Login already exists') updateToast('error', 'Логин занят', id);
+                    else if (error.message === 'Email already exists') updateToast('error', 'Email занят', id);
+                    else updateToast('error', `Error: ${error.message}`, id);
+
                 }
             })
             .catch(() => {

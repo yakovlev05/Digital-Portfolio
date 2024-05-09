@@ -30,7 +30,7 @@ const SetPasswordPage = () => {
     const handleSubmit = async () => {
         console.log('1')
         if (!checkForm()) return;
-console.log(2)
+        console.log(2)
         if (passwordForm.password.length < 8) {
             toast.error('Пароль слишком короткий, нужно минимум 8 символов')
             return;
@@ -64,10 +64,11 @@ console.log(2)
                         updateToast('error', 'Пароли не совпадают', id)
                     else if (error.message === "Password is too short, need at least 8 characters")
                         updateToast('error', 'Пароль слишком короткий, нужно минимум 8 символов', id)
+                    else updateToast('error', `Error: ${error.message}`, id)
                 }
             })
             .catch(() => {
-                updateToast('error', 'Непредвиденная ошибка сети111', id)
+                updateToast('error', 'Непредвиденная ошибка сети', id)
             })
 
     }
