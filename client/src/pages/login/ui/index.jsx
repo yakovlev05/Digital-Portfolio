@@ -24,18 +24,37 @@ const LoginPage = () => {
         return user.login.length !== 0 && user.password.length !== 0;
     }
 
+    const updateToast = (type, message, id, autoClose = 5000) => {
+        toast.update(id, {
+            render: message,
+            type: type,
+            isLoading: false,
+            autoClose: autoClose
+        });
+    }
 
     const handleLogin = async () => {
         if (!checkInputFiled()) return;
 
-        const response = await LoginRequestApi(user.login, user.password)
-        if (response.ok) {
-            window.location.href = "/profile"
-        } else {
-            const error = await response.json()
-            if (error.message === "User not found" || error.message === "Invalid password") toast.error("Неверный логин или пароль")
-            else toast.error("Непредвиденная ошибка")
-        }
+        const response = LoginRequestApi(user.login, user.password)
+
+        const id = toast.loading('Вход...');
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Вход выполнен', id)
+                    window.location.href = "/profile"
+                } else {
+                    const error = await response.json()
+                    if (error.message === "User not found" || error.message === "Invalid password") {
+                        updateToast('error', 'Неверный логин или пароль', id)
+                    }
+                }
+            })
+            .catch(() => {
+                updateToast('error', 'Непредвиденная ошибка', id)
+            })
     }
 
     return (

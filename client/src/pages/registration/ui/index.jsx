@@ -37,6 +37,15 @@ const RegistrationPage = () => {
             && formData.secondName.length !== 0 && formData.password.length !== 0 && formData.confirmPassword.length !== 0;
     }
 
+    const updateToast = (type, message, id, autoClose = 5000) => {
+        toast.update(id, {
+            render: message,
+            type: type,
+            isLoading: false,
+            autoClose: autoClose
+        });
+    }
+
     const handleSubmit = async () => {
         if (!checkFields()) return;
         const emailRegex = /^\S+@\S+\.\S+$/;
@@ -60,34 +69,26 @@ const RegistrationPage = () => {
         const response = RegistrationRequestApi(formData.login, formData.email, formData.name,
             formData.secondName, formData.password, formData.confirmPassword);
 
-        // Крутится по времени столько, сколько выполянется запрос
-        await toast.promise(
-            response,
-            {
-                pending: 'Регистрация...',
-            }
-        )
+        const id = toast.loading('Регистрация...');
 
-        // Обработка промиса в жс. Успешно - then, ошибка - catch
         response
             .then(async (response) => {
                 if (response.ok) {
-                    toast.success("Перейдите по ссылке из письма");
+                    updateToast('success', 'Перейдите по ссылке из письма', id);
                 } else {
                     const error = await response.json();
-                    if (error.message === 'Passwords do not match') toast.error('Пароли не совпадают');
-                    if (error.message === 'Password is too short, need at least 8 characters') toast.error('Пароль должен быть не менее 8 символов');
-                    if (error.message === 'Login is too short, need at least 5 characters') toast.error('Логин должен быть не менее 5 символов');
-                    if (error.message === 'Invalid email') toast.error('Некорректный email');
-                    if (error.message === 'Name or second name is empty') toast.error('Имя или фамилия пустые');
-                    if (error.message === 'Login already exists') toast.error('Логин занят');
-                    if (error.message === 'Email already exists') toast.error('Email занят');
-
+                    if (error.message === 'Passwords do not match') updateToast('error', 'Пароли не совпадают', id);
+                    if (error.message === 'Password is too short, need at least 8 characters') updateToast('error', 'Пароль должен быть не менее 8 символов', id);
+                    if (error.message === 'Login is too short, need at least 5 characters') updateToast('error', 'Логин должен быть не менее 5 символов', id);
+                    if (error.message === 'Invalid email') updateToast('error', 'Некорректный email', id);
+                    if (error.message === 'Name or second name is empty') updateToast('error', 'Имя или фамилия пустые', id);
+                    if (error.message === 'Login already exists') updateToast('error', 'Логин занят', id);
+                    if (error.message === 'Email already exists') updateToast('error', 'Email занят', id);
                 }
             })
             .catch(() => {
-                toast.error("Непредвиденная ошибка сети");
-            });
+                updateToast('error', 'Непредвиденная ошибка сети', id)
+            })
     }
 
     return (
