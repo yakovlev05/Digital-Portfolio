@@ -58,7 +58,7 @@ public class EmailService : IEmailService
     {
         await SendEmailAsync(email,
             "Ссылка на сброс пароля",
-            $"Для сброса пароля перейдите по ссылке: <a href='https://pp.yakovlev05.ru/reset?token={token}&email={email}'>ссылка</a>");
+            $"Для сброса пароля перейдите по ссылке: <a href='https://pp.yakovlev05.ru/set-password?token={token}&email={email}'>ссылка</a>");
     }
 
     public bool ValidateEmail(string email)
