@@ -37,7 +37,9 @@ public class AuthController : Controller
             .FirstOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
 
         if (user is null) return BadRequest(new MessageModel("User not found"));
-
+        
+        if (user.Status == UserStatus.Suspended) return BadRequest("Email confirmation is required");
+        
         var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
         if (!verifyPassword) return BadRequest(new MessageModel("Invalid password"));
 
@@ -47,7 +49,7 @@ public class AuthController : Controller
     }
 
     [HttpPost("registration")]
-    public async Task<ActionResult<RegistrationResponse>> Registration([FromBody] RegistrationRequest request)
+    public async Task<ActionResult<MessageModel>> Registration([FromBody] RegistrationRequest request)
     {
         if (request.Password != request.ConfirmPassword) return BadRequest(new MessageModel("Passwords do not match"));
 
@@ -86,7 +88,7 @@ public class AuthController : Controller
         await _emailService.SendConfirmationUrl(user.Email,
             _tokenService.CreateEmailConfirmationToken(user.Login, id.ToString()));
 
-        return new RegistrationResponse(_tokenService.CreateAuthToken(user.Login, id.ToString()));
+        return new MessageModel("Confirmation is required, follow the link from the email");
     }
 
     [HttpPost("password/reset")]
