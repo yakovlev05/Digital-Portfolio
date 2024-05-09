@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="digitalPortfolioDB@147.45.102.216" uuid="315b06f4-a6f6-49c1-984d-6cc4342de68f">
+    <data-source source="LOCAL" name="digitalPortfolioDB@147.45.102.216" uuid="7311fe6b-3d18-40dd-916b-5c988dcd2d86">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://147.45.102.216:5432/digitalPortfolioDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="digitalPortfolioDB@localhost" uuid="d262dd21-5a66-4254-8ddf-0901d38a3ab4">
+    <data-source source="LOCAL" name="digitalPortfolioDB@localhost" uuid="2cbf8a8f-2b54-4f5d-ae6a-a9cf7cf69d52">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
