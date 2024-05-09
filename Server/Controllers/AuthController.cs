@@ -36,10 +36,10 @@ public class AuthController : Controller
             .Users
             .FirstOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
 
-        if (user is null) return BadRequest("User not found");
+        if (user is null) return BadRequest(new MessageModel("User not found"));
 
         var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
-        if (!verifyPassword) return BadRequest("Invalid password");
+        if (!verifyPassword) return BadRequest(new MessageModel("Invalid password"));
 
         var token = _tokenService.CreateAuthToken(user.Login, user.Id.ToString());
 
@@ -49,25 +49,25 @@ public class AuthController : Controller
     [HttpPost("registration")]
     public async Task<ActionResult<RegistrationResponse>> Registration([FromBody] RegistrationRequest request)
     {
-        if (request.Password != request.ConfirmPassword) return BadRequest("Passwords do not match");
+        if (request.Password != request.ConfirmPassword) return BadRequest(new MessageModel("Passwords do not match"));
 
         if (request.Password.Length < 8)
-            return BadRequest("Password is too short, need at least 8 characters");
+            return BadRequest(new MessageModel("Password is too short, need at least 8 characters"));
 
         if (request.Login.Length < 5)
-            return BadRequest($"Login is too short, need at least 5 characters");
+            return BadRequest(new MessageModel($"Login is too short, need at least 5 characters"));
 
         var regex = new Regex("^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$");
-        if (!regex.IsMatch(request.Email)) return BadRequest("Invalid email");
+        if (!regex.IsMatch(request.Email)) return BadRequest(new MessageModel("Invalid email"));
 
         if (request.Name.Length == 0 || request.SecondName.Length == 0)
-            return BadRequest("Name or second name is empty");
+            return BadRequest(new MessageModel("Name or second name is empty"));
 
         if (await _dbContext.Users.AnyAsync(x => x.Login == request.Login))
-            return BadRequest("Login already exists");
+            return BadRequest(new MessageModel("Login already exists"));
 
         if (await _dbContext.Users.AnyAsync(x => x.Email == request.Email))
-            return BadRequest("Email already exists");
+            return BadRequest(new MessageModel("Email already exists"));
 
         var user = new UserEntity()
         {
@@ -93,34 +93,34 @@ public class AuthController : Controller
     public async Task<ActionResult> PasswordReset([FromBody] PasswordResetRequest request)
     {
         var regex = new Regex("^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$");
-        if (!regex.IsMatch(request.Email)) return BadRequest("Invalid email");
+        if (!regex.IsMatch(request.Email)) return BadRequest(new MessageModel("Invalid email"));
 
         if (!await _dbContext.Users.AnyAsync(x => x.Email == request.Email))
-            return BadRequest("Email not found");
+            return BadRequest(new MessageModel("Email not found"));
 
         var user = await _dbContext.Users.FirstAsync(x => x.Email == request.Email);
         await _emailService.SendPasswordResetUrl(request.Email,
             _tokenService.CreatePasswordResetToken(user.Login, user.Id.ToString()));
-        return Ok("Email sent");
+        return Ok(new MessageModel("Email sent"));
     }
 
     [Authorize(Policy = "password_reset")]
     [HttpPut("password/change")]
     public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
     {
-        if (request.Password != request.ConfirmPassword) return BadRequest("Passwords do not match");
+        if (request.Password != request.ConfirmPassword) return BadRequest(new MessageModel("Passwords do not match"));
 
         if (request.Password.Length < 8)
-            return BadRequest("Password is too short, need at least 8 characters");
+            return BadRequest(new MessageModel("Password is too short, need at least 8 characters"));
 
         var userIdRequest = User.FindFirstValue("id");
-        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+        if (userIdRequest is null) return BadRequest(new MessageModel("Empty id in the JWT token"));
 
         var user = await _dbContext.Users.FirstAsync(x => x.Id == int.Parse(userIdRequest));
         user.HashedPassword = _passwordService.HashPassword(request.Password, user.Login);
         await _dbContext.SaveChangesAsync();
 
-        return Ok("Password changed");
+        return Ok(new MessageModel("Password changed"));
     }
 
     [Authorize(Policy = "confirm_email")]
@@ -128,11 +128,11 @@ public class AuthController : Controller
     public async Task<ActionResult> ConfirmEmail()
     {
         var userIdRequest = User.FindFirstValue("id");
-        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+        if (userIdRequest is null) return BadRequest(new MessageModel("Empty id in the JWT token"));
 
         var user = await _dbContext.Users.FirstAsync(x => x.Id == int.Parse(userIdRequest));
         user.Status = UserStatus.Active;
         await _dbContext.SaveChangesAsync();
-        return Ok("Email confirmed");
+        return Ok(new MessageModel("Email confirmed"));
     }
 }
