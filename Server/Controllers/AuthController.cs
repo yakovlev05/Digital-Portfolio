@@ -37,9 +37,9 @@ public class AuthController : Controller
             .FirstOrDefaultAsync(x => x.Login == request.Login || x.Email == request.Login);
 
         if (user is null) return BadRequest(new MessageModel("User not found"));
-        
-        if (user.Status == UserStatus.Suspended) return BadRequest("Email confirmation is required");
-        
+
+        if (user.Status == UserStatus.Suspended) return BadRequest(new MessageModel("Email confirmation is required"));
+
         var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
         if (!verifyPassword) return BadRequest(new MessageModel("Invalid password"));
 

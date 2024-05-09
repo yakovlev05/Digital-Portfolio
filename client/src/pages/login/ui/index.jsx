@@ -50,6 +50,8 @@ const LoginPage = () => {
                     if (error.message === "User not found" || error.message === "Invalid password") {
                         updateToast('error', 'Неверный логин или пароль', id)
                     }
+                    else if (error.message==="Email confirmation is required")
+                        updateToast('error', 'Подтвердите почту', id)
                 }
             })
             .catch(() => {
