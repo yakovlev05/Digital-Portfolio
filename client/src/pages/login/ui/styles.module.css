@@ -9,7 +9,8 @@
     line-height: 39px;
     text-align: center;
 
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     margin: 0;
     padding: 0;
 

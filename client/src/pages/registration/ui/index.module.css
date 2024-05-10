@@ -1,6 +1,7 @@
 .body {
     background: linear-gradient(180deg, #3853B4 0%, #00145A 100%);
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     margin: 0;
     padding: 0;
 
