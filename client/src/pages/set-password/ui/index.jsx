@@ -28,9 +28,7 @@ const SetPasswordPage = () => {
     }
 
     const handleSubmit = async () => {
-        console.log('1')
         if (!checkForm()) return;
-        console.log(2)
         if (passwordForm.password.length < 8) {
             toast.error('Пароль слишком короткий, нужно минимум 8 символов')
             return;
@@ -43,7 +41,6 @@ const SetPasswordPage = () => {
 
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-        console.log(token);
 
         const response = ChangePasswordRequestApi(passwordForm.password, passwordForm.confirmPassword, token);
 
