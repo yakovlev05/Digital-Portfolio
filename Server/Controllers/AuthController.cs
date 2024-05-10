@@ -137,4 +137,19 @@ public class AuthController : Controller
         await _dbContext.SaveChangesAsync();
         return Ok(new MessageModel("Email confirmed"));
     }
+
+    [AllowAnonymous]
+    [HttpPost("email/reset-url")]
+    public async Task<ActionResult<MessageModel>> ResetConfirmationUrl(ResetConfirmationRequest request)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
+        if (user is null) return BadRequest(new MessageModel("Email not found"));
+
+        if (user.Status != UserStatus.Suspended) return BadRequest(new MessageModel("Email already confirmed"));
+
+        await _emailService.SendConfirmationUrl(request.Email,
+            _tokenService.CreateEmailConfirmationToken(user.Login, user.Id.ToString()));
+
+        return new MessageModel("Check email for confirmation link");
+    }
 }

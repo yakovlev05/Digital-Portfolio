@@ -46,7 +46,7 @@ public class EmailService : IEmailService
     {
         await SendEmailAsync(email, "Подтвердите почту",
             $"Чтобы активировать свой аккаунт на сайте pp.yakovlev05.ru, " +
-            $"<a href='https://pp.yakovlev05.ru/confirm?token={token}&email={email}'>перейдите по ссылке</a>");
+            $"<a href='https://pp.yakovlev05.ru/confirm-email?token={token}&email={email}'>перейдите по ссылке</a>");
     }
 
     public async Task SendNewPassword(string email, string password)
