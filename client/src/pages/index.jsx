@@ -5,7 +5,7 @@ import RegistrationPage from "./registration";
 import ResetPasswordPage from "./reset-password";
 import SetPasswordPage from "./set-password";
 import ConfirmEmailPage from "./confirm-email";
-import MePage from "./me";
+// import MePage from "./me";
 
 const AppRouter = () => {
     return (
@@ -18,7 +18,7 @@ const AppRouter = () => {
                     <Route path='/reset-password' element={<ResetPasswordPage/>}/>
                     <Route path='/set-password' element={<SetPasswordPage/>}/>
                     <Route path='/confirm-email' element={<ConfirmEmailPage/>}/>
-                    <Route path='/me' element={<MePage/>}/>
+                    {/*<Route path='/me' element={<MePage/>}/>*/}
                 </Routes>
             </Router>
         </>
