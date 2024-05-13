@@ -1,7 +1,11 @@
 import styles from './styles.module.scss'
 import logo from './img/logo.png'
+import {useContext} from "react";
+import UserInfoContext from "../../../contexts/UserInfoContext";
 
 const MainHeaderComponent = ({imageName}) => {
+    const userInfo = useContext(UserInfoContext);
+    
     return (
         <header className={styles.header}>
             <a className={styles.logo} href='/'>
