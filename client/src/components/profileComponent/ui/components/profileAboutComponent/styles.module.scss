@@ -1,0 +1,30 @@
+.about {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  color: #FFFFFF;
+
+  font-size: 16px;
+  line-height: 24px;
+
+  width: 500px;
+  text-align: center;
+}
+
+.name {
+  padding: 0;
+  margin: 0 0 10px;
+}
+
+.description {
+  padding: 5px;
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  margin: 0 0 15px;
+  
+  min-height: 50px;
+  height: 100%;
+
+  text-align: justify;
+  text-align-last: center;
+}
