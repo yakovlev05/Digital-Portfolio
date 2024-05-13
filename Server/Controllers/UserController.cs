@@ -68,19 +68,17 @@ public class UserController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpPut("{nickName}")]
-    public async Task<ActionResult> UpdateUserInfo([FromBody] UpdateUserInfoRequest request, string nickName)
+    [HttpPut("me")]
+    public async Task<ActionResult> UpdateUserInfo([FromBody] UpdateUserInfoRequest request)
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users.FindAsync(userId);
         if (user is null) return BadRequest("User not found");
 
-        if (user.Login != nickName) return BadRequest("Access denied");
-
         if (request.Login.Length < 5) return BadRequest($"Login is too short, need at least 5 characters");
         if (!_emailService.ValidateEmail(request.Email)) return BadRequest("Invalid email");
-        if (request.NewPassword.Length < 8) return BadRequest("Password is too short, need at least 8 characters");
-        if (await _dbContext.Users.AnyAsync(x => x.Login == request.Login)) return BadRequest("Login already exists");
+        if (user.Login != request.Login &&
+            await _dbContext.Users.AnyAsync(x => x.Login == request.Login)) return BadRequest("Login already exists");
         if (await _dbContext.Users.AnyAsync(x => x.Email == request.Email && x.Id != userId))
             return BadRequest("Email already exists");
 
@@ -90,7 +88,7 @@ public class UserController : Controller
         user.Patronymic = request.Patronymic;
         user.Login = request.Login;
         user.Email = request.Email;
-        user.HashedPassword = _passwordService.HashPassword(request.NewPassword, user.Login);
+        user.Description = request.Description;
 
         //TODO: Сделать смену почты через подтверждение
         await _dbContext.SaveChangesAsync();
@@ -98,8 +96,8 @@ public class UserController : Controller
     }
 
     [Authorize(Policy = "auth")]
-    [HttpDelete("{nickName}")]
-    public async Task<ActionResult> DeleteUser(string nickName)
+    [HttpDelete("me")]
+    public async Task<ActionResult> DeleteUser()
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users
@@ -107,8 +105,6 @@ public class UserController : Controller
             .FirstOrDefaultAsync(x => x.Id == userId);
 
         if (user is null) return BadRequest("User not found");
-
-        if (user.Login != nickName) return BadRequest("Access denied");
 
         var files = user.Files;
         foreach (var file in files)

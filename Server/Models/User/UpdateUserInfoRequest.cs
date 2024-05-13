@@ -4,8 +4,8 @@ public record UpdateUserInfoRequest(
     string ProfilePhoto,
     string Name,
     string SecondName,
-    string Patronymic,
+    string? Patronymic,
     string Login,
     string Email,
-    string NewPassword
+    string? Description
 );
