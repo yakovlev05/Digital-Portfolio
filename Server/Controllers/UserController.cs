@@ -39,10 +39,7 @@ public class UserController : Controller
             user.Name,
             user.SecondName,
             user.DateRegistration.ToString("dd.MM.yyyy"),
-            user.BirthDate == DateTime.MinValue ? null : user.BirthDate.ToString("dd.MM.yyyy"),
             user.Description,
-            user.TelegramLink,
-            user.VkLink,
             user.ProfilePhoto
         );
         return response;
@@ -62,10 +59,7 @@ public class UserController : Controller
             user.Name,
             user.SecondName,
             user.DateRegistration.ToString("dd.MM.yyyy"),
-            user.BirthDate == DateTime.MinValue ? null : user.BirthDate.ToString("dd.MM.yyyy"),
             user.Description,
-            user.TelegramLink,
-            user.VkLink,
             user.ProfilePhoto
         );
         return response;

@@ -9,10 +9,7 @@ public class UserEntity
     public string Name { get; set; } = null!;
     public string SecondName { get; set; } = null!;
     public DateTime DateRegistration { get; init; } = DateTime.Now.ToUniversalTime();
-    public DateTime BirthDate { get; set; } = DateTime.MinValue;
     public string? Description { get; set; }
-    public string? TelegramLink { get; set; }
-    public string? VkLink { get; set; }
     public string? ProfilePhoto { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Suspended;
     public UserRole Role { get; set; } = UserRole.User;

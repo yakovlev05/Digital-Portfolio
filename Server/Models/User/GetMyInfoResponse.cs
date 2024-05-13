@@ -6,9 +6,6 @@ public record GetMyInfoResponse(
     string Name,
     string SecondName,
     string DateRegistration,
-    string? BirthDate,
     string? Description,
-    string? TelegramLink,
-    string? VkLink,
     string? ProfilePhoto
 );
