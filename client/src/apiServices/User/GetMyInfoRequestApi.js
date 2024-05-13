@@ -1,4 +1,4 @@
-const GetMyInfo = async (token) => {
+const GetMyInfoRequestApi = async (token) => {
     return await fetch('/api/v1/user/me', {
         method: 'GET',
         headers: {
@@ -9,4 +9,4 @@ const GetMyInfo = async (token) => {
     })
 }
 
-export default GetMyInfo;
+export default GetMyInfoRequestApi;

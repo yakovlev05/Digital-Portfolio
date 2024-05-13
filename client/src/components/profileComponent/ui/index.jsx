@@ -5,7 +5,7 @@ import ProfilePortfolioComponent from "./components/profilePortfolioComponent";
 import ProfileBookmarkComponent from "./components/profileBookmarkComponent";
 import ProfileAboutComponent from "./components/profileAboutComponent";
 import AuthContext from "../../../contexts/AuthContext";
-import {Await, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {toast} from "react-toastify";
 
 

@@ -5,8 +5,8 @@ import MainHeaderComponent from "../../../components/mainHeader";
 import FooterComponent from "../../../components/footer";
 import ProfileComponent from "../../../components/profileComponent";
 import {useEffect, useState} from "react";
-import GetMyInfo from "../../../apiServices/User/GetMyInfo";
-import MyUserInfo from "../../../models/MyUserInfo";
+import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
+import UserInfo from "../../../models/UserInfo";
 
 const MePage = () => {
     const [isLogged, setIsLogged] = useState(false); // [1
@@ -16,9 +16,9 @@ const MePage = () => {
         const token = localStorage.getItem('token');
 
         const getInfo = async () => {
-            const response = await GetMyInfo(token);
+            const response = await GetMyInfoRequestApi(token);
             if (!response.ok) window.location.href = '/login';
-            setMyInfo(new MyUserInfo(await response.json()))
+            setMyInfo(new UserInfo(await response.json()))
             setIsLogged(true)
         }
         getInfo();
