@@ -152,4 +152,11 @@ public class AuthController : Controller
 
         return new MessageModel("Check email for confirmation link");
     }
+
+    [Authorize(Policy = "auth")]
+    [HttpGet("token/validate")]
+    public async Task<ActionResult> ValidateToken()
+    {
+        return Ok();
+    }
 }
