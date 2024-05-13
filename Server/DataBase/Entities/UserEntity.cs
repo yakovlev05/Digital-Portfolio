@@ -8,6 +8,7 @@ public class UserEntity
     public string Email { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string SecondName { get; set; } = null!;
+    public string? Patronymic { get; set; }
     public DateTime DateRegistration { get; init; } = DateTime.Now.ToUniversalTime();
     public string? Description { get; set; }
     public string? ProfilePhoto { get; set; }

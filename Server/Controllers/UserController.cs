@@ -38,6 +38,7 @@ public class UserController : Controller
             user.Email,
             user.Name,
             user.SecondName,
+            user.Patronymic,
             user.DateRegistration.ToString("dd.MM.yyyy"),
             user.Description,
             user.ProfilePhoto
@@ -58,6 +59,7 @@ public class UserController : Controller
             user.Email,
             user.Name,
             user.SecondName,
+            user.Patronymic,
             user.DateRegistration.ToString("dd.MM.yyyy"),
             user.Description,
             user.ProfilePhoto
@@ -85,6 +87,7 @@ public class UserController : Controller
         user.ProfilePhoto = request.ProfilePhoto;
         user.Name = request.Name;
         user.SecondName = request.SecondName;
+        user.Patronymic = request.Patronymic;
         user.Login = request.Login;
         user.Email = request.Email;
         user.HashedPassword = _passwordService.HashPassword(request.NewPassword, user.Login);
