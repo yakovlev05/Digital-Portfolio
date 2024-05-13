@@ -71,3 +71,14 @@
 .url:hover {
   color: #0D3B66;
 }
+
+.avatar{
+  width: 70px;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid #000000;
+}
+
+.avatar:hover {
+  border: 3px solid #0D3B66;
+}

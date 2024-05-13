@@ -43,6 +43,8 @@ const LoginPage = () => {
         response
             .then(async (response) => {
                 if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token)
                     updateToast('success', 'Вход выполнен', id)
                     window.location.href = "/profile"
                 } else {
