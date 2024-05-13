@@ -1,0 +1,201 @@
+.body {
+  background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
+  flex: 1;
+
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: #FFFFFF;
+
+  font-size: 16px;
+  line-height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formsContainer {
+  margin: 20px 0 20px 0;
+  background: #0D3B66;
+  border-radius: 5%;
+  padding: 30px;
+  height: 600px;
+  min-width: 545px;
+  max-width: 700px;
+  width: 100%;
+
+  grid-template-columns: repeat(auto-fill, minmax(min-content, max-content));
+  display: grid;
+  grid-template-areas:
+  "photo back"
+  "name secondName"
+  "thirdName email"
+  "login login"
+  "about about"
+  "changePassword exit"
+  "save delete";
+}
+
+.label {
+  margin: 0;
+}
+
+.avatar {
+  width: 100px;
+  height: auto;
+  border-radius: 50%;
+}
+
+.photoCont {
+  grid-area: photo;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.updatePhotoButton {
+  border: none;
+  background: #32B857;
+  border-radius: 75px;
+  width: 170px;
+  height: 40px;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-weight: inherit;
+}
+
+.updatePhotoButton:hover {
+  background: #2A8C4F;
+}
+
+.backCont {
+  grid-area: back;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.url {
+  padding: 5px;
+  text-decoration: none;
+  font-size: inherit;
+  line-height: inherit;
+  color: #32B857;
+  font-weight: inherit;
+  margin: auto;
+  cursor: pointer;
+}
+
+.url:hover {
+  color: #25873f;
+}
+
+.inputField {
+  padding-left: 10px;
+  padding-right: 10px;
+  background: inherit;
+  width: 70%;
+  max-width: 260px;
+  height: 30px;
+  border: 1px solid #FFFFFF;
+  border-radius: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.inputField::placeholder {
+  color: #9e9c9c;
+}
+
+.nameCont {
+  grid-area: name;
+}
+
+.secondNameCont {
+  grid-area: secondName;
+}
+
+.thirdNameCont {
+  grid-area: thirdName;
+}
+
+.emailCont {
+  grid-area: email;
+}
+
+.loginCont {
+  grid-area: login;
+}
+
+.aboutCont {
+  grid-area: about;
+}
+
+.aboutTextArea {
+  padding: 10px;
+  background: inherit;
+  width: 80% !important;
+  height: 85px !important;
+  min-height: 100px;
+  border: 1px solid #FFFFFF;
+  border-radius: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.aboutTextArea::placeholder {
+  color: #9e9c9c;
+}
+
+.changePassword {
+  grid-area: changePassword;
+}
+
+.exit {
+  grid-area: exit;
+}
+
+.save {
+  grid-area: save;
+  border: none;
+  background: #32B857;
+  border-radius: 75px;
+  width: 270px;
+  height: 40px;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-weight: inherit;
+  margin: auto;
+}
+
+.save:hover {
+  background: #25873f;
+}
+
+.delete {
+  grid-area: delete;
+  border: none;
+  background: #C52E2E;
+  border-radius: 75px;
+  width: 270px;
+  height: 40px;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-weight: inherit;
+  margin: auto;
+}
+
+.delete:hover {
+  background: #912424;
+}
