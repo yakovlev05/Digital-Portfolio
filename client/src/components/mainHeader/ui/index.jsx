@@ -32,7 +32,7 @@ const MainHeaderComponent = () => {
                 <a className={styles.url} href={'/registration'}>Регистрация</a>
             </div>
             <div style={{display: auth.logged ? 'block' : 'none'}}>
-                <a href={'/profile'}>
+                <a href={'/me'}>
                     <img className={styles.avatar}
                          src={userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
                          alt='аватар'></img>

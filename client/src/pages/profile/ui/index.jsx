@@ -9,7 +9,6 @@ import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
 import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestApi";
 import {useParams} from "react-router-dom";
 import UserInfo from "../../../models/UserInfo";
-import LoaderComponent from "../../../components/LoaderComponent";
 
 const ProfilePage = () => {
     const {username} = useParams();
@@ -22,7 +21,7 @@ const ProfilePage = () => {
     const token = localStorage.getItem('token');
     const getMyInfo = async () => {
         const response = await GetMyInfoRequestApi(token);
-        if (!response.ok) window.location.href = '/login';
+        if (!response.ok) return null;
         return await response.json();
     }
 
@@ -35,14 +34,24 @@ const ProfilePage = () => {
     useEffect(() => {
         const loadData = async () => {
             if (username) {
-                setMyUserInfo(new UserInfo(await getMyInfo()));
-                setUserInfo(new UserInfo(await getUserInfo()));
-                setAuth({logged: true, canChange: false})
+                const myUserInfo = new UserInfo(await getMyInfo());
+                const userInfo = new UserInfo(await getUserInfo());
+                
+                setMyUserInfo(myUserInfo);
+                setUserInfo(userInfo);
+                
+                if(!userInfo.login) window.location.href= '/me';
+                
+                setAuth({logged: Boolean(myUserInfo.login), canChange: myUserInfo.login=== userInfo.login});
                 setIsLoaded(true);
             } else {
-                const info = await getMyInfo();
-                setMyUserInfo(new UserInfo(info));
-                setUserInfo(new UserInfo(info));
+                const myUserInfo = new UserInfo(await getMyInfo());
+                
+                setMyUserInfo(myUserInfo);
+                setUserInfo(myUserInfo);
+                
+                if(!myUserInfo.login) window.location.href= '/login';
+                
                 setAuth({logged: true, canChange: true});
                 setIsLoaded(true);
             }
