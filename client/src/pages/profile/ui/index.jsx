@@ -6,35 +6,63 @@ import FooterComponent from "../../../components/footer";
 import ProfileComponent from "../../../components/profileComponent";
 import {useEffect, useState} from "react";
 import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
+import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestApi";
+import {useParams} from "react-router-dom";
 import UserInfo from "../../../models/UserInfo";
 
-const MePage = () => {
-    const [isLogged, setIsLogged] = useState(false); // [1
-    const [myInfo, setMyInfo] = useState(null);
+const ProfilePage = () => {
+    const {username} = useParams();
+    const [auth, setAuth] = useState({logged: false, canChange: false});
+    const [userInfo, setUserInfo] = useState(null); // Информация просто о пользователе, которого посетили
+    const [myUserInfo, setMyUserInfo] = useState(null); // Информация обо мне
+    const [isLoaded, setIsLoaded] = useState(false);
+
+
+    const token = localStorage.getItem('token');
+    const getMyInfo = async () => {
+        const response = await GetMyInfoRequestApi(token);
+        if (!response.ok) window.location.href = '/login';
+        return await response.json();
+    }
+
+    const getUserInfo = async () => {
+        const response = await GetUserInfoRequestApi(username);
+        if (!response.ok) window.location.href = '/me';
+        return await response.json();
+    }
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-
-        const getMyInfo = async () => {
-            const response = await GetMyInfoRequestApi(token);
-            if (!response.ok) window.location.href = '/login';
-            setMyInfo(new UserInfo(await response.json()))
-            setIsLogged(true)
+        const loadData = async () => {
+            if (username) {
+                setMyUserInfo(new UserInfo(await getMyInfo()));
+                setUserInfo(new UserInfo(await getUserInfo()));
+                setAuth({logged: true, canChange: false})
+                setIsLoaded(true);
+            } else {
+                const info = await getMyInfo();
+                setMyUserInfo(new UserInfo(info));
+                setUserInfo(new UserInfo(info));
+                setAuth({logged: true, canChange: true});
+                setIsLoaded(true);
+            }
         }
-        getMyInfo();
+
+        loadData();
     }, [])
 
-    if (!myInfo) {
+    if (!isLoaded) {
         return null; // или отрисовать загрузочный индикатор
     }
 
     return (
         <>
-            <AuthContext.Provider value={isLogged}>
-                <UserInfoContext.Provider value={myInfo}>
+            <AuthContext.Provider value={auth}>
+                <UserInfoContext.Provider value={myUserInfo}>
                     <div className={styles.divContainer}>
-                        <MainHeaderComponent imageName={myInfo.profilePhoto}/>
-                        <ProfileComponent/>
+                        <MainHeaderComponent/>
+                        <UserInfoContext.Provider value={userInfo}>
+                            <ProfileComponent/>
+                        </UserInfoContext.Provider>
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>
@@ -43,4 +71,4 @@ const MePage = () => {
     )
 }
 
-export default MePage;
+export default ProfilePage;

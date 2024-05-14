@@ -5,8 +5,8 @@ import RegistrationPage from "./registration";
 import ResetPasswordPage from "./reset-password";
 import SetPasswordPage from "./set-password";
 import ConfirmEmailPage from "./confirm-email";
-import MePage from "./profile";
-import MeEditPage from "./profile-edit";
+import ProfilePage from "./profile";
+import ProfileEditPage from "./profile-edit";
 
 const AppRouter = () => {
     return (
@@ -19,8 +19,9 @@ const AppRouter = () => {
                     <Route path='/reset-password' element={<ResetPasswordPage/>}/>
                     <Route path='/set-password' element={<SetPasswordPage/>}/>
                     <Route path='/confirm-email' element={<ConfirmEmailPage/>}/>
-                    <Route path='/me' element={<MePage/>}/>
-                    <Route path='/me/edit' element={<MeEditPage/>}/>
+                    <Route path='/me' element={<ProfilePage/>}/>
+                    <Route path='/me/edit' element={<ProfileEditPage/>}/>
+                    <Route exact path='/:username' element={<ProfilePage/>}/>
                 </Routes>
             </Router>
         </>

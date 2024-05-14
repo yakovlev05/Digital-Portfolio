@@ -9,7 +9,7 @@ import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
 import {useEffect, useState} from "react";
 
-const MeEditPage = () => {
+const ProfileEditPage = () => {
     const [myInfo, setMyInfo] = useState(null);
     const [isLogged, setIsLogged] = useState(false);
 
@@ -48,4 +48,4 @@ const MeEditPage = () => {
     )
 }
 
-export default MeEditPage;
+export default ProfileEditPage;

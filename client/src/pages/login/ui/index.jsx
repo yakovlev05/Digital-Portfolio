@@ -46,7 +46,7 @@ const LoginPage = () => {
                     const data = await response.json();
                     localStorage.setItem("token", data.token)
                     updateToast('success', 'Вход выполнен', id)
-                    window.location.href = "/profile"
+                    window.location.href = "/me"
                 } else {
                     const error = await response.json()
                     if (error.message === "User not found" || error.message === "Invalid password") {

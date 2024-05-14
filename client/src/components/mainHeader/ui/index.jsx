@@ -5,7 +5,7 @@ import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
 import emptyProfilePhoto from '../../../img/emptyProfilePhoto.jpg'
 
-const MainHeaderComponent = (imageName) => {
+const MainHeaderComponent = () => {
     const userInfo = useContext(UserInfoContext);
     const auth = useContext(AuthContext);
 
@@ -26,12 +26,12 @@ const MainHeaderComponent = (imageName) => {
                 </li>
             </ul>
             <input className={styles.searchField} type='search' placeholder='Поиск'/>
-            <div className={styles.auth} style={{display: auth ? 'none' : 'block'}}>
+            <div className={styles.auth} style={{display: auth.logged ? 'none' : 'block'}}>
                 <a className={styles.url} href={'/login'}>Вход</a>
                 /
                 <a className={styles.url} href={'/registration'}>Регистрация</a>
             </div>
-            <div style={{display: auth ? 'block' : 'none'}}>
+            <div style={{display: auth.logged ? 'block' : 'none'}}>
                 <a href={'/profile'}>
                     <img className={styles.avatar}
                          src={userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
