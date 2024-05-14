@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
 import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestApi";
 import {useParams} from "react-router-dom";
+import LoaderComponent from "../../../components/LoaderComponent";
 import UserInfo from "../../../models/UserInfo";
 
 const ProfilePage = () => {
@@ -36,24 +37,25 @@ const ProfilePage = () => {
             if (username) {
                 const myUserInfo = new UserInfo(await getMyInfo());
                 const userInfo = new UserInfo(await getUserInfo());
-                
+
                 setMyUserInfo(myUserInfo);
                 setUserInfo(userInfo);
-                
-                if(!userInfo.login) window.location.href= '/me';
-                
-                setAuth({logged: Boolean(myUserInfo.login), canChange: myUserInfo.login=== userInfo.login});
-                setIsLoaded(true);
+
+                if (!userInfo.login) window.location.href = '/me';
+
+                setAuth({logged: Boolean(myUserInfo.login), canChange: myUserInfo.login === userInfo.login});
+
+                setTimeout(() => setIsLoaded(true), 400);
             } else {
                 const myUserInfo = new UserInfo(await getMyInfo());
-                
+
                 setMyUserInfo(myUserInfo);
                 setUserInfo(myUserInfo);
-                
-                if(!myUserInfo.login) window.location.href= '/login';
-                
+
+                if (!myUserInfo.login) window.location.href = '/login';
+
                 setAuth({logged: true, canChange: true});
-                setIsLoaded(true);
+                setTimeout(() => setIsLoaded(true), 400);
             }
         }
 
@@ -61,7 +63,7 @@ const ProfilePage = () => {
     }, [])
 
     if (!isLoaded) {
-        return null;// или отрисовать загрузочный индикатор
+        return <LoaderComponent/>;// или отрисовать загрузочный индикатор
     }
 
     return (

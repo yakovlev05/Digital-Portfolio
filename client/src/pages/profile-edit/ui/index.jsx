@@ -12,7 +12,8 @@ import LoaderComponent from "../../../components/LoaderComponent";
 
 const ProfileEditPage = () => {
     const [myInfo, setMyInfo] = useState(null);
-    const [isLogged, setIsLogged] = useState(false);
+    const [auth, setAuth] = useState({logged: false, canChange: false});
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -20,14 +21,17 @@ const ProfileEditPage = () => {
         const getInfo = async () => {
             const response = await GetMyInfoRequestApi(token);
             if (!response.ok) window.location.href = '/login';
-            setMyInfo(new UserInfo(await response.json()));
-            setIsLogged(true);
+
+            const myUserInfo = new UserInfo(await response.json());
+            setMyInfo(myUserInfo);
+            setAuth({logged: true, canChange: true});
+            setTimeout(() => setIsLoaded(true), 400);
         }
         getInfo()
     }, []);
 
-    if (!myInfo) {
-        return null;
+    if (!isLoaded) {
+        return <LoaderComponent/>;
     }
 
     return (
@@ -36,7 +40,7 @@ const ProfileEditPage = () => {
                 <title>Редактирование профиля</title>
             </Helmet>
 
-            <AuthContext.Provider value={isLogged}>
+            <AuthContext.Provider value={auth}>
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.divContainer}>
                         <MainHeaderComponent/>
