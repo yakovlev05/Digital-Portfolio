@@ -9,6 +9,7 @@ import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
 import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestApi";
 import {useParams} from "react-router-dom";
 import UserInfo from "../../../models/UserInfo";
+import LoaderComponent from "../../../components/LoaderComponent";
 
 const ProfilePage = () => {
     const {username} = useParams();
@@ -51,7 +52,7 @@ const ProfilePage = () => {
     }, [])
 
     if (!isLoaded) {
-        return null; // или отрисовать загрузочный индикатор
+        return null;// или отрисовать загрузочный индикатор
     }
 
     return (

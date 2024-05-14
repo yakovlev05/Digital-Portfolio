@@ -8,6 +8,7 @@ import UserInfo from "../../../models/UserInfo";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
 import {useEffect, useState} from "react";
+import LoaderComponent from "../../../components/LoaderComponent";
 
 const ProfileEditPage = () => {
     const [myInfo, setMyInfo] = useState(null);
