@@ -50,8 +50,7 @@ public class UserController : Controller
     [HttpGet("{nickName}")]
     public async Task<ActionResult<GetMyInfoResponse>> GetUserInfo(string nickName)
     {
-        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
-        var user = await _dbContext.Users.FindAsync(userId);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Login == nickName);
         if (user is null) return BadRequest("User not found");
 
         var response = new GetMyInfoResponse(
