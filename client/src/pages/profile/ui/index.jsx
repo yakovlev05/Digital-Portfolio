@@ -15,13 +15,13 @@ const MePage = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        const getInfo = async () => {
+        const getMyInfo = async () => {
             const response = await GetMyInfoRequestApi(token);
             if (!response.ok) window.location.href = '/login';
             setMyInfo(new UserInfo(await response.json()))
             setIsLogged(true)
         }
-        getInfo();
+        getMyInfo();
     }, [])
 
     if (!myInfo) {

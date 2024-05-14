@@ -5,8 +5,8 @@ import RegistrationPage from "./registration";
 import ResetPasswordPage from "./reset-password";
 import SetPasswordPage from "./set-password";
 import ConfirmEmailPage from "./confirm-email";
-import MePage from "./me";
-import MeEditPage from "./me-edit";
+import MePage from "./profile";
+import MeEditPage from "./profile-edit";
 
 const AppRouter = () => {
     return (

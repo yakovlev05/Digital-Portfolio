@@ -2,10 +2,13 @@ import styles from './styles.module.scss'
 import logo from './img/logo.png'
 import {useContext} from "react";
 import UserInfoContext from "../../../contexts/UserInfoContext";
+import AuthContext from "../../../contexts/AuthContext";
+import emptyProfilePhoto from '../../../img/emptyProfilePhoto.jpg'
 
-const MainHeaderComponent = ({imageName}) => {
+const MainHeaderComponent = (imageName) => {
     const userInfo = useContext(UserInfoContext);
-    
+    const auth = useContext(AuthContext);
+
     return (
         <header className={styles.header}>
             <a className={styles.logo} href='/'>
@@ -23,14 +26,16 @@ const MainHeaderComponent = ({imageName}) => {
                 </li>
             </ul>
             <input className={styles.searchField} type='search' placeholder='Поиск'/>
-            <div className={styles.auth} style={{display: imageName === undefined ? 'block' : 'none'}}>
+            <div className={styles.auth} style={{display: auth ? 'none' : 'block'}}>
                 <a className={styles.url} href={'/login'}>Вход</a>
                 /
                 <a className={styles.url} href={'/registration'}>Регистрация</a>
             </div>
-            <div style={{display: imageName !== undefined ? 'block' : 'none'}}>
-                <a href={'/me'}>
-                    <img className={styles.avatar} src={`/api/v1/content/image/${imageName}`} alt='аватар'></img>
+            <div style={{display: auth ? 'block' : 'none'}}>
+                <a href={'/profile'}>
+                    <img className={styles.avatar}
+                         src={userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
+                         alt='аватар'></img>
                 </a>
             </div>
         </header>

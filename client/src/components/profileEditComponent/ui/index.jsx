@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import UpdateUserInfoRequestApi from "../../../apiServices/User/UpdateUserInfo";
 import updateToast from "../../../utilities/updateToast";
 import {toast} from "react-toastify";
+import emptyProfilePhoto from "../../../img/emptyProfilePhoto.jpg";
 
 
 const ProfileEditComponent = () => {
@@ -39,7 +40,8 @@ const ProfileEditComponent = () => {
                     <div>
                         <p className={styles.label}>Фотография</p>
                         <img className={styles.avatar}
-                             src={`/api/v1/content/image/${userInfo.profilePhoto}`} width='100'
+                             src={userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
+                             width='100'
                              height='100'
                              alt='logo'/>
                     </div>

@@ -6,10 +6,12 @@ import {Helmet} from "react-helmet";
 import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
 import UserInfo from "../../../models/UserInfo";
 import UserInfoContext from "../../../contexts/UserInfoContext";
+import AuthContext from "../../../contexts/AuthContext";
 import {useEffect, useState} from "react";
 
 const MeEditPage = () => {
     const [myInfo, setMyInfo] = useState(null);
+    const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token')
@@ -18,6 +20,7 @@ const MeEditPage = () => {
             const response = await GetMyInfoRequestApi(token);
             if (!response.ok) window.location.href = '/login';
             setMyInfo(new UserInfo(await response.json()));
+            setIsLogged(true);
         }
         getInfo()
     }, []);
@@ -32,13 +35,15 @@ const MeEditPage = () => {
                 <title>Редактирование профиля</title>
             </Helmet>
 
-            <UserInfoContext.Provider value={myInfo}>
-                <div className={styles.divContainer}>
-                    <MainHeaderComponent/>
-                    <ProfileEditComponent/>
-                    <FooterComponent/>
-                </div>
-            </UserInfoContext.Provider>
+            <AuthContext.Provider value={isLogged}>
+                <UserInfoContext.Provider value={myInfo}>
+                    <div className={styles.divContainer}>
+                        <MainHeaderComponent/>
+                        <ProfileEditComponent/>
+                        <FooterComponent/>
+                    </div>
+                </UserInfoContext.Provider>
+            </AuthContext.Provider>
         </>
     )
 }
