@@ -7,14 +7,14 @@ const Index = () => {
 
     return (
         <>
-            {auth.logged &&
+            {auth.canChange &&
                 <div className={styles.profile}>
                     <p>Здесь пока ничего нету. Тут будут отображаться ваши рецепты</p>
                     <button className={styles.button}>Опубликовать</button>
                 </div>
             }
 
-            {!auth.logged &&
+            {!auth.canChange &&
                 <div className={styles.profile}>
                     <p>Здесь пока ничего нету. Тут будут отображаться рецепты пользователя</p>
                 </div>
