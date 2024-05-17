@@ -3,11 +3,13 @@ import UserInfoContext from "../../../contexts/UserInfoContext";
 import {useContext, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import UpdateUserInfoRequestApi from "../../../apiServices/User/UpdateUserInfoRequestApi";
+import ChangeMyPasswordRequestApi from "../../../apiServices/User/ChangeMyPasswordRequestApi";
 import updateToast from "../../../utilities/updateToast";
 import {toast} from "react-toastify";
 import emptyProfilePhoto from "../../../img/emptyProfilePhoto.jpg";
 import ModalComponent from "../../modal";
 import DeleteUserInfoRequestApi from "../../../apiServices/User/DeleteUserInfoRequestApi";
+import ChangePasswordComponent from "./components/ChangePasswordComponent";
 
 
 const ProfileEditComponent = () => {
@@ -22,7 +24,7 @@ const ProfileEditComponent = () => {
         login: userInfo.login,
         description: userInfo.description
     })
-    const [showModalDelete, setShowModalDelete] = useState(false);
+    const [changePasswordFormState, setChangePasswordFormState] = useState({password: '', newPassword: ''})
 
     const handleButtonSave = async () => {
         if (!validateForm()) return;
@@ -64,6 +66,33 @@ const ProfileEditComponent = () => {
                 }
             })
             .catch(() => updateToast('error', 'Произошла ошибка', id))
+    }
+
+    const handleChangePasswordOk = () => {
+        if (changePasswordFormState.newPassword.length < 8) {
+            toast.warning('Пароль не может быть короче 8 символов')
+            return;
+        }
+
+
+        const response = ChangeMyPasswordRequestApi(localStorage.getItem('token'), changePasswordFormState);
+        const id = toast.loading('Обработка...')
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Пароль изменен', id)
+                } else {
+                    const error = await response.json();
+                    if (error.message === 'Invalid password')
+                        updateToast('error', 'Неверный пароль', id)
+                    else if (error.message === 'Password is too short, need at least 8 characters')
+                        updateToast('error', 'Длина пароля должн быть не менее 8 символов', id)
+                    else
+                        updateToast('error', error.message, id)
+                }
+            })
+            .catch(() => updateToast('error', 'Произошла непредвиденная ошибка', id))
     }
 
     const validateForm = () => {
@@ -137,7 +166,21 @@ const ProfileEditComponent = () => {
                                       description: e.target.value
                                   })}></textarea>
                     </div>
-                    <a className={`${styles.changePassword} ${styles.url}`}>Сменить пароль</a>
+                    {/*<a className={`${styles.changePassword} ${styles.url}`}*/}
+                    {/*   onClick={() => setShowModalChangePassword(true)}>Сменить пароль</a>*/}
+                    <ModalComponent
+                        stylesButton={styles.changePassword}
+                        message={'Введите текущий пароль и новый'}
+                        title={'Изменение пароля'}
+                        AnotherContent={<ChangePasswordComponent
+                            formState={changePasswordFormState}
+                            setFormState={setChangePasswordFormState}
+                        />}
+                        okButtonText={'Изменить'}
+                        handleSubmit={handleChangePasswordOk}
+                        titleButton={'Изменить пароль'}
+                        timeout={0}
+                    />
                     <a className={`${styles.exit} ${styles.url}`}>Выйти из аккаунта</a>
                     <button className={styles.save} type={"submit"} onClick={handleButtonSave}>Сохранить изменения
                     </button>
@@ -148,12 +191,11 @@ const ProfileEditComponent = () => {
                             message={'Вы точно хотите удалить аккаунт? Данные безвозвратно будут утеряны'}
                             title={'Удаление аккаунта'}
                             handleSubmit={handleModalDeleteOk}
+                            titleButton={'Удалить аккаунт'}
                         />
                     </div>
                 </div>
             </div>
-
-            {showModalDelete && <ModalComponent/>}
         </>
     )
 }
