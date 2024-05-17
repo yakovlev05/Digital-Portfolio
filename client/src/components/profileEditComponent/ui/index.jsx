@@ -10,6 +10,7 @@ import emptyProfilePhoto from "../../../img/emptyProfilePhoto.jpg";
 import ModalComponent from "../../modal";
 import DeleteUserInfoRequestApi from "../../../apiServices/User/DeleteUserInfoRequestApi";
 import ChangePasswordComponent from "./components/ChangePasswordComponent";
+import RevokeTokenRequestApi from "../../../apiServices/Auth/RevokeTokenRequestApi";
 
 
 const ProfileEditComponent = () => {
@@ -93,6 +94,23 @@ const ProfileEditComponent = () => {
                 }
             })
             .catch(() => updateToast('error', 'Произошла непредвиденная ошибка', id))
+    }
+
+    const handleExit = () => {
+        const response = RevokeTokenRequestApi(localStorage.getItem('token'));
+        const id = toast.loading("Выход...")
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Выход выполнен', id)
+                    localStorage.removeItem('token');
+                    window.location.href = "/login";
+                } else {
+                    updateToast('error', 'Произошла ошибка', id)
+                }
+            })
+            .catch(() => updateToast('error', 'Произошла ошибка', id))
     }
 
     const validateForm = () => {
@@ -181,7 +199,7 @@ const ProfileEditComponent = () => {
                         titleButton={'Изменить пароль'}
                         timeout={0}
                     />
-                    <a className={`${styles.exit} ${styles.url}`}>Выйти из аккаунта</a>
+                    <a className={`${styles.exit} ${styles.url}`} onClick={handleExit}>Выйти из аккаунта</a>
                     <button className={styles.save} type={"submit"} onClick={handleButtonSave}>Сохранить изменения
                     </button>
                     {/*<button className={styles.delete} onClick={() => setShowModalDelete(true)}>Удалить аккаунт</button>*/}
