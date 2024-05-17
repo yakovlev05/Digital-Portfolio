@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Server.DataBase;
+using Server.Program.Middlewares;
 using Server.Services;
 using Server.Services.Interfaces;
 
@@ -91,6 +92,7 @@ public static class Program
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseMiddleware<RevokeTokenMiddleware>();
 
         app.UseSwagger();
         app.UseSwaggerUI(); //на время разработки
