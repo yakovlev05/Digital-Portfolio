@@ -83,7 +83,6 @@ public class UserController : Controller
         if (await _dbContext.Users.AnyAsync(x => x.Email == request.Email && x.Id != userId))
             return BadRequest(new MessageModel("Email already exists"));
 
-        user.ProfilePhoto = request.ProfilePhoto;
         user.Name = request.Name;
         user.SecondName = request.SecondName;
         user.Patronymic = request.Patronymic;
@@ -139,5 +138,28 @@ public class UserController : Controller
         await _dbContext.SaveChangesAsync();
 
         return Ok(new MessageModel("User deleted"));
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpPut("me/photo")]
+    public async Task<ActionResult> UpdateProfilePhoto(UpdateProfilePhotoRequest request)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Files)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        if (user.Files.All(x => x.Name != request.ImageName))
+            return BadRequest(new MessageModel("File not found"));
+
+        if (user.ProfilePhoto != null && System.IO.File.Exists($"/files/images/{user.ProfilePhoto}"))
+            System.IO.File.Delete($"/files/images/{user.ProfilePhoto}");
+
+        user.ProfilePhoto = request.ImageName;
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok(new UpdateProfilePhotoResponse(request.ImageName));
     }
 }
