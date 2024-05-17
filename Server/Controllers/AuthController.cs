@@ -3,6 +3,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
@@ -158,5 +159,28 @@ public class AuthController : Controller
     public async Task<ActionResult> ValidateToken()
     {
         return Ok();
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpPost("token/revoke")]
+    public async Task<ActionResult> RevokeToken()
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        var token = HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Split().Last();
+
+        var revokedToken = new RevokedTokenEntity()
+        {
+            Token = token,
+            UserId = userId,
+            ExpirationDate = _tokenService.GetExpirationDate(token)
+        };
+
+        await _dbContext.RevokedTokens.AddAsync(revokedToken);
+        await _dbContext.SaveChangesAsync();
+        
+        return Ok(new MessageModel("Token revoked"));
     }
 }

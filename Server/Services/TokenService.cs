@@ -43,4 +43,11 @@ public class TokenService : ITokenService
     public string CreatePasswordResetToken(string login, string id) => CreateToken(login, id, "password_reset");
 
     public string CreateEmailConfirmationToken(string login, string id) => CreateToken(login, id, "email_confirmation");
+
+    public DateTime GetExpirationDate(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        return jwtToken.ValidTo.ToUniversalTime();
+    }
 }

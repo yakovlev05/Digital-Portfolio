@@ -16,12 +16,18 @@ public class RevokeTokenMiddleware
     // в InvokeAsync внедерние зависимостей работает
     public async Task InvokeAsync(HttpContext context, DataContext dataContext)
     {
-        var token = context.Request.Headers[HeaderNames.Authorization];
+        var token = context.Request.Headers[HeaderNames.Authorization].ToString().Split().Last();
+        if (token.Length == 0)
+        {
+            await _next.Invoke(context);
+            return;
+        }
+
         var tokensToRemove = new List<RevokedTokenEntity>();
         var unauthorized = false;
         foreach (var tokenEntity in dataContext.RevokedTokens)
         {
-            if (tokenEntity.ExpirationDate > DateTime.Now) tokensToRemove.Add(tokenEntity);
+            if (tokenEntity.ExpirationDate < DateTime.Now) tokensToRemove.Add(tokenEntity);
             if (tokenEntity.Token == token) unauthorized = true;
         }
 
