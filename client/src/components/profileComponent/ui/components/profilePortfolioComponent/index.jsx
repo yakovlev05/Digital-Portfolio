@@ -9,14 +9,14 @@ const Index = () => {
         <>
             {auth.canChange &&
                 <div className={styles.profile}>
-                    <p>Здесь пока ничего нету. Тут будут отображаться ваши рецепты</p>
+                    <p>Здесь пока ничего нет. Тут будут отображаться ваши рецепты</p>
                     <button className={styles.button}>Опубликовать</button>
                 </div>
             }
 
             {!auth.canChange &&
                 <div className={styles.profile}>
-                    <p>Здесь пока ничего нету. Тут будут отображаться рецепты пользователя</p>
+                    <p>Пользователь не опубликовал ни одного рецепта</p>
                 </div>
             }
         </>
