@@ -75,7 +75,8 @@ public class UserController : Controller
         var user = await _dbContext.Users.FindAsync(userId);
         if (user is null) return BadRequest(new MessageModel("User not found"));
 
-        if (request.Login.Length < 5) return BadRequest(new MessageModel($"Login is too short, need at least 5 characters"));
+        if (request.Login.Length < 5)
+            return BadRequest(new MessageModel($"Login is too short, need at least 5 characters"));
         if (!_emailService.ValidateEmail(request.Email)) return BadRequest(new MessageModel("Invalid email"));
         if (await _dbContext.Users.AnyAsync(x => x.Login == request.Login && x.Id != userId))
             return BadRequest(new MessageModel("Login already exists"));
@@ -93,6 +94,25 @@ public class UserController : Controller
         //TODO: Сделать смену почты через подтверждение
         await _dbContext.SaveChangesAsync();
         return Ok(new MessageModel("User info updated"));
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpPut("me/password")]
+    public async Task<ActionResult> ChangeMyPassword(ChangeMyPasswordRequest request)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users.FindAsync(userId);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        if (!_passwordService.VerifyPassword(request.Password, user.Login, user.HashedPassword))
+            return BadRequest(new MessageModel("Invalid password"));
+        if (request.NewPassword.Length < 8)
+            return BadRequest(new MessageModel("Password is too short, need at least 8 characters"));
+
+        user.HashedPassword = _passwordService.HashPassword(request.NewPassword, user.Login);
+
+        await _dbContext.SaveChangesAsync();
+        return Ok(new MessageModel("Password changed"));
     }
 
     [Authorize(Policy = "auth")]
