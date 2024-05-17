@@ -1,7 +1,7 @@
 ﻿namespace Server.Models;
 
 public record UpdateUserInfoRequest(
-    string ProfilePhoto,
+    string? ProfilePhoto,
     string Name,
     string SecondName,
     string? Patronymic,

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.DataBase;
 using Server.Models;
+using Server.Models.User;
 using Server.Services.Interfaces;
 
 namespace Server.Controllers;
@@ -28,10 +29,10 @@ public class UserController : Controller
     public async Task<ActionResult<GetMyInfoResponse>> GetMyInfo()
     {
         var userIdRequest = User.FindFirstValue("id");
-        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
+        if (userIdRequest is null) return BadRequest(new MessageModel("Empty id in the JWT token"));
 
         var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
-        if (user is null) return BadRequest("User not found");
+        if (user is null) return BadRequest(new MessageModel("User not found"));
 
         var response = new GetMyInfoResponse(
             user.Login,
@@ -51,7 +52,7 @@ public class UserController : Controller
     public async Task<ActionResult<GetMyInfoResponse>> GetUserInfo(string nickName)
     {
         var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Login == nickName);
-        if (user is null) return BadRequest("User not found");
+        if (user is null) return BadRequest(new MessageModel("User not found"));
 
         var response = new GetMyInfoResponse(
             user.Login,
@@ -72,14 +73,14 @@ public class UserController : Controller
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users.FindAsync(userId);
-        if (user is null) return BadRequest("User not found");
+        if (user is null) return BadRequest(new MessageModel("User not found"));
 
-        if (request.Login.Length < 5) return BadRequest($"Login is too short, need at least 5 characters");
-        if (!_emailService.ValidateEmail(request.Email)) return BadRequest("Invalid email");
-        if (user.Login != request.Login &&
-            await _dbContext.Users.AnyAsync(x => x.Login == request.Login)) return BadRequest("Login already exists");
+        if (request.Login.Length < 5) return BadRequest(new MessageModel($"Login is too short, need at least 5 characters"));
+        if (!_emailService.ValidateEmail(request.Email)) return BadRequest(new MessageModel("Invalid email"));
+        if (await _dbContext.Users.AnyAsync(x => x.Login == request.Login && x.Id != userId))
+            return BadRequest(new MessageModel("Login already exists"));
         if (await _dbContext.Users.AnyAsync(x => x.Email == request.Email && x.Id != userId))
-            return BadRequest("Email already exists");
+            return BadRequest(new MessageModel("Email already exists"));
 
         user.ProfilePhoto = request.ProfilePhoto;
         user.Name = request.Name;
@@ -91,7 +92,7 @@ public class UserController : Controller
 
         //TODO: Сделать смену почты через подтверждение
         await _dbContext.SaveChangesAsync();
-        return Ok("User info updated");
+        return Ok(new MessageModel("User info updated"));
     }
 
     [Authorize(Policy = "auth")]
@@ -103,7 +104,7 @@ public class UserController : Controller
             .Include(x => x.Files)
             .FirstOrDefaultAsync(x => x.Id == userId);
 
-        if (user is null) return BadRequest("User not found");
+        if (user is null) return BadRequest(new MessageModel("User not found"));
 
         var files = user.Files;
         foreach (var file in files)
@@ -117,6 +118,6 @@ public class UserController : Controller
         _dbContext.Remove(user);
         await _dbContext.SaveChangesAsync();
 
-        return Ok("User deleted");
+        return Ok(new MessageModel("User deleted"));
     }
 }

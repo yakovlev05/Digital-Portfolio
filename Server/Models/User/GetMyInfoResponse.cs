@@ -1,4 +1,4 @@
-﻿namespace Server.Models;
+﻿namespace Server.Models.User;
 
 public record GetMyInfoResponse(
     string Login,
