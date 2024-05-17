@@ -7,7 +7,6 @@ const UpdateUserInfoRequestApi = async (token, userInfo)=>{
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            profilePhoto: userInfo.profilePhoto,
             name: userInfo.name,
             secondName: userInfo.secondName,
             patronymic: userInfo.patronymic,

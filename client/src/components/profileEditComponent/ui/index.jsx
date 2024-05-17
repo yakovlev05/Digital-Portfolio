@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import UserInfoContext from "../../../contexts/UserInfoContext";
-import {useContext, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import UpdateUserInfoRequestApi from "../../../apiServices/User/UpdateUserInfoRequestApi";
 import ChangeMyPasswordRequestApi from "../../../apiServices/User/ChangeMyPasswordRequestApi";
@@ -11,6 +11,8 @@ import ModalComponent from "../../modal";
 import DeleteUserInfoRequestApi from "../../../apiServices/User/DeleteUserInfoRequestApi";
 import ChangePasswordComponent from "./components/ChangePasswordComponent";
 import RevokeTokenRequestApi from "../../../apiServices/Auth/RevokeTokenRequestApi";
+import UploadImagesRequestApi from "../../../apiServices/Content/UploadImagesRequestApi";
+import UpdateProfilePhotoRequestApi from "../../../apiServices/User/UpdateProfilePhotoRequestApi";
 
 
 const ProfileEditComponent = () => {
@@ -26,6 +28,7 @@ const ProfileEditComponent = () => {
         description: userInfo.description
     })
     const [changePasswordFormState, setChangePasswordFormState] = useState({password: '', newPassword: ''})
+    const fileInputRef = useRef();
 
     const handleButtonSave = async () => {
         if (!validateForm()) return;
@@ -113,6 +116,38 @@ const ProfileEditComponent = () => {
             .catch(() => updateToast('error', 'Произошла ошибка', id))
     }
 
+    const handleUpdatePhoto = (e) => {
+        const files = e.target.files;
+        if (files.length === 0) return;
+
+        const token = localStorage.getItem('token');
+
+        const id = toast.loading("Загрузка фото...")
+        const responseUpload = UploadImagesRequestApi(token, files, 200, 200, 80);
+
+        responseUpload
+            .then(async (r) => {
+                if (r.ok) {
+                    const response = await r.json();
+                    const imageName = response.imagesNames[0];
+                    const responseUpdate = UpdateProfilePhotoRequestApi(token, imageName);
+                    responseUpdate
+                        .then(async (r) => {
+                            if (r.ok) {
+                                updateToast('success', 'Фото обновлено', id)
+                                window.location.reload();
+                            } else {
+                                updateToast('error', 'Произошла ошибка при обновлении фото', id)
+                            }
+                        })
+                        .catch(() => updateToast('error', 'Произошла ошибка при обновлении фото', id))
+                } else {
+                    updateToast('error', 'Произошла ошибка при загрузке фото', id)
+                }
+            })
+            .catch(() => updateToast('error', 'Произошла ошибка при загрузке фото', id))
+    }
+
     const validateForm = () => {
         const emailRegex = /^\S+@\S+\.\S+$/;
         if (formState.name.length === 0) {
@@ -145,7 +180,14 @@ const ProfileEditComponent = () => {
                                  height='100'
                                  alt='logo'/>
                         </div>
-                        <button className={styles.updatePhotoButton}>Обновить фото</button>
+                        <button className={styles.updatePhotoButton}
+                                onClick={() => fileInputRef.current.click()}>Обновить фото
+                        </button>
+                        <input type={"file"}
+                               ref={fileInputRef}
+                               style={{display: 'none'}}
+                               onInput={handleUpdatePhoto}
+                               accept={"image/*"}></input>
                     </div>
                     <div className={styles.backCont}>
                         <a className={styles.url} onClick={() => navigate('/me')}>Вернуться к профилю</a>
