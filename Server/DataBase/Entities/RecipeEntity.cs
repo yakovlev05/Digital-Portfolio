@@ -8,7 +8,8 @@ public class RecipeEntity
     public string Name { get; set; } = null!;
     public string MainImageName { get; set; } = null!;
     public string Category { get; set; } = null!;
-    public TimeSpan CookingTime { get; set; }
+    public int Rating { get; set; }
+    public TimeSpan CookingTimeInMinutes { get; set; }
     public DateTime DateCreate { get; init; } = DateTime.Now.ToUniversalTime();
     public string Description { get; set; } = null!;
     public ICollection<RecipeIngredientEntity> Ingredients { get; set; } = new List<RecipeIngredientEntity>();
