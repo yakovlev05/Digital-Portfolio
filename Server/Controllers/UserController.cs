@@ -132,6 +132,7 @@ public class UserController : Controller
             System.IO.File.Delete(file.Path);
         }
 
+//TODO: RevokeToken
         if (System.IO.File.Exists(user.ProfilePhoto)) System.IO.File.Delete(user.ProfilePhoto);
 
         _dbContext.Remove(user);
@@ -161,5 +162,33 @@ public class UserController : Controller
         await _dbContext.SaveChangesAsync();
 
         return Ok(new UpdateProfilePhotoResponse(request.ImageName));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("me/recipes")]
+    public async Task<ActionResult<GetMyRecipesResponse>> GetMyRecipes(int page = 1, int count = 3)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Ingredients)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        var recipes = user.Recipes
+            .OrderByDescending(x => x.Rating)
+            .ThenByDescending(x => x.DateCreate)
+            .Skip((page - 1) * count)
+            .Take(count)
+            .Select(x => new MyRecipe(
+                x.Name,
+                x.MainImageName,
+                x.Rating,
+                x.CookingTimeInMinutes,
+                x.Ingredients.Count,
+                x.Category))
+            .ToList();
+
+        return new GetMyRecipesResponse(recipes);
     }
 }

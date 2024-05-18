@@ -24,16 +24,20 @@ public class CommentController : Controller
     [HttpPost("add")]
     public async Task<ActionResult<AddCommentResponse>> AddComment(AddCommentRequest request)
     {
-        var userIdRequest = User.FindFirstValue("id");
-        if (userIdRequest is null) return BadRequest("Empty id in the JWT token");
-
-        var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .ThenInclude(recipeEntity => recipeEntity.Comments)
+            .FirstOrDefaultAsync(x => x.Id == userId);
         if (user is null) return BadRequest("User not found");
 
-        if (await _dbContext.Recipes.FindAsync(request.RecipeId) is null) return BadRequest("Recipe not found");
         if (request.Rating < 1 || request.Rating > 5) return BadRequest("Rating must be from 1 to 5");
+
         if (request.Description.Contains('<') || request.Description.Contains('>'))
             return BadRequest("Characters '<' and '>' are prohibited");
+
+        var recipe = user.Recipes.FirstOrDefault(x => x.Id == request.RecipeId);
+        if (recipe is null) return BadRequest("Recipe not found");
 
         var newCommentEntity = new CommentEntity()
         {
@@ -43,6 +47,9 @@ public class CommentController : Controller
             Rating = request.Rating
         };
         await _dbContext.Comments.AddAsync(newCommentEntity);
+
+        recipe.Rating = (int)Math.Round(recipe.Comments.Average(x => x.Rating));
+
         await _dbContext.SaveChangesAsync();
 
         return new AddCommentResponse(newCommentEntity.Guid);
@@ -79,11 +86,16 @@ public class CommentController : Controller
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users
             .Include(x => x.Comments)
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Comments)
             .FirstOrDefaultAsync(x => x.Id == userId);
         if (user is null) return BadRequest("User not found");
 
         var comment = user.Comments.FirstOrDefault(x => x.Guid == commentGuid);
         if (comment is null) return BadRequest("Comment not found");
+
+        var recipe = user.Recipes.FirstOrDefault(x => x.Id == comment.RecipeEntityId);
+        if (recipe is null) return BadRequest("Recipe not found");
 
         if (request.NewRating < 1 || request.NewRating > 5) return BadRequest("Rating must be from 1 to 5");
         if (request.NewDescription.Contains('<') || request.NewDescription.Contains('>'))
@@ -91,6 +103,8 @@ public class CommentController : Controller
 
         comment.Rating = request.NewRating;
         comment.Description = request.NewDescription;
+        recipe.Rating = (int)Math.Round(recipe.Comments.Average(x => x.Rating));
+
         await _dbContext.SaveChangesAsync();
 
         return Ok("Comment has been updated");

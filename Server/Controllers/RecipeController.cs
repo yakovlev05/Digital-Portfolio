@@ -39,7 +39,7 @@ public class RecipeController : Controller
             Name = model.Name,
             MainImageName = model.MainImageName,
             Category = model.Category,
-            CookingTime = TimeSpan.FromMinutes(model.CookingTimeMinutes),
+            CookingTimeInMinutes = TimeSpan.FromMinutes(model.CookingTimeMinutes),
             Description = model.Description
         };
 
@@ -104,7 +104,7 @@ public class RecipeController : Controller
             recipe.Name,
             recipe.MainImageName,
             recipe.Category,
-            recipe.CookingTime.Minutes,
+            recipe.CookingTimeInMinutes.Minutes,
             recipe.Description,
             recipe.Ingredients.Select(x => new RecipeIngredientModel(x.Name, x.Quantity, x.Unit)).ToList(),
             new RecipeEnergyModel(
@@ -145,7 +145,7 @@ public class RecipeController : Controller
         recipe.Name = request.Name;
         recipe.MainImageName = request.MainImageName;
         recipe.Category = request.Category;
-        recipe.CookingTime = TimeSpan.FromMinutes(request.CookingTimeMinutes);
+        recipe.CookingTimeInMinutes = TimeSpan.FromMinutes(request.CookingTimeMinutes);
         recipe.Description = request.Description;
 
         // Можно не создавать новые объекты, а искать в бд: объект нашёлся - обновить, не нашёлся - создать
