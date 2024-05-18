@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Server.DataBase;
+using Server.DataBase.Entities;
 using Server.Models;
 using Server.Models.User;
 using Server.Services.Interfaces;
@@ -16,12 +18,15 @@ public class UserController : Controller
     private readonly DataContext _dbContext;
     private readonly IEmailService _emailService;
     private readonly IPasswordService _passwordService;
+    private readonly ITokenService _tokenService;
 
-    public UserController(DataContext dataContext, IEmailService emailService, IPasswordService passwordService)
+    public UserController(DataContext dataContext, IEmailService emailService, IPasswordService passwordService,
+        ITokenService tokenService)
     {
         _dbContext = dataContext;
         _emailService = emailService;
         _passwordService = passwordService;
+        _tokenService = tokenService;
     }
 
     [Authorize(Policy = "auth")]
@@ -132,9 +137,17 @@ public class UserController : Controller
             System.IO.File.Delete(file.Path);
         }
 
-//TODO: RevokeToken
         if (System.IO.File.Exists(user.ProfilePhoto)) System.IO.File.Delete(user.ProfilePhoto);
 
+        var token = HttpContext.Request.Headers[HeaderNames.Authorization].ToString().Split().Last();
+        var revokedToken = new RevokedTokenEntity()
+        {
+            Token = token,
+            UserId = userId,
+            ExpirationDate = _tokenService.GetExpirationDate(token)
+        };
+
+        await _dbContext.RevokedTokens.AddAsync(revokedToken);
         _dbContext.Remove(user);
         await _dbContext.SaveChangesAsync();
 
