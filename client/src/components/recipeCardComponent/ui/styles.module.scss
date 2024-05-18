@@ -1,0 +1,87 @@
+.recipeCard {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #FFFFFF;
+
+  max-width: 700px;
+  min-width: 630px;
+  width: 100%;
+
+  background: #0D3B66;
+  border-radius: 25px;
+
+  display: grid;
+  grid-template-areas: 
+          "image name rating rating"
+          "image time ingredients category"
+          "image button button button";
+  grid-template-columns: auto 1fr 1fr 1fr;
+}
+
+.image {
+  width: 150px;
+  height: auto;
+  aspect-ratio: 1/1;
+  border-radius: 20px;
+
+  grid-area: image;
+}
+
+.name {
+  grid-area: name;
+  margin: auto 0 auto 10px;
+}
+
+.rating {
+  grid-area: rating;
+
+  display: flex;
+  gap: 3px;
+
+  margin: auto 35px auto auto;
+}
+
+.star {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.time {
+  grid-area: time;
+  margin-left: 10px;
+}
+
+.ingredients {
+  grid-area: ingredients;
+}
+
+.category {
+  grid-area: category;
+}
+
+.button {
+  grid-area: button;
+  margin-left: 10px;
+
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 700;
+  color: #FFFFFF;
+
+  width: 200px;
+  height: 40px;
+
+  border: 3px solid #FFFFFF;
+  border-radius: 25px;
+  background: inherit;
+}
+
+.button:hover {
+  color: #bababa;
+  border-color: #bababa;
+}
