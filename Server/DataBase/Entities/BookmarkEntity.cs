@@ -7,4 +7,5 @@ public class BookmarkEntity
     public int RecipeEntityId { get; init; }
     public string NameUrl { get; set; } = null!;
     public DateTime DateCreate { get; init; } = DateTime.Now.ToUniversalTime();
+    public RecipeEntity Recipe { get; set; }
 }

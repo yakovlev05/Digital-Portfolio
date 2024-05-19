@@ -239,4 +239,34 @@ public class UserController : Controller
 
         return new GetUserRecipesResponse(recipes);
     }
+
+    [Authorize(Policy = "auth")]
+    [HttpGet("me/bookmarks")]
+    public async Task<ActionResult<GetUserRecipesResponse>> GetMyBookmarks(int page = 1, int count = 3)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Bookmarks)
+            .ThenInclude(x => x.Recipe)
+            .ThenInclude(x => x.Ingredients)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        var recipes = user.Bookmarks
+            .OrderByDescending(x => x.DateCreate)
+            .Skip((page - 1) * count)
+            .Take(count)
+            .Select(x => new MyRecipe(
+                x.Recipe.Name,
+                x.Recipe.MainImageName,
+                x.Recipe.Rating,
+                x.Recipe.CookingTimeInMinutes.Minutes,
+                x.Recipe.Ingredients.Count,
+                x.Recipe.Category,
+                x.NameUrl))
+            .ToList();
+
+        return new GetUserRecipesResponse(recipes);
+    }
 }
