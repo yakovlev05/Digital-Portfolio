@@ -9,6 +9,7 @@ class UserInfo {
             this.dateRegistration = json.dateRegistration;
             this.description = json.description;
             this.profilePhoto = json.profilePhoto;
+            this.recipesCount = json.recipesCount;
         } else {
             this.login = null;
             this.email = null;
@@ -18,6 +19,7 @@ class UserInfo {
             this.dateRegistration = null;
             this.description = null;
             this.profilePhoto = null;
+            this.recipesCount = null;
         }
 
     }

@@ -20,6 +20,8 @@
           "image time ingredients category"
           "image button button button";
   grid-template-columns: auto 1fr 1fr 1fr;
+
+  margin-bottom: 20px;
 }
 
 .image {
@@ -84,4 +86,13 @@
 .button:hover {
   color: #bababa;
   border-color: #bababa;
+}
+
+.buttonBookmark {
+  @extend .button;
+  width: 250px;
+
+  background: url("./img/bookmark.png") no-repeat 10px center;
+  text-align: end;
+  padding-right: 20px;
 }

@@ -1,29 +1,31 @@
 import styles from './styles.module.scss'
 import AuthContext from "../../../../../contexts/AuthContext";
+import userInfoContext from "../../../../../contexts/UserInfoContext";
 import {useContext} from "react";
 import RecipesCardsComponent from "../../../../recipesCardsComponent";
 
-const Index = () => {
+const ProfilePortfolioComponent = () => {
     const auth = useContext(AuthContext);
+    const user = useContext(userInfoContext);
 
     return (
         <>
-            {/*{auth.canChange &&*/}
-            {/*    <div className={styles.profile}>*/}
-            {/*        <p>Здесь пока ничего нет. Тут будут отображаться ваши рецепты</p>*/}
-            {/*        <button className={styles.button}>Опубликовать</button>*/}
-            {/*    </div>*/}
-            {/*}*/}
+            {auth.canChange && user.recipesCount === 0 &&
+                <div className={styles.profile}>
+                    <p>Здесь пока ничего нет. Тут будут отображаться ваши рецепты</p>
+                    <button className={styles.button}>Опубликовать</button>
+                </div>
+            }
 
-            {/*{!auth.canChange &&*/}
-            {/*    <div className={styles.profile}>*/}
-            {/*        <p>Пользователь не опубликовал ни одного рецепта</p>*/}
-            {/*    </div>*/}
-            {/*}*/}
+            {!auth.canChange && user.recipesCount === 0 &&
+                <div className={styles.profile}>
+                    <p>Пользователь не опубликовал ни одного рецепта</p>
+                </div>
+            }
 
-            <RecipesCardsComponent/>
+            {user.recipesCount !== 0 && <RecipesCardsComponent/>}
         </>
     )
 }
 
-export default Index;
+export default ProfilePortfolioComponent;
