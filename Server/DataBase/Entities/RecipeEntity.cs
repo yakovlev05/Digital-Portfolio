@@ -16,4 +16,5 @@ public class RecipeEntity
     public RecipeEnergyEntity Energy { get; set; } = new RecipeEnergyEntity();
     public ICollection<RecipeStepEntity> Steps { get; set; } = new List<RecipeStepEntity>();
     public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+    public ICollection<BookmarkEntity> Bookmarks { get; set; } = new List<BookmarkEntity>();
 }
