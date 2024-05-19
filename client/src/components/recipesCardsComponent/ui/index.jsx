@@ -7,10 +7,9 @@ import {useParams} from "react-router-dom";
 import GetMyRecipesRequestApi from "../../../apiServices/User/GetMyRecipesRequestApi";
 import GetUserRecipesRequestApi from "../../../apiServices/User/GetUserRecipesRequestApi";
 import {toast} from "react-toastify";
-import LoaderComponent from "../../LoaderComponent";
 
 
-const RecipesCardsComponent = () => {
+const RecipesCardsComponent = ({isPortfolio = false, isBookmarks = false}) => {
     const {username} = useParams();
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(3);
@@ -23,8 +22,12 @@ const RecipesCardsComponent = () => {
         const fetchData = async () => {
             setIsLoading(true);
             let response = null;
-            if (username === undefined) response = await GetMyRecipesRequestApi(token, page, count);
-            else response = await GetUserRecipesRequestApi(username, page, count);
+            if (isPortfolio) {
+                if (username === undefined) response = await GetMyRecipesRequestApi(token, page, count);
+                else response = await GetUserRecipesRequestApi(username, page, count);
+            } else if (isBookmarks) {
+
+            }
 
 
             if (response.ok) {
@@ -40,7 +43,8 @@ const RecipesCardsComponent = () => {
             }, 1000);
         }
 
-        fetchData();
+        fetchData()
+            .catch(() => toast.error('Ошибка при загрузке рецептов'))
     }, [count, page, token, username]);
 
     return (
