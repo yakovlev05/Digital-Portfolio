@@ -1,6 +1,6 @@
 ﻿namespace Server.Models.User;
 
-public record GetMyInfoResponse(
+public record GetUserInfoResponse(
     string Login,
     string Email,
     string Name,
@@ -8,5 +8,6 @@ public record GetMyInfoResponse(
     string? Patronymic,
     string DateRegistration,
     string? Description,
-    string? ProfilePhoto
+    string? ProfilePhoto,
+    int RecipesCount
 );

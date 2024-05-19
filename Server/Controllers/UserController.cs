@@ -31,15 +31,17 @@ public class UserController : Controller
 
     [Authorize(Policy = "auth")]
     [HttpGet("me")]
-    public async Task<ActionResult<GetMyInfoResponse>> GetMyInfo()
+    public async Task<ActionResult<GetUserInfoResponse>> GetMyInfo()
     {
         var userIdRequest = User.FindFirstValue("id");
         if (userIdRequest is null) return BadRequest(new MessageModel("Empty id in the JWT token"));
 
-        var user = await _dbContext.Users.FindAsync(int.Parse(userIdRequest));
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .FirstOrDefaultAsync(x => x.Id == int.Parse(userIdRequest));
         if (user is null) return BadRequest(new MessageModel("User not found"));
 
-        var response = new GetMyInfoResponse(
+        var response = new GetUserInfoResponse(
             user.Login,
             user.Email,
             user.Name,
@@ -47,19 +49,22 @@ public class UserController : Controller
             user.Patronymic,
             user.DateRegistration.ToString("dd.MM.yyyy"),
             user.Description,
-            user.ProfilePhoto
+            user.ProfilePhoto,
+            user.Recipes.Count
         );
         return response;
     }
 
     [AllowAnonymous]
     [HttpGet("{nickName}")]
-    public async Task<ActionResult<GetMyInfoResponse>> GetUserInfo(string nickName)
+    public async Task<ActionResult<GetUserInfoResponse>> GetUserInfo(string nickName)
     {
-        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Login == nickName);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .FirstOrDefaultAsync(x => x.Login == nickName);
         if (user is null) return BadRequest(new MessageModel("User not found"));
 
-        var response = new GetMyInfoResponse(
+        var response = new GetUserInfoResponse(
             user.Login,
             user.Email,
             user.Name,
@@ -67,7 +72,8 @@ public class UserController : Controller
             user.Patronymic,
             user.DateRegistration.ToString("dd.MM.yyyy"),
             user.Description,
-            user.ProfilePhoto
+            user.ProfilePhoto,
+            user.Recipes.Count
         );
         return response;
     }
@@ -177,9 +183,9 @@ public class UserController : Controller
         return Ok(new UpdateProfilePhotoResponse(request.ImageName));
     }
 
-    [AllowAnonymous]
+    [Authorize(Policy = "auth")]
     [HttpGet("me/recipes")]
-    public async Task<ActionResult<GetMyRecipesResponse>> GetMyRecipes(int page = 1, int count = 3)
+    public async Task<ActionResult<GetUserRecipesResponse>> GetMyRecipes(int page = 1, int count = 3)
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users
@@ -197,11 +203,40 @@ public class UserController : Controller
                 x.Name,
                 x.MainImageName,
                 x.Rating,
-                x.CookingTimeInMinutes,
+                x.CookingTimeInMinutes.Minutes,
                 x.Ingredients.Count,
-                x.Category))
+                x.Category,
+                x.NameUrl))
             .ToList();
 
-        return new GetMyRecipesResponse(recipes);
+        return new GetUserRecipesResponse(recipes);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{username}/recipes")]
+    public async Task<ActionResult<GetUserRecipesResponse>> GetUserRecipes(string username, int page = 1, int count = 1)
+    {
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .ThenInclude(x => x.Ingredients)
+            .FirstOrDefaultAsync(x => x.Login == username);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        var recipes = user.Recipes
+            .OrderByDescending(x => x.Rating)
+            .ThenByDescending(x => x.DateCreate)
+            .Skip((page - 1) * count)
+            .Take(count)
+            .Select(x => new MyRecipe(
+                x.Name,
+                x.MainImageName,
+                x.Rating,
+                x.CookingTimeInMinutes.Minutes,
+                x.Ingredients.Count,
+                x.Category,
+                x.NameUrl))
+            .ToList();
+
+        return new GetUserRecipesResponse(recipes);
     }
 }

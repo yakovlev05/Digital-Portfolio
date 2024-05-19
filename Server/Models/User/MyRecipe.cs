@@ -4,7 +4,8 @@ public record MyRecipe(
     string Name,
     string ImageName,
     int Rating,
-    TimeSpan CookingTimeInMinutes,
+    int CookingTimeInMinutes,
     int IngredientsCount,
-    string Category
+    string Category,
+    string NameUrl
 );
