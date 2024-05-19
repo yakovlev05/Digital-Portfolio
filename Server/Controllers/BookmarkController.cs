@@ -24,6 +24,7 @@ public class BookmarkController : Controller
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users
+            .Include(x => x.Recipes)
             .Include(x => x.Bookmarks)
             .FirstOrDefaultAsync(x => x.Id == userId);
         if (user is null) return BadRequest(new MessageModel("User not found"));
@@ -33,6 +34,9 @@ public class BookmarkController : Controller
 
         var recipe = _dbContext.Recipes.FirstOrDefault(x => x.NameUrl == recipeNameUrl);
         if (recipe is null) return BadRequest(new MessageModel("Recipe not found"));
+
+        if (user.Recipes.Any(x => x.NameUrl == recipeNameUrl))
+            return BadRequest(new MessageModel("You can't bookmark your own recipe"));
 
         var bookmark = new BookmarkEntity()
         {
