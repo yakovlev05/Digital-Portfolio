@@ -31,17 +31,18 @@ public class UserController : Controller
 
     [Authorize(Policy = "auth")]
     [HttpGet("me")]
-    public async Task<ActionResult<GetUserInfoResponse>> GetMyInfo()
+    public async Task<ActionResult<GetMyInfoResponse>> GetMyInfo()
     {
         var userIdRequest = User.FindFirstValue("id");
         if (userIdRequest is null) return BadRequest(new MessageModel("Empty id in the JWT token"));
 
         var user = await _dbContext.Users
             .Include(x => x.Recipes)
+            .Include(x => x.Bookmarks)
             .FirstOrDefaultAsync(x => x.Id == int.Parse(userIdRequest));
         if (user is null) return BadRequest(new MessageModel("User not found"));
 
-        var response = new GetUserInfoResponse(
+        var response = new GetMyInfoResponse(
             user.Login,
             user.Email,
             user.Name,
@@ -50,7 +51,8 @@ public class UserController : Controller
             user.DateRegistration.ToString("dd.MM.yyyy"),
             user.Description,
             user.ProfilePhoto,
-            user.Recipes.Count
+            user.Recipes.Count,
+            user.Bookmarks.Count
         );
         return response;
     }

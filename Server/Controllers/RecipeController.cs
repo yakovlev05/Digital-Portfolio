@@ -5,6 +5,7 @@ using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
 using Server.Models.Recipe;
+using Server.Models.User;
 using Server.Services.Interfaces;
 
 namespace Server.Controllers;
@@ -215,5 +216,22 @@ public class RecipeController : Controller
         await _dbContext.SaveChangesAsync();
 
         return Ok("Recipe deleted");
+    }
+
+    [Authorize(Policy = "auth")]
+    [HttpGet("{recipeUrl}/info")]
+    public async Task<ActionResult<GetMyInfoAboutRecipeResponse>> GetMyInfoAboutRecipe(string recipeUrl)
+    {
+        var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
+        var user = await _dbContext.Users
+            .Include(x => x.Recipes)
+            .Include(x => x.Bookmarks)
+            .FirstOrDefaultAsync(x => x.Id == userId);
+        if (user is null) return BadRequest(new MessageModel("User not found"));
+
+        var isMyRecipe = user.Recipes.Any(x => x.NameUrl == recipeUrl);
+        var isMyBookmark = user.Bookmarks.Any(x => x.NameUrl == recipeUrl);
+
+        return new GetMyInfoAboutRecipeResponse(isMyBookmark, isMyRecipe);
     }
 }
