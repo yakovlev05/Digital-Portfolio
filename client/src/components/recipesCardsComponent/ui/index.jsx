@@ -6,10 +6,15 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import GetMyRecipesRequestApi from "../../../apiServices/User/GetMyRecipesRequestApi";
 import GetUserRecipesRequestApi from "../../../apiServices/User/GetUserRecipesRequestApi";
+import GetMyBookmarksRequestApi from "../../../apiServices/User/GetMyBookmarksRequestApi";
 import {toast} from "react-toastify";
 
 
-const RecipesCardsComponent = ({isPortfolio = false, isBookmarks = false}) => {
+const RecipesCardsComponent = ({
+                                   isPortfolio = false,
+                                   isBookmarks = false,
+                                   isAuthorized = false,
+                               }) => {
     const {username} = useParams();
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(3);
@@ -26,7 +31,7 @@ const RecipesCardsComponent = ({isPortfolio = false, isBookmarks = false}) => {
                 if (username === undefined) response = await GetMyRecipesRequestApi(token, page, count);
                 else response = await GetUserRecipesRequestApi(username, page, count);
             } else if (isBookmarks) {
-
+                response = await GetMyBookmarksRequestApi(token, page, count);
             }
 
 
@@ -53,9 +58,14 @@ const RecipesCardsComponent = ({isPortfolio = false, isBookmarks = false}) => {
 
                 {recipes.map((recipe, index) => {
                     if (isLoading) {
-                        if (index < page * count - count) return <RecipeCardComponent recipe={recipe}/>
+                        if (index < page * count - count) return <RecipeCardComponent recipe={recipe}
+                                                                                      key={index}
+                                                                                      isAuthorized={isAuthorized}/>
                     } else {
-                        return <RecipeCardComponent recipe={recipe}/>
+                        return <RecipeCardComponent
+                            recipe={recipe}
+                            key={index}
+                            isAuthorized={isAuthorized}/>
                     }
                 })}
 

@@ -23,7 +23,8 @@ const ProfilePortfolioComponent = () => {
                 </div>
             }
 
-            {user.recipesCount !== 0 && <RecipesCardsComponent isPortfolio={true}/>}
+            {user.recipesCount !== 0 &&
+                <RecipesCardsComponent isPortfolio={true} isAuthorized={auth.logged}/>}
         </>
     )
 }

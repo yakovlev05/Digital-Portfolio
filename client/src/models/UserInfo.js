@@ -10,6 +10,7 @@ class UserInfo {
             this.description = json.description;
             this.profilePhoto = json.profilePhoto;
             this.recipesCount = json.recipesCount;
+            this.bookmarksCount = json.bookmarksCount === undefined ? null : json.bookmarksCount
         } else {
             this.login = null;
             this.email = null;
@@ -20,6 +21,7 @@ class UserInfo {
             this.description = null;
             this.profilePhoto = null;
             this.recipesCount = null;
+            this.bookmarksCount = null;
         }
 
     }
