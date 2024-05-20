@@ -90,20 +90,22 @@ public class RecipeController : Controller
 
     [AllowAnonymous]
     [HttpGet("{recipeUrl}")]
-    public async Task<ActionResult<RecipeModel>> GetRecipe(string recipeUrl)
+    public async Task<ActionResult<GetRecipeModelResponse>> GetRecipe(string recipeUrl)
     {
         var recipe = await _dbContext.Recipes
             .Include(x => x.Ingredients)
             .Include(x => x.Energy)
             .Include(x => x.Steps)
+            .Include(x => x.User)
             .FirstOrDefaultAsync(x => x.NameUrl == recipeUrl);
 
         if (recipe is null) return BadRequest("Recipe not found");
-        var response = new RecipeModel(
-            recipe.Id,
+        var response = new GetRecipeModelResponse(
             recipe.NameUrl,
             recipe.Name,
             recipe.MainImageName,
+            recipe.User.Login,
+            recipe.User.ProfilePhoto,
             recipe.Category,
             recipe.CookingTimeInMinutes.Minutes,
             recipe.Description,
