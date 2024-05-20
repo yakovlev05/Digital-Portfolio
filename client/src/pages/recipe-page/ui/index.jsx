@@ -8,9 +8,17 @@ import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import AuthContext from "../../../contexts/AuthContext";
 import LoaderComponent from "../../../components/LoaderComponent";
+import RecipePageComponent from "../../../components/recipePageComponent";
+import {useParams} from "react-router-dom";
+import GetRecipeRequestResponse from "../../../apiServices/Recipe/GetRecipeRequestResponse";
+import GetMyInfoAboutRecipeRequestApi from "../../../apiServices/Recipe/GetMyInfoAboutRecipeRequestApi";
+import {Helmet} from "react-helmet";
 
 const RecipePage = () => {
+    const {recipeNameUrl} = useParams();
     const [myInfo, setMyInfo] = useState(null);
+    const [recipeInfo, setRecipeInfo] = useState(null);
+    const [myRecipeAccess, setMyRecipeAccess] = useState(null);
     const [auth, setAuth] = useState({logged: false, canChange: false});
     const [isLoaded, setIsLoaded] = useState(false);
     const token = localStorage.getItem('token')
@@ -24,15 +32,43 @@ const RecipePage = () => {
                     const myUserInfo = new UserInfo(await response.json());
                     setMyInfo(myUserInfo);
                     setAuth({logged: true, canChange: false}); //canChange не используется, проверка происходит в компоненте рецепта
-                    setTimeout(() => setIsLoaded(true), 400);
                 }
             })
             .catch(() => toast.error('Ошибка загрузки данных о пользователе'))
     }
 
+    const getRecipeInfo = async () => {
+        const response = GetRecipeRequestResponse(recipeNameUrl);
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    const recipeInfo = await response.json();
+                    setRecipeInfo(recipeInfo);
+                }
+            })
+            .catch(() => toast.error('Ошибка загрузки данных о рецепте'))
+    }
+
+    const getRecipeAccess = async () => {
+        const response = GetMyInfoAboutRecipeRequestApi(token, recipeNameUrl);
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    const myRecipeAccess = await response.json();
+                    setMyRecipeAccess(myRecipeAccess);
+                }
+            })
+            .catch(() => toast.error('Ошибка при загрузке доступа к рецепту'))
+    }
+
     useEffect(() => {
-        getMyInfo()
-            .catch(() => toast.error('Ошибка загрузки данных о пользователе'));
+        const fetchData = async () => Promise.all([getMyInfo(), getRecipeInfo(), getRecipeAccess()]);
+
+        fetchData()
+            .then(() => setTimeout(() => setIsLoaded(true), 400))
+            .catch(() => toast.error('Ошибка загрузки данных'));
     }, []);
 
     if (!isLoaded) {
@@ -41,9 +77,14 @@ const RecipePage = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Рецепт: {recipeInfo.name}</title>
+            </Helmet>
+
             <AuthContext.Provider value={auth}>
                 <UserInfoContext.Provider value={myInfo}>
                     <MainHeaderComponent/>
+                    <RecipePageComponent recipe={recipeInfo}/>
                     <FooterComponent/>
                 </UserInfoContext.Provider>
             </AuthContext.Provider>
