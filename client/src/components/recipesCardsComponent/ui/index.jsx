@@ -33,7 +33,7 @@ const RecipesCardsComponent = ({
             } else if (isBookmarks) {
                 response = GetMyBookmarksRequestApi(token, page, count);
             } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
-            
+
             response
                 .then(async (response) => {
                     if (response.ok) {
