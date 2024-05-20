@@ -28,28 +28,30 @@ const RecipesCardsComponent = ({
             setIsLoading(true);
             let response = null;
             if (isPortfolio) {
-                if (username === undefined) response = await GetMyRecipesRequestApi(token, page, count);
-                else response = await GetUserRecipesRequestApi(username, page, count);
+                if (username === undefined) response = GetMyRecipesRequestApi(token, page, count);
+                else response = GetUserRecipesRequestApi(username, page, count);
             } else if (isBookmarks) {
-                response = await GetMyBookmarksRequestApi(token, page, count);
-            }
-
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.recipes.length < count) setIsEnd(true);
-                setRecipes(recipes => [...recipes, ...data.recipes]);
-
-            } else {
-                toast.error('Ошибка при загрузке рецептов')
-            }
-            setTimeout(() => {
-                setIsLoading(false)
-            }, 1000);
+                response = GetMyBookmarksRequestApi(token, page, count);
+            } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
+            
+            response
+                .then(async (response) => {
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.recipes.length < count) setIsEnd(true);
+                        setRecipes(recipes => [...recipes, ...data.recipes]);
+                        setTimeout(() => {
+                            setIsLoading(false)
+                        }, 1000)
+                    } else {
+                        toast.error('Ошибка при загрузке рецептов')
+                    }
+                })
+                .catch(() => toast.error('Ошибка при загрузке рецептов'))
         }
 
         fetchData()
-            .catch(() => toast.error('Ошибка при загрузке рецептов'))
+            .catch(() => toast.error('Непредвиденная ошибка при загрузке рецептов'))
     }, [count, page, token, username]);
 
     return (
