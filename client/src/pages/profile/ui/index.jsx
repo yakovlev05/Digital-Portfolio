@@ -10,6 +10,7 @@ import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestA
 import {useParams} from "react-router-dom";
 import LoaderComponent from "../../../components/LoaderComponent";
 import UserInfo from "../../../models/UserInfo";
+import {Helmet} from "react-helmet";
 
 const ProfilePage = () => {
     const {username} = useParams();
@@ -68,6 +69,10 @@ const ProfilePage = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Профиль {userInfo.login}</title>
+            </Helmet>
+
             <AuthContext.Provider value={auth}>
                 <UserInfoContext.Provider value={myUserInfo}>
                     <div className={styles.divContainer}>
