@@ -7,6 +7,7 @@ import SetPasswordPage from "./set-password";
 import ConfirmEmailPage from "./confirm-email";
 import ProfilePage from "./profile";
 import ProfileEditPage from "./profile-edit";
+import RecipePage from "./recipe-page";
 
 const AppRouter = () => {
     return (
@@ -22,6 +23,7 @@ const AppRouter = () => {
                     <Route path='/me' element={<ProfilePage/>}/>
                     <Route path='/me/edit' element={<ProfileEditPage/>}/>
                     <Route exact path='/:username' element={<ProfilePage/>}/>
+                    <Route excat path='/recipe/:recipeNameUrl' element={<RecipePage/>}/>
                 </Routes>
             </Router>
         </>
