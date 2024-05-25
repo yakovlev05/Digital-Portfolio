@@ -119,7 +119,8 @@ public class RecipeController : Controller
                 recipe.Energy.CarbohydratesTo,
                 recipe.Energy.ProteinsFrom,
                 recipe.Energy.ProteinsTo),
-            recipe.Steps.Select(x => new RecipeStepModel(x.StepNumber, x.Description, x.ImageName)).ToList()
+            recipe.Steps.Select(x => new RecipeStepModel(x.StepNumber, x.Description, x.ImageName))
+                .OrderBy(x => x.StepNumber).ToList()
         );
 
         return response;
