@@ -34,7 +34,7 @@ const MainHeaderComponent = () => {
             <div style={{display: auth.logged ? 'block' : 'none'}}>
                 <a href={'/me'}>
                     <img className={styles.avatar}
-                         src={userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
+                         src={auth.logged && userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
                          alt='аватар'></img>
                 </a>
             </div>

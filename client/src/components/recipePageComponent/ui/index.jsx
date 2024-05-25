@@ -68,7 +68,7 @@ const RecipePageComponent = ({recipe}) => {
                         {
                             recipe.steps.map((step, index) => {
                                 return (
-                                    <li className={styles.stepElement}>
+                                    <li className={styles.stepElement} key={index}>
                                         <h3 className={styles.stepElementTitle}>{step.stepNumber} шаг</h3>
                                         <p className={styles.stepElementDescription}>{step.description}</p>
                                         <img className={styles.stepElementImage}
