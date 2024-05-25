@@ -6,6 +6,7 @@ public record GetRecipeModelResponse(
     string ImageName,
     string AuthorLogin,
     string? AuthorImage,
+    int CountAuthorRecipes,
     string Category,
     int CookingTimeInMinutes,
     string Description,

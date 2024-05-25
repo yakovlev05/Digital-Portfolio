@@ -97,6 +97,7 @@ public class RecipeController : Controller
             .Include(x => x.Energy)
             .Include(x => x.Steps)
             .Include(x => x.User)
+            .ThenInclude(userEntity => userEntity.Recipes)
             .FirstOrDefaultAsync(x => x.NameUrl == recipeUrl);
 
         if (recipe is null) return BadRequest("Recipe not found");
@@ -106,6 +107,7 @@ public class RecipeController : Controller
             recipe.MainImageName,
             recipe.User.Login,
             recipe.User.ProfilePhoto,
+            recipe.User.Recipes.Count,
             recipe.Category,
             recipe.CookingTimeInMinutes.Minutes,
             recipe.Description,
