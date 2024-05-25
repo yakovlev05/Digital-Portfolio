@@ -13,6 +13,7 @@ import {useParams} from "react-router-dom";
 import GetRecipeRequestResponse from "../../../apiServices/Recipe/GetRecipeRequestResponse";
 import GetMyInfoAboutRecipeRequestApi from "../../../apiServices/Recipe/GetMyInfoAboutRecipeRequestApi";
 import {Helmet} from "react-helmet";
+import MoreRecipesFromAuthorComponent from "../../../components/moreRecipesFromAuthorComponent";
 
 const RecipePage = () => {
     const {recipeNameUrl} = useParams();
@@ -93,6 +94,12 @@ const RecipePage = () => {
                     <div className={styles.container}>
                         <MainHeaderComponent/>
                         <RecipePageComponent recipe={recipeInfo}/>
+                        <MoreRecipesFromAuthorComponent 
+                            isAuthorized={auth.logged} 
+                            userLogin={recipeInfo.authorLogin}
+                            filterNameUrl={recipeInfo.recipeUrl}
+                            recipeCount={recipeInfo.countAuthorRecipes}
+                        />
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>

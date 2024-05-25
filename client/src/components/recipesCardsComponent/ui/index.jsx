@@ -14,6 +14,9 @@ const RecipesCardsComponent = ({
                                    isPortfolio = false,
                                    isBookmarks = false,
                                    isAuthorized = false,
+                                   isAnother = false,
+                                   userRequest = null,
+    filterNameUrl = null
                                }) => {
     const {username} = useParams();
     const [page, setPage] = useState(1);
@@ -32,6 +35,8 @@ const RecipesCardsComponent = ({
                 else response = GetUserRecipesRequestApi(username, page, count);
             } else if (isBookmarks) {
                 response = GetMyBookmarksRequestApi(token, page, count);
+            } else if (isAnother) {
+                response = response = GetUserRecipesRequestApi(userRequest, page, count);
             } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
 
             response
@@ -59,6 +64,7 @@ const RecipesCardsComponent = ({
             <div className={styles.container}>
 
                 {recipes.map((recipe, index) => {
+                    if (filterNameUrl===recipe.nameUrl) return null;
                     if (isLoading) {
                         if (index < page * count - count) return <RecipeCardComponent recipe={recipe}
                                                                                       key={index}
