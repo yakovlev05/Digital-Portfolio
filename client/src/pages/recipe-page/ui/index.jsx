@@ -72,20 +72,29 @@ const RecipePage = () => {
     }, []);
 
     if (!isLoaded) {
-        return <LoaderComponent/>;
+        return (
+            <>
+                <Helmet>
+                    <title>Загрузка...</title>
+                </Helmet>
+                <LoaderComponent/>
+            </>
+        )
     }
 
     return (
         <>
             <Helmet>
-                <title>Рецепт: {recipeInfo.name}</title>
+                <title>Рецепт: {recipeInfo ? recipeInfo.name : 'Загрузка...'}</title>
             </Helmet>
 
             <AuthContext.Provider value={auth}>
                 <UserInfoContext.Provider value={myInfo}>
-                    <MainHeaderComponent/>
-                    <RecipePageComponent recipe={recipeInfo}/>
-                    <FooterComponent/>
+                    <div className={styles.container}>
+                        <MainHeaderComponent/>
+                        <RecipePageComponent recipe={recipeInfo}/>
+                        <FooterComponent/>
+                    </div>
                 </UserInfoContext.Provider>
             </AuthContext.Provider>
         </>

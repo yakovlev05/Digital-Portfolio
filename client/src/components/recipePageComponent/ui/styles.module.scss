@@ -1,0 +1,265 @@
+.body {
+  background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.recipeContainer {
+  background: #0D3B66;
+  border-radius: 75px;
+  //width: 1100px;
+  width: 1000px;
+  margin: 155px 0 100px 0;
+
+  display: flex;
+  flex-direction: column;
+  //align-items: center;
+  //justify-content: center;
+
+  padding: 50px 50px 50px 50px;
+}
+
+.recipeName {
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 49px;
+  text-transform: uppercase;
+
+  text-align: center;
+
+  margin: 0 0 50px 0;
+}
+
+.recipeInfoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 60px;
+}
+
+.mainImage {
+  display: block;
+
+  aspect-ratio: 1/1;
+  width: 450px;
+  height: auto;
+
+  border-radius: 20px;
+}
+
+.cardsInfoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+
+}
+
+.cardInfo {
+  border: 3px solid rgba(255, 255, 255, 1);
+  border-radius: 10px;
+
+  padding: 10px 10px 10px 10px;
+  text-align: start;
+
+  min-width: 300px;
+  min-height: 60px;
+
+  font-size: 20px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+}
+
+.cardAuthor {
+  @extend .cardInfo;
+
+  display: flex;
+  align-items: center;
+}
+
+.photoAuthor {
+  display: block;
+  width: 60px;
+  border-radius: 50%;
+
+  margin-right: 20px;
+}
+
+.loginAuthor {
+  display: block;
+  text-decoration: none;
+
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+
+  color: #FFFFFF;
+}
+
+.cardTime {
+  @extend .cardInfo;
+
+  background: url("./img/time.png") no-repeat 10px center;
+  padding-left: 68px;
+}
+
+.cardBookmark {
+  @extend .cardInfo;
+
+  background: url("./img/bookmark.png") no-repeat 10px center;
+  padding-left: 68px;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.descriptionTitle {
+  margin: 0 0 30px;
+  padding: 0;
+  text-align: center;
+}
+
+.descriptionText {
+  margin: 0;
+  text-align: justify;
+}
+
+.ingredientsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+
+.ingredientsTitle {
+  margin: 0 0 30px;
+  padding: 0;
+  text-align: center;
+}
+
+.ingredientsList {
+  padding: 0;
+  margin: 0 0 0 20px;
+
+}
+
+.ingredientElement {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+}
+
+.ingredientElementLine {
+  border-bottom: 1px solid rgb(255, 255, 255, 0.5);
+  flex: 1;
+
+  margin-bottom: 7px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.energyContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.energyTitle {
+  margin: 0 0 30px;
+  padding: 0;
+  text-align: center;
+}
+
+.energyList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.energyElement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.energyElementTitle {
+  padding: 0;
+
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+
+  margin: 0 0 5px;
+}
+
+.energyElementValue {
+  margin: 0;
+  padding: 0;
+}
+
+.stepsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepsTitle {
+  margin: 0 0 30px;
+  padding: 0;
+  text-align: center;
+}
+
+.stepsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.stepElement {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepElementTitle {
+  margin: 0 0 20px;
+}
+
+.stepElementDescription {
+  margin: 0 0 20px;
+  text-align: justify;
+}
+
+.stepElementImage {
+  display: block;
+  width: 400px;
+  height: auto;
+  border-radius: 20px;
+
+  align-self: center;
+}
