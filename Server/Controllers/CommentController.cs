@@ -25,10 +25,7 @@ public class CommentController : Controller
     public async Task<ActionResult<AddCommentResponse>> AddComment(AddCommentRequest request)
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
-        var user = await _dbContext.Users
-            .Include(x => x.Recipes)
-            .ThenInclude(recipeEntity => recipeEntity.Comments)
-            .FirstOrDefaultAsync(x => x.Id == userId);
+        var user = await _dbContext.Users.FindAsync(userId);
         if (user is null) return BadRequest("User not found");
 
         if (request.Rating < 1 || request.Rating > 5) return BadRequest("Rating must be from 1 to 5");
@@ -36,7 +33,9 @@ public class CommentController : Controller
         if (request.Description.Contains('<') || request.Description.Contains('>'))
             return BadRequest("Characters '<' and '>' are prohibited");
 
-        var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == request.RecipeUrl);
+        var recipe = await _dbContext.Recipes
+            .Include(recipeEntity => recipeEntity.Comments)
+            .FirstOrDefaultAsync(x => x.NameUrl == request.RecipeUrl);
         if (recipe is null) return BadRequest("Recipe not found");
         var newCommentEntity = new CommentEntity()
         {
@@ -85,15 +84,15 @@ public class CommentController : Controller
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
         var user = await _dbContext.Users
             .Include(x => x.Comments)
-            .Include(x => x.Recipes)
-            .ThenInclude(x => x.Comments)
             .FirstOrDefaultAsync(x => x.Id == userId);
         if (user is null) return BadRequest("User not found");
 
         var comment = user.Comments.FirstOrDefault(x => x.Guid == commentGuid);
         if (comment is null) return BadRequest("Comment not found");
 
-        var recipe = user.Recipes.FirstOrDefault(x => x.Id == comment.RecipeEntityId);
+        var recipe = await _dbContext.Recipes
+            .Include(recipeEntity => recipeEntity.Comments)
+            .FirstOrDefaultAsync(x => x.Id == comment.RecipeEntityId);
         if (recipe is null) return BadRequest("Recipe not found");
 
         if (request.NewRating < 1 || request.NewRating > 5) return BadRequest("Rating must be from 1 to 5");
