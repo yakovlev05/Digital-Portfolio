@@ -35,8 +35,8 @@ public class BookmarkController : Controller
         var recipe = _dbContext.Recipes.FirstOrDefault(x => x.NameUrl == recipeNameUrl);
         if (recipe is null) return BadRequest(new MessageModel("Recipe not found"));
 
-        if (user.Recipes.Any(x => x.NameUrl == recipeNameUrl))
-            return BadRequest(new MessageModel("You can't bookmark your own recipe"));
+        // if (user.Recipes.Any(x => x.NameUrl == recipeNameUrl))
+        //     return BadRequest(new MessageModel("You can't bookmark your own recipe"));
 
         var bookmark = new BookmarkEntity()
         {

@@ -22,6 +22,15 @@
 
 .authorLogin {
   margin: 20px 30px 20px 0;
+  font-size: 20px;
+  padding: 5px;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.authorLogin:hover {
+  color: #bababa;
 }
 
 .commentDate {
@@ -52,6 +61,7 @@
 .button:hover {
   color: #bababa;
   border-color: #bababa;
+  cursor: pointer;
 }
 
 .editButton {
@@ -76,6 +86,6 @@
   margin-bottom: 20px;
 }
 
-.submitButton{
+.submitButton {
   @extend .button;
 }

@@ -92,6 +92,12 @@
   align-items: center;
 }
 
+.cardAuthor:hover{
+  color: #bababa;
+  border-color: #bababa;
+  cursor: pointer;
+}
+
 .photoAuthor {
   display: block;
   width: 60px;
@@ -107,8 +113,12 @@
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
+  padding: 5px;
+  color: inherit;
+}
 
-  color: #FFFFFF;
+.loginAuthor:hover {
+  color: #bababa;
 }
 
 .cardTime {
@@ -123,6 +133,12 @@
 
   background: url("./img/bookmark.png") no-repeat 10px center;
   padding-left: 68px;
+}
+
+.cardBookmark:hover {
+  color: #bababa;
+  border-color: #bababa;
+  cursor: pointer;
 }
 
 .descriptionContainer {

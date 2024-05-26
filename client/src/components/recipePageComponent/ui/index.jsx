@@ -1,6 +1,55 @@
 import styles from './styles.module.scss';
+import {useNavigate} from "react-router-dom";
+import AddBookmarkRequestApi from "../../../apiServices/Bookmark/AddBookmarkRequestApi";
+import {toast} from "react-toastify";
+import updateToast from "../../../utilities/updateToast";
+import DeleteBookmarkRequestApi from "../../../apiServices/Bookmark/DeleteBookmarkRequestApi";
+import {useState} from "react";
 
-const RecipePageComponent = ({recipe}) => {
+const RecipePageComponent = ({recipe, isMyRecipe = false, isMyBookmark = false, isAuthorized = false}) => {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const [myRequirements, setMyRequirements] = useState({isMyRecipe: isMyRecipe, isMyBookmark: isMyBookmark});
+
+    console.log(myRequirements.isMyBookmark)
+    const addBookmarkHandle = async () => {
+        if (!isAuthorized) {
+            navigate('/login');
+            return;
+        }
+        const id = toast.loading('Добавление в избранное...');
+
+        const response = AddBookmarkRequestApi(token, recipe.recipeUrl);
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Добавлено в избранное', id);
+                    setMyRequirements({...myRequirements, isMyBookmark: true});
+                } else {
+                    updateToast('error', 'Ошибка добавления в избранное', id);
+                }
+            })
+            .catch(() => updateToast('error', 'Непредвиденная ошика при добавлении в избранное', id))
+    }
+
+    const removeBookmarkHandle = async () => {
+        const id = toast.loading('Удаление из избранного...');
+
+        const response = DeleteBookmarkRequestApi(token, recipe.recipeUrl);
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Удалено из избранного', id);
+                    setMyRequirements({...myRequirements, isMyBookmark: false})
+                } else {
+                    updateToast('error', 'Ошибка удаления из избранного', id);
+                }
+            })
+            .catch(() => updateToast('error', 'Непредвиденная ошика при удалении из избранного', id));
+    }
+
     return (
         <div className={styles.body}>
             <div className={styles.recipeContainer}>
@@ -9,14 +58,22 @@ const RecipePageComponent = ({recipe}) => {
                     <img className={styles.mainImage} src={`/api/v1/content/image/${recipe.imageName}`}
                          alt='главное фото блюда'/>
                     <ul className={styles.cardsInfoList}>
-                        <li className={styles.cardAuthor}>
+                        <li className={styles.cardAuthor} onClick={() => navigate(`/${recipe.authorLogin}`)}>
                             <img className={styles.photoAuthor} src={`/api/v1/content/image/${recipe.authorImage}`}
                                  alt='автор'/>
                             <a className={styles.loginAuthor} href={`/${recipe.authorLogin}`}>{recipe.authorLogin}</a>
                         </li>
                         <li className={styles.cardInfo}>{recipe.category}</li>
                         <li className={styles.cardTime}>{recipe.cookingTimeInMinutes} минут</li>
-                        <li className={styles.cardBookmark}>В избранное</li>
+                        {
+                            (!isAuthorized || !myRequirements.isMyBookmark) &&
+                            <li className={styles.cardBookmark} onClick={addBookmarkHandle}>Добавить в избранное</li>
+                        }
+                        {
+                            myRequirements.isMyBookmark &&
+                            <li className={styles.cardBookmark} onClick={removeBookmarkHandle}>Удалить из
+                                избранного</li>
+                        }
                     </ul>
                 </div>
                 <div className={styles.descriptionContainer}>

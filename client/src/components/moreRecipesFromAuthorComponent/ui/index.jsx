@@ -13,6 +13,7 @@ const MoreRecipesFromAuthorComponent = ({isAuthorized = false, userLogin = null,
                     <RecipesCardsComponent isAuthorized={isAuthorized}
                                            isAnother={true}
                                            userRequest={userLogin}
+                                           isPortfolio={true}
                                            // filterNameUrl={filterNameUrl} // Лучше на бэке сделать отдельный эндпоинт
                     />
                 </div>

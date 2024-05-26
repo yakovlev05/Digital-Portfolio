@@ -43,7 +43,7 @@ const CommentComponent = ({comment, myLogin = null}) => {
     return (
         <div className={styles.commentContainer}>
             <div className={styles.headerComment}>
-                <h1 className={styles.authorLogin}>{comment.userLogin}</h1>
+                <a className={styles.authorLogin} href={`/${comment.userLogin}`}>{comment.userLogin}</a>
                 {
                     !showEdit &&
                     <StarRatings

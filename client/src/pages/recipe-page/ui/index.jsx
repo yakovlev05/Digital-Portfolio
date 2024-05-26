@@ -96,7 +96,12 @@ const RecipePage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
-                        <RecipePageComponent recipe={recipeInfo}/>
+                        <RecipePageComponent
+                            recipe={recipeInfo}
+                            isMyRecipe={myRecipeAccess ? myRecipeAccess.isMyRecipe : false}
+                            isMyBookmark={myRecipeAccess ? myRecipeAccess.isMyBookmark : false}
+                            isAuthorized={auth.logged}
+                        />
                         <MoreRecipesFromAuthorComponent
                             isAuthorized={auth.logged}
                             userLogin={recipeInfo.authorLogin}

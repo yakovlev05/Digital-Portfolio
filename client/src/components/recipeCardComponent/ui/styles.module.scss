@@ -36,6 +36,15 @@
 .name {
   grid-area: name;
   margin: auto 0 auto 10px;
+  
+  font-size: 19px;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.name:hover{
+    color: #bababa;
 }
 
 .rating {
@@ -86,6 +95,7 @@
 .button:hover {
   color: #bababa;
   border-color: #bababa;
+  cursor: pointer;
 }
 
 .buttonBookmark {

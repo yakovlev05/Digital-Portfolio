@@ -11,7 +11,7 @@ import DeleteBookmarkRequestApi from "../../../apiServices/Bookmark/DeleteBookma
 import {useNavigate} from "react-router-dom";
 
 
-const RecipeCardComponent = ({recipe, isAuthorized = false}) => {
+const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false, isPortfolio = false}) => {
     const navigate = useNavigate();
     if (recipe.rating === 0) recipe.rating = 5;
     const [myRequirements, setMyRequirements] = useState({isMyRecipe: false, isMyBookmark: false});
@@ -34,7 +34,7 @@ const RecipeCardComponent = ({recipe, isAuthorized = false}) => {
 
         response
             .then(async (response) => {
-                var json = await response.json();
+                const json = await response.json();
                 if (response.ok) setMyRequirements(json);
             })
             .catch(() => toast.error("Ошибка при проверке наличия в избранном"));
@@ -45,7 +45,7 @@ const RecipeCardComponent = ({recipe, isAuthorized = false}) => {
             navigate('/login')
             return;
         }
-        
+
         const id = toast.loading('Добавление в избранное...')
         const response = AddBookmarkRequestApi(token, recipe.nameUrl);
 
@@ -77,7 +77,7 @@ const RecipeCardComponent = ({recipe, isAuthorized = false}) => {
         <div className={styles.recipeCard}>
             <img className={styles.image} src={`/api/v1/content/image/${recipe.imageName}`} alt='блюдо' width='150'
                  height='150'/>
-            <h3 className={styles.name}>{recipe.name}</h3>
+            <a className={styles.name} href={`/recipe/${recipe.nameUrl}`}>{recipe.name}</a>
             <p className={styles.rating}>
                 <span>Рейтинг :</span>
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
@@ -95,16 +95,16 @@ const RecipeCardComponent = ({recipe, isAuthorized = false}) => {
             <p className={styles.ingredients}>ингредиентов: {recipe.ingredientsCount}</p>
             <p className={styles.category}>{recipe.category}</p>
 
-            {!isLoading && myRequirements.isMyRecipe &&
+            {!isLoading && myRequirements.isMyRecipe && !isBookmarks &&
                 <button className={styles.button}>Редактировать</button>
             }
 
-            {!isLoading && (!isAuthorized || !myRequirements.isMyRecipe) && !myRequirements.isMyBookmark &&
+            {!isLoading && ((!isPortfolio && !myRequirements.isMyBookmark) || (isPortfolio && !myRequirements.isMyRecipe && !myRequirements.isMyBookmark)) &&
                 <button className={styles.buttonBookmark} onClick={handleButtonAddBookmark}>Добавить в
                     избранное</button>
             }
 
-            {!isLoading && myRequirements.isMyBookmark &&
+            {!isLoading && ((!isPortfolio && myRequirements.isMyBookmark) || (isPortfolio && !myRequirements.isMyRecipe && myRequirements.isMyBookmark)) &&
                 <button className={styles.buttonBookmark} onClick={handleButtonDeleteBookmark}>Удалить из
                     избранного</button>
             }

@@ -16,7 +16,7 @@ const RecipesCardsComponent = ({
                                    isAuthorized = false,
                                    isAnother = false,
                                    userRequest = null,
-    filterNameUrl = null
+                                   filterNameUrl = null
                                }) => {
     const {username} = useParams();
     const [page, setPage] = useState(1);
@@ -30,7 +30,7 @@ const RecipesCardsComponent = ({
         const fetchData = async () => {
             setIsLoading(true);
             let response = null;
-            if (isPortfolio) {
+            if (isPortfolio && !isAnother) {
                 if (username === undefined) response = GetMyRecipesRequestApi(token, page, count);
                 else response = GetUserRecipesRequestApi(username, page, count);
             } else if (isBookmarks) {
@@ -64,16 +64,20 @@ const RecipesCardsComponent = ({
             <div className={styles.container}>
 
                 {recipes.map((recipe, index) => {
-                    if (filterNameUrl===recipe.nameUrl) return null;
+                    if (filterNameUrl === recipe.nameUrl) return null;
                     if (isLoading) {
                         if (index < page * count - count) return <RecipeCardComponent recipe={recipe}
                                                                                       key={index}
-                                                                                      isAuthorized={isAuthorized}/>
+                                                                                      isAuthorized={isAuthorized}
+                                                                                      isBookmarks={isBookmarks}
+                                                                                      isPortfolio={isPortfolio}/>
                     } else {
                         return <RecipeCardComponent
                             recipe={recipe}
                             key={index}
-                            isAuthorized={isAuthorized}/>
+                            isAuthorized={isAuthorized}
+                            isBookmarks={isBookmarks}
+                            isPortfolio={isPortfolio}/>
                     }
                 })}
 
