@@ -14,6 +14,7 @@ import GetRecipeRequestResponse from "../../../apiServices/Recipe/GetRecipeReque
 import GetMyInfoAboutRecipeRequestApi from "../../../apiServices/Recipe/GetMyInfoAboutRecipeRequestApi";
 import {Helmet} from "react-helmet";
 import MoreRecipesFromAuthorComponent from "../../../components/moreRecipesFromAuthorComponent";
+import CommentsControllerComponent from "../../../components/commentsControllerComponent";
 
 const RecipePage = () => {
     const {recipeNameUrl} = useParams();
@@ -65,14 +66,16 @@ const RecipePage = () => {
     }
 
     useEffect(() => {
-        const fetchData = async () => Promise.all([getMyInfo(), getRecipeInfo(), getRecipeAccess()]);
+        const fetchData = async () => {
+            return Promise.all([getMyInfo(), getRecipeInfo(), getRecipeAccess()]);
+        }
 
         fetchData()
             .then(() => setTimeout(() => setIsLoaded(true), 400))
             .catch(() => toast.error('Ошибка загрузки данных'));
     }, []);
 
-    if (!isLoaded) {
+    if (!isLoaded || !recipeInfo) {
         return (
             <>
                 <Helmet>
@@ -94,11 +97,14 @@ const RecipePage = () => {
                     <div className={styles.container}>
                         <MainHeaderComponent/>
                         <RecipePageComponent recipe={recipeInfo}/>
-                        <MoreRecipesFromAuthorComponent 
-                            isAuthorized={auth.logged} 
+                        <MoreRecipesFromAuthorComponent
+                            isAuthorized={auth.logged}
                             userLogin={recipeInfo.authorLogin}
                             filterNameUrl={recipeInfo.recipeUrl}
                             recipeCount={recipeInfo.countAuthorRecipes}
+                        />
+                        <CommentsControllerComponent
+                            recipeUrl={recipeInfo.recipeUrl}
                         />
                         <FooterComponent/>
                     </div>
