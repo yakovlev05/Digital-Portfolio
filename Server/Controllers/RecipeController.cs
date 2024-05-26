@@ -239,4 +239,29 @@ public class RecipeController : Controller
 
         return new GetMyInfoAboutRecipeResponse(isMyBookmark, isMyRecipe);
     }
+
+    [AllowAnonymous]
+    [HttpGet("{recipeUrl}/comments")]
+    public async Task<ActionResult<GetCommentsResponse>> GetComments(string recipeUrl, int page = 1, int count = 5)
+    {
+        var recipe = await _dbContext.Recipes
+            .Include(x => x.Comments)
+            .ThenInclude(x => x.User)
+            .FirstOrDefaultAsync(x => x.NameUrl == recipeUrl);
+        if (recipe is null) return BadRequest(new MessageModel("Recipe not found"));
+
+        var comments = recipe.Comments
+            .OrderByDescending(x => x.Published)
+            .Skip((page - 1) * count)
+            .Take(count)
+            .Select(x => new CommentModel(
+                x.Guid,
+                x.Published.ToString("dd.MM.yyyy"),
+                x.Rating,
+                x.Description,
+                x.User.Login))
+            .ToList();
+
+        return new GetCommentsResponse(recipe.Comments.Count, comments);
+    }
 }

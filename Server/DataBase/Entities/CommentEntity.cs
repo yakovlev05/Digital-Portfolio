@@ -10,5 +10,6 @@ public class CommentEntity
     public int Rating { get; set; }
     public string Description { get; set; }
     public CommentStatus Status { get; set; } = CommentStatus.RequireModeration;
-    public RecipeEntity RecipeEntity { get; set; }
+    public RecipeEntity RecipeEntity { get; set; } = null!;
+    public UserEntity User { get; set; } = null!;
 }
