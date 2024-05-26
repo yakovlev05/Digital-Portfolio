@@ -70,6 +70,7 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
                     setPage(1)
                     setComments([])
                     setRefreshComments(!refreshComments)
+                    setNewComment({recipeUrl: recipeUrl, rating: 0, description: ''})
                 } else {
                     if (response.statusCode === 401) updateToast('error', 'Доступно только авторизованным пользователям', id);
                     const error = await response.json();
@@ -99,7 +100,8 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
                     </div>
                     <textarea className={styles.inputComment}
                               placeholder='Ваш отзыв'
-                              onChange={(e) => setNewComment({...newComment, description: e.target.value})}></textarea>
+                              value={newComment.description}
+                              onInput={(e) => setNewComment({...newComment, description: e.target.value})}></textarea>
                     <button className={styles.commentButton} onClick={submitNewCommentHandle}>Отправить</button>
                 </div>
 
