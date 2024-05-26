@@ -51,7 +51,7 @@ public class CommentController : Controller
 
         await _dbContext.SaveChangesAsync();
 
-        return new AddCommentResponse(newCommentEntity.Guid);
+        return new AddCommentResponse(newCommentEntity.Guid, DateTime.UtcNow.ToString("dd.MM.yyyy"));
     }
 
     [AllowAnonymous]
