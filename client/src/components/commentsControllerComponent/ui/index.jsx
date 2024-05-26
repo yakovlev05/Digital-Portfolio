@@ -15,6 +15,7 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
     const [comments, setComments] = useState([]);
     const [totalCountComments, setTotalCountComments] = useState(0);
     const [page, setPage] = useState(1);
+    const [refreshComments, setRefreshComments] = useState(false);
     const count = 5;
     const [newComment, setNewComment] = useState({recipeUrl: recipeUrl, rating: 0, description: ''});
     const [isEnd, setIsEnd] = useState(false);
@@ -22,6 +23,7 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
     const token = localStorage.getItem('token');
 
     const getComments = async () => {
+        setIsLoading(true)
         const response = GetRecipeCommentsRequestApi(recipeUrl, page, count);
 
         response
@@ -39,13 +41,12 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
     }
 
     useEffect(() => {
-        setIsLoading(true)
         const fetchData = async () => Promise.all([getComments()]);
 
         fetchData()
             .then(() => setTimeout(() => setIsLoading(false), 1000))
             .catch(() => toast.error('Ошибка загрузки данных'));
-    }, [page]);
+    }, [page, refreshComments]);
 
     const submitNewCommentHandle = async () => {
         if (!isAuthorized) {
@@ -66,6 +67,9 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
             .then(async (response) => {
                 if (response.ok) {
                     updateToast('success', 'Отзыв опубликован', id);
+                    setPage(1)
+                    setComments([])
+                    setRefreshComments(!refreshComments)
                 } else {
                     if (response.statusCode === 401) updateToast('error', 'Доступно только авторизованным пользователям', id);
                     const error = await response.json();
