@@ -71,3 +71,27 @@
   align-items: center;
   gap: 10px;
 }
+
+.newCommentContainer{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 60px;
+}
+
+.commentsContainer{
+  display: flex;
+  flex-direction: column;
+  //gap: 20px;
+}
+
+.spinner{
+  margin-top: 50px;
+  margin-bottom: 50px;
+  color: #FFFFFF;
+}
+
+.moreButton{
+  @extend .commentButton;
+  
+  align-self: center;
+}
