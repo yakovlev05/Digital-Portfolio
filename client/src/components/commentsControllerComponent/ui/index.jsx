@@ -111,12 +111,24 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
                                 if (index < page * count - count) return <CommentComponent
                                     comment={comment}
                                     key={index}
-                                    myLogin={isAuthorized ? userInfo.login : null}/>
+                                    myLogin={isAuthorized ? userInfo.login : null}
+                                    refreshCommentFunc={() => {
+                                        setPage(1)
+                                        setComments([])
+                                        setRefreshComments(!refreshComments)
+                                    }}
+                                />
                             } else {
                                 return <CommentComponent
                                     comment={comment}
                                     key={index}
-                                    myLogin={isAuthorized ? userInfo.login : null}/>
+                                    myLogin={isAuthorized ? userInfo.login : null}
+                                    refreshCommentFunc={() => {
+                                        setPage(1)
+                                        setComments([])
+                                        setRefreshComments(!refreshComments)
+                                    }}
+                                />
                             }
                         })
                     }

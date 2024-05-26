@@ -4,9 +4,10 @@ import {useState} from "react";
 import UpdateCommentRequestApi from "../../../apiServices/Comment/UpdateCommentRequestApi";
 import {toast} from "react-toastify";
 import updateToast from "../../../utilities/updateToast";
+import DeleteCommentRequestApi from "../../../apiServices/Comment/DeleteCommentRequestApi";
 
 
-const CommentComponent = ({comment, myLogin = null}) => {
+const CommentComponent = ({comment, refreshCommentFunc, myLogin = null}) => {
     const isMyComment = comment.userLogin === myLogin;
     const [showEdit, setShowEdit] = useState(false);
     const [editComment, setEditComment] = useState({
@@ -38,6 +39,22 @@ const CommentComponent = ({comment, myLogin = null}) => {
                 } else updateToast('error', 'Ошибка при сохранении изменений', id)
             })
             .catch(() => updateToast('error', 'Непредвиденная ошибка при сохранении изменений', id));
+    }
+
+    const deleteButtonHandle = () => {
+        const id = toast.loading("Удаление комментария...")
+        const response = DeleteCommentRequestApi(token, comment.guid);
+
+        response
+            .then(async (response) => {
+                if (response.ok) {
+                    updateToast('success', 'Комментарий удален', id)
+                    refreshCommentFunc();
+                } else {
+                    updateToast('error', 'Ошибка при удалении комментария', id)
+                }
+            })
+            .catch(() => updateToast('error', 'Непредвиденная ошибка при удалении комментария', id));
     }
 
     return (
@@ -87,10 +104,16 @@ const CommentComponent = ({comment, myLogin = null}) => {
                 isMyComment && !showEdit &&
                 <button className={styles.editButton} onClick={() => setShowEdit(true)}>Редактировать</button>
             }
-            {
-                showEdit &&
-                <button className={styles.submitButton} onClick={saveButtonHandle}>Сохранить</button>
-            }
+            <div className={styles.editButtonsContainer}>
+                {
+                    showEdit &&
+                    <button className={styles.deleteButton} onClick={deleteButtonHandle}>Удалить</button>
+                }
+                {
+                    showEdit &&
+                    <button className={styles.submitButton} onClick={saveButtonHandle}>Сохранить</button>
+                }
+            </div>
         </div>
     )
 }

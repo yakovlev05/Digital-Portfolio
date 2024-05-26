@@ -89,3 +89,18 @@
 .submitButton {
   @extend .button;
 }
+
+.editButtonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.deleteButton {
+  @extend .button;
+  background: #C52E2E;
+  border: none;
+
+  &:hover {
+    background: #912424 !important;
+  }
+}
