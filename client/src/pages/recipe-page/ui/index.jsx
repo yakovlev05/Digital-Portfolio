@@ -105,6 +105,7 @@ const RecipePage = () => {
                         />
                         <CommentsControllerComponent
                             recipeUrl={recipeInfo.recipeUrl}
+                            isAuthorized={auth.logged}
                         />
                         <FooterComponent/>
                     </div>
