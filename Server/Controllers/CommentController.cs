@@ -36,13 +36,12 @@ public class CommentController : Controller
         if (request.Description.Contains('<') || request.Description.Contains('>'))
             return BadRequest("Characters '<' and '>' are prohibited");
 
-        var recipe = user.Recipes.FirstOrDefault(x => x.Id == request.RecipeId);
+        var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == request.RecipeUrl);
         if (recipe is null) return BadRequest("Recipe not found");
-
         var newCommentEntity = new CommentEntity()
         {
             UserEntityId = user.Id,
-            RecipeEntityId = request.RecipeId,
+            RecipeEntityId = recipe.Id,
             Description = request.Description,
             Rating = request.Rating
         };

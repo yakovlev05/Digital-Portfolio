@@ -1,7 +1,7 @@
 ﻿namespace Server.Models.Comment;
 
 public record AddCommentRequest(
-    int RecipeId,
+    string RecipeUrl,
     int Rating,
     string Description
 );
