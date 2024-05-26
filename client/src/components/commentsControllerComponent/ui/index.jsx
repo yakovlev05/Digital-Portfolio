@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import GetRecipeCommentsRequestApi from "../../../apiServices/Recipe/GetRecipeCommentsRequestApi";
 import {toast} from "react-toastify";
 import StarRatings from "react-star-ratings/build/star-ratings";
@@ -8,9 +8,12 @@ import updateToast from "../../../utilities/updateToast";
 import CommentComponent from "../../CommentComponent";
 import {LoadingOutlined} from "@ant-design/icons";
 import {Spin} from "antd";
+import UserInfoContext from "../../../contexts/UserInfoContext";
 
 const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
+    const userInfo = useContext(UserInfoContext);
     const [comments, setComments] = useState([]);
+    const [totalCountComments, setTotalCountComments] = useState(0);
     const [page, setPage] = useState(1);
     const count = 5;
     const [newComment, setNewComment] = useState({recipeUrl: recipeUrl, rating: 0, description: ''});
@@ -25,6 +28,7 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
             .then(async (response) => {
                 if (response.ok) {
                     const jsonComments = await response.json();
+                    setTotalCountComments(jsonComments.totalCount);
                     if (jsonComments.comments.length < count) setIsEnd(true);
                     setComments([...comments, ...jsonComments.comments]);
                 }
@@ -102,11 +106,13 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
                             if (isLoading) {
                                 if (index < page * count - count) return <CommentComponent
                                     comment={comment}
-                                    key={index}/>
+                                    key={index}
+                                    myLogin={isAuthorized ? userInfo.login : null}/>
                             } else {
                                 return <CommentComponent
                                     comment={comment}
-                                    key={index}/>
+                                    key={index}
+                                    myLogin={isAuthorized ? userInfo.login : null}/>
                             }
                         })
                     }
@@ -121,6 +127,10 @@ const CommentsControllerComponent = ({recipeUrl, isAuthorized = false}) => {
                     >Больше
                     </button>
 
+                    {
+                        !isLoading && totalCountComments === 0 &&
+                        <p className={styles.beFirst}>Поделитесь своим мнением! Будьте первыми!</p>
+                    }
                 </div>
             </div>
         </div>

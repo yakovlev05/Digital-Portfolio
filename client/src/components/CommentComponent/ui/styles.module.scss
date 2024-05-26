@@ -5,26 +5,77 @@
   font-size: 16px;
   line-height: 24px;
   color: #FFFFFF;
-  
+
   border-bottom: 1px solid #FFFFFF;
   border-top: 1px solid #FFFFFF;
   margin-bottom: 30px;
+
+  display: flex;
+  flex-direction: column;
 }
 
-.headerComment{
+.headerComment {
   display: flex;
   justify-content: start;
   align-items: center;
 }
 
-.authorLogin{
+.authorLogin {
   margin: 20px 30px 20px 0;
 }
 
-.commentDate{
+.commentDate {
   margin-left: 30px;
 }
 
-.commentDescription{
+.commentDescription {
   margin: 0 0 10px 0;
+}
+
+.button {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 700;
+  color: #FFFFFF;
+
+  width: 200px;
+  height: 40px;
+
+  border: 3px solid #FFFFFF;
+  border-radius: 25px;
+  background: inherit;
+
+  margin-bottom: 20px;
+  align-self: end;
+}
+
+.button:hover {
+  color: #bababa;
+  border-color: #bababa;
+}
+
+.editButton {
+  @extend .button;
+}
+
+.inputComment {
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  resize: none;
+
+  background-color: inherit;
+  height: 70px;
+
+  font-style: inherit;
+  font-weight: 400;
+  font-size: inherit;
+  line-height: 20px;
+  color: #FFFFFF;
+
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.submitButton{
+  @extend .button;
 }
