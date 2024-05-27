@@ -25,67 +25,54 @@ public class RecipeController : Controller
 
     [Authorize(Policy = "auth")]
     [HttpPost("add")]
-    public async Task<ActionResult<AddRecipeResponse>> AddRecipe(
-        [FromBody] RecipeModel model)
+    public async Task<ActionResult<AddRecipeResponse>> AddRecipe([FromBody] RecipeModel request)
     {
         var userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
-
         var user = await _dbContext.Users.FindAsync(userId);
         if (user is null) return BadRequest("User not found");
 
         var recipe = new RecipeEntity()
         {
             UserEntityId = user.Id,
-            NameUrl = _urlService.GetUrlFromString(model.Name),
-            Name = model.Name,
-            MainImageName = model.MainImageName,
-            Category = model.Category,
-            CookingTimeInMinutes = TimeSpan.FromMinutes(model.CookingTimeMinutes),
-            Description = model.Description
-        };
-
-        var recipeIngredients = new List<RecipeIngredientEntity>();
-        foreach (var ingredient in model.Ingredients)
-        {
-            recipeIngredients.Add(new RecipeIngredientEntity()
+            NameUrl = _urlService.GetUrlFromString(request.Name),
+            Name = request.Name,
+            MainImageName = request.MainImageName,
+            Category = request.Category,
+            CookingTimeInMinutes = TimeSpan.FromMinutes(request.CookingTimeInMinutes),
+            Description = request.Description,
+            Ingredients = request.Ingredients
+                .Select(x => new RecipeIngredientEntity()
+                {
+                    Name = x.Name,
+                    Quantity = x.Quantity,
+                    Unit = x.Unit
+                })
+                .ToList(),
+            Energy = new RecipeEnergyEntity()
             {
-                Name = ingredient.Name,
-                Quantity = ingredient.Quantity,
-                Unit = ingredient.Unit,
-            });
-        }
-
-        var recipeSteps = new List<RecipeStepEntity>();
-        foreach (var step in model.Steps)
-        {
-            recipeSteps.Add(new RecipeStepEntity()
-            {
-                StepNumber = step.StepNumber,
-                Description = step.Description,
-                ImageName = step.ImageName,
-            });
-        }
-
-        var recipeEnergy = new RecipeEnergyEntity()
-        {
-            CaloriesFrom = model.EnergyModel.CaloriesFrom,
-            CaloriesTo = model.EnergyModel.CaloriesTo,
-            FatsFrom = model.EnergyModel.FatsFrom,
-            FatsTo = model.EnergyModel.FatsTo,
-            CarbohydratesFrom = model.EnergyModel.CarbohydratesFrom,
-            CarbohydratesTo = model.EnergyModel.CarbohydratesTo,
-            ProteinsFrom = model.EnergyModel.ProteinsFrom,
-            ProteinsTo = model.EnergyModel.ProteinsTo,
+                CaloriesFrom = request.EnergyModel.CaloriesFrom,
+                CaloriesTo = request.EnergyModel.CaloriesTo,
+                FatsFrom = request.EnergyModel.FatsFrom,
+                FatsTo = request.EnergyModel.FatsTo,
+                CarbohydratesFrom = request.EnergyModel.CarbohydratesFrom,
+                CarbohydratesTo = request.EnergyModel.CarbohydratesTo,
+                ProteinsFrom = request.EnergyModel.ProteinsFrom,
+                ProteinsTo = request.EnergyModel.ProteinsTo
+            },
+            Steps = request.Steps
+                .Select(x => new RecipeStepEntity()
+                {
+                    StepNumber = x.StepNumber,
+                    Description = x.Description,
+                    ImageName = x.ImageName
+                })
+                .ToList(),
         };
-
-        recipe.Energy = recipeEnergy;
-        recipe.Ingredients = recipeIngredients;
-        recipe.Steps = recipeSteps;
 
         await _dbContext.Recipes.AddAsync(recipe);
         await _dbContext.SaveChangesAsync();
 
-        return new AddRecipeResponse(recipe.NameUrl, recipe.Id);
+        return new AddRecipeResponse(recipe.NameUrl);
     }
 
     [AllowAnonymous]
@@ -151,7 +138,7 @@ public class RecipeController : Controller
         recipe.Name = request.Name;
         recipe.MainImageName = request.MainImageName;
         recipe.Category = request.Category;
-        recipe.CookingTimeInMinutes = TimeSpan.FromMinutes(request.CookingTimeMinutes);
+        recipe.CookingTimeInMinutes = TimeSpan.FromMinutes(request.CookingTimeInMinutes);
         recipe.Description = request.Description;
 
         // Можно не создавать новые объекты, а искать в бд: объект нашёлся - обновить, не нашёлся - создать

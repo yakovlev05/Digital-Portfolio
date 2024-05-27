@@ -1,12 +1,10 @@
 namespace Server.Models.Recipe;
 
 public record RecipeModel(
-    int RecipeId,
-    string RecipeUrl,
     string Name,
     string MainImageName,
     string Category,
-    int CookingTimeMinutes,
+    int CookingTimeInMinutes,
     string Description,
     ICollection<RecipeIngredientModel> Ingredients,
     RecipeEnergyModel EnergyModel,
