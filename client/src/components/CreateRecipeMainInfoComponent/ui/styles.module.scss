@@ -1,0 +1,53 @@
+.infoContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.infoList{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.infoImage{
+  width: 450px;
+  height: auto;
+}
+
+.infoInputField{
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  background-color: inherit;
+  padding: 5px;
+  
+  width: 360px;
+  height: 50px;
+  
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.inputLabel{
+  margin: 0;
+}
+
+.infoListElement{
+  margin-bottom: auto;
+}
+
+.descriptionContainer{
+  margin-bottom: 60px;
+}
+
+.descriptionInput{
+  @extend .infoInputField;
+  padding: 10px;
+  width: 100%;
+  height: 150px;
+  resize: none;
+}

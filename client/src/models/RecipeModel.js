@@ -14,11 +14,11 @@ class RecipeModel {
             this.energy = new RecipeEnergyEntity(json.energy);
             this.steps = json.steps.map(step => new RecipeStepEntity(step));
         } else {
-            this.name = null;
-            this.mainImageName = null;
-            this.category = null;
-            this.cookingTimeInMinutes = null;
-            this.description = null;
+            this.name = '';
+            this.mainImageName = '';
+            this.category = '';
+            this.cookingTimeInMinutes = '';
+            this.description = '';
             this.ingredients = [];
             this.energy = new RecipeEnergyEntity()//Изменить
             this.steps = [];
