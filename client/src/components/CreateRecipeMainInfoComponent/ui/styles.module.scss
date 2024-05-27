@@ -16,6 +16,12 @@
 .infoImage{
   width: 450px;
   height: auto;
+  border-radius: 20px;
+}
+
+.infoImage:hover{
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 .infoInputField{
