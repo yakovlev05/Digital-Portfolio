@@ -24,10 +24,12 @@
   display: flex;
   flex-direction: column;
 
-  width: 1000px;
+  width: 100%;
+  max-width: 1100px;
   padding: 50px;
   background: #0D3B66;
   border-radius: 75px;
+  box-sizing: border-box;
 }
 
 .inputComment {
@@ -58,7 +60,7 @@
   font-size: 16px;
   line-height: 24px;
   color: #FFFFFF;
-  
+
   align-self: end;
 }
 
@@ -73,31 +75,31 @@
   gap: 10px;
 }
 
-.newCommentContainer{
+.newCommentContainer {
   display: flex;
   flex-direction: column;
   margin-bottom: 60px;
 }
 
-.commentsContainer{
+.commentsContainer {
   display: flex;
   flex-direction: column;
   //gap: 20px;
 }
 
-.spinner{
+.spinner {
   margin-top: 50px;
   margin-bottom: 50px;
   color: #FFFFFF;
 }
 
-.moreButton{
+.moreButton {
   @extend .commentButton;
-  
+
   align-self: center;
 }
 
-.beFirst{
+.beFirst {
   margin: 0;
   font-weight: 500;
   align-self: center;
