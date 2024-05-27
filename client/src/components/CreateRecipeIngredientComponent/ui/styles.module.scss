@@ -1,3 +1,14 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredientContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
 .inputField {
   font-size: inherit;
   font-weight: inherit;
@@ -31,7 +42,32 @@
 
 .unit {
   @extend .inputField;
-  width: 20%;
+  width: 17%;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+
+.closeButton {
+  background-color: inherit;
+  color: #FFFFFF;
+  border: none;
+}
+
+.closeButton:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.addButton {
+  width: 77px;
+  height: 77px;
+  border: none;
+  align-self: center;
+  background-color: inherit;
+  background: url("./img/plus.png") no-repeat center center;
+}
+
+.addButton:hover {
+  opacity: 0.5;
+  cursor: pointer;
 }

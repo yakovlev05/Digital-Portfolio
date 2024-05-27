@@ -1,3 +1,4 @@
+import styles from './styles.module.scss';
 import CreateRecipeIngredientComponent from "../../CreateRecipeIngredientComponent";
 import RecipeIngredientEntity from "../../../models/RecipeIngredientEntity";
 import RecipeModel from "../../../models/RecipeModel";
@@ -23,8 +24,20 @@ const CreateRecipeIngredientsComponent = ({recipe, setRecipe}) => {
         setRecipe(new RecipeModel({...recipe, ingredients: newIngredients}));
     }
 
+    const onDelete = (indexRemove) => {
+        if (recipe.ingredients.length === 1) return;
+        const newIngredients = recipe.ingredients.filter((ingredient, index) => index !== indexRemove)
+        setRecipe(new RecipeModel({...recipe, ingredients: newIngredients}));
+    }
+
+    const onAdd = () => {
+        const newIngredients = [...recipe.ingredients, new RecipeIngredientEntity()]
+        setRecipe(new RecipeModel({...recipe, ingredients: newIngredients}));
+    }
+
     return (
         <div>
+            <p className={styles.label}>Список ингредиентов*</p>
             {
                 recipe.ingredients.map((ingredient, index) =>
                     <CreateRecipeIngredientComponent
@@ -34,6 +47,9 @@ const CreateRecipeIngredientsComponent = ({recipe, setRecipe}) => {
                         onInputName={onInputName}
                         onInputQuantity={onInputQuantity}
                         onInputUnit={onInputUnit}
+                        onDelete={onDelete}
+                        onAdd={onAdd}
+                        addButtonVisible={index === recipe.ingredients.length - 1}
                     />
                 )
             }
