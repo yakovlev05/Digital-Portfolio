@@ -10,6 +10,7 @@ import AuthContext from "../../../contexts/AuthContext";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import MainHeaderComponent from "../../../components/mainHeader";
 import FooterComponent from "../../../components/footer";
+import CreateRecipeComponent from "../../../components/CreateRecipeComponent";
 
 const CreateRecipePage = () => {
     const navigate = useNavigate();
@@ -64,6 +65,7 @@ const CreateRecipePage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
+                        <CreateRecipeComponent/>
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>
