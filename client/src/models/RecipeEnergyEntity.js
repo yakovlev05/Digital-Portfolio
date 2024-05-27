@@ -10,14 +10,14 @@ class RecipeEnergyEntity {
             this.proteinsFrom = json.proteinsFrom;
             this.proteinsTo = json.proteinsTo;
         } else {
-            this.caloriesFrom = null;
-            this.caloriesTo = null;
-            this.fatsFrom = null;
-            this.fatsTo = null;
-            this.carbohydratesFrom = null;
-            this.carbohydratesTo = null;
-            this.proteinsFrom = null;
-            this.proteinsTo = null;
+            this.caloriesFrom = 0;
+            this.caloriesTo = 0;
+            this.fatsFrom = 0;
+            this.fatsTo = 0;
+            this.carbohydratesFrom = 0;
+            this.carbohydratesTo = 0;
+            this.proteinsFrom = 0;
+            this.proteinsTo = 0;
         }
     }
 }

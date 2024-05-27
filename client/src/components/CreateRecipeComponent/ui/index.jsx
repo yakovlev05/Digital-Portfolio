@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import RecipeModel from "../../../models/RecipeModel";
 import CreateRecipeMainInfoComponent from "../../CreateRecipeMainInfoComponent";
 import CreateRecipeIngredientsComponent from "../../CreateRecipeIngredientsComponent";
+import CreateRecipeEnergyComponent from "../../CreateRecipeEnergyComponent";
 
 const CreateRecipeComponent = () => {
     const [recipe, setRecipe] = useState(new RecipeModel());
@@ -21,6 +22,10 @@ const CreateRecipeComponent = () => {
             <CreateRecipeIngredientsComponent
                 setRecipe={setRecipe}
                 recipe={recipe}
+            />
+            <CreateRecipeEnergyComponent
+                recipe={recipe}
+                setRecipe={setRecipe}
             />
         </div>
     )
