@@ -5,9 +5,9 @@ class RecipeIngredientEntity {
             this.quantity = json.quantity;
             this.unit = json.unit;
         } else {
-            this.name = null;
-            this.quantity = null;
-            this.unit = null;
+            this.name = '';
+            this.quantity = 0;
+            this.unit = '';
         }
     }
 }

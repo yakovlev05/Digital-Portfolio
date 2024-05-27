@@ -19,9 +19,9 @@ class RecipeModel {
             this.category = '';
             this.cookingTimeInMinutes = '';
             this.description = '';
-            this.ingredients = [];
+            this.ingredients = [new RecipeIngredientEntity()];
             this.energy = new RecipeEnergyEntity()//Изменить
-            this.steps = [];
+            this.steps = [new RecipeStepEntity()];
         }
 
     }

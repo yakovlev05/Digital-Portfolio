@@ -1,0 +1,37 @@
+.inputField {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  background-color: inherit;
+
+  height: 50px;
+  padding: 5px;
+
+  box-sizing: border-box;
+}
+
+.name {
+  @extend .inputField;
+  width: 70%;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  border-right: none;
+}
+
+.quantity {
+  @extend .inputField;
+  width: 10%;
+  border-radius: 0;
+  border-right: none;
+  text-align: center;
+}
+
+.unit {
+  @extend .inputField;
+  width: 20%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
