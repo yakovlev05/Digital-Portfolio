@@ -68,7 +68,7 @@ const CreateRecipeMainInfoComponent = ({recipe, setRecipe}) => {
                                    if (isNaN(e.target.value)) return prevRecipe;
                                    return new RecipeModel({
                                        ...prevRecipe,
-                                       cookingTimeInMinutes: e.target.value
+                                       cookingTimeInMinutes: Number(e.target.value)
                                    })
                                })}
                                value={recipe.cookingTimeInMinutes}

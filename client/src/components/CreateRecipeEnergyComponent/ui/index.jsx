@@ -6,7 +6,7 @@ const CreateRecipeEnergyComponent = ({recipe, setRecipe}) => {
 
     const updateField = (e, field) => {
         if (isNaN(e.target.value)) return;
-        const newEnergy = new RecipeEnergyEntity({...recipe.energy, [field]: e.target.value});
+        const newEnergy = new RecipeEnergyEntity({...recipe.energy, [field]: Number(e.target.value)});
         setRecipe(new RecipeModel({...recipe, energy: newEnergy}))
     }
 

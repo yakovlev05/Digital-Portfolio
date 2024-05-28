@@ -5,6 +5,7 @@ import CreateRecipeMainInfoComponent from "../../CreateRecipeMainInfoComponent";
 import CreateRecipeIngredientsComponent from "../../CreateRecipeIngredientsComponent";
 import CreateRecipeEnergyComponent from "../../CreateRecipeEnergyComponent";
 import CreateRecipeStepsComponent from "../../CreateRecipeStepsComponent";
+import CreateRecipeSubmitButton from "../../CreateRecipeSubmitButton";
 
 const CreateRecipeComponent = () => {
     const [recipe, setRecipe] = useState(new RecipeModel());
@@ -31,6 +32,9 @@ const CreateRecipeComponent = () => {
             <CreateRecipeStepsComponent
                 recipe={recipe}
                 setRecipe={setRecipe}
+            />
+            <CreateRecipeSubmitButton
+                recipe={recipe}
             />
         </div>
     )

@@ -14,7 +14,10 @@ const CreateRecipeIngredientsComponent = ({recipe, setRecipe}) => {
     const onInputQuantity = (e, index) => {
         if (isNaN(e.target.value)) return;
         const newIngredients = [...recipe.ingredients];
-        newIngredients[index] = new RecipeIngredientEntity({...newIngredients[index], quantity: e.target.value});
+        newIngredients[index] = new RecipeIngredientEntity({
+            ...newIngredients[index],
+            quantity: Number(e.target.value)
+        });
         setRecipe(new RecipeModel({...recipe, ingredients: newIngredients}));
     }
 
