@@ -50,14 +50,14 @@ public class RecipeController : Controller
                 .ToList(),
             Energy = new RecipeEnergyEntity()
             {
-                CaloriesFrom = request.EnergyModel.CaloriesFrom,
-                CaloriesTo = request.EnergyModel.CaloriesTo,
-                FatsFrom = request.EnergyModel.FatsFrom,
-                FatsTo = request.EnergyModel.FatsTo,
-                CarbohydratesFrom = request.EnergyModel.CarbohydratesFrom,
-                CarbohydratesTo = request.EnergyModel.CarbohydratesTo,
-                ProteinsFrom = request.EnergyModel.ProteinsFrom,
-                ProteinsTo = request.EnergyModel.ProteinsTo
+                CaloriesFrom = request.Energy.CaloriesFrom,
+                CaloriesTo = request.Energy.CaloriesTo,
+                FatsFrom = request.Energy.FatsFrom,
+                FatsTo = request.Energy.FatsTo,
+                CarbohydratesFrom = request.Energy.CarbohydratesFrom,
+                CarbohydratesTo = request.Energy.CarbohydratesTo,
+                ProteinsFrom = request.Energy.ProteinsFrom,
+                ProteinsTo = request.Energy.ProteinsTo
             },
             Steps = request.Steps
                 .Select(x => new RecipeStepEntity()
@@ -156,14 +156,14 @@ public class RecipeController : Controller
 
         var recipeEnergy = new RecipeEnergyEntity()
         {
-            CaloriesFrom = request.EnergyModel.CaloriesFrom,
-            CaloriesTo = request.EnergyModel.CaloriesTo,
-            CarbohydratesFrom = request.EnergyModel.CarbohydratesFrom,
-            CarbohydratesTo = request.EnergyModel.CarbohydratesTo,
-            FatsFrom = request.EnergyModel.FatsFrom,
-            FatsTo = request.EnergyModel.FatsTo,
-            ProteinsFrom = request.EnergyModel.ProteinsFrom,
-            ProteinsTo = request.EnergyModel.ProteinsTo
+            CaloriesFrom = request.Energy.CaloriesFrom,
+            CaloriesTo = request.Energy.CaloriesTo,
+            CarbohydratesFrom = request.Energy.CarbohydratesFrom,
+            CarbohydratesTo = request.Energy.CarbohydratesTo,
+            FatsFrom = request.Energy.FatsFrom,
+            FatsTo = request.Energy.FatsTo,
+            ProteinsFrom = request.Energy.ProteinsFrom,
+            ProteinsTo = request.Energy.ProteinsTo
         };
 
 

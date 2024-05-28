@@ -7,6 +7,6 @@ public record RecipeModel(
     int CookingTimeInMinutes,
     string Description,
     ICollection<RecipeIngredientModel> Ingredients,
-    RecipeEnergyModel EnergyModel,
+    RecipeEnergyModel Energy,
     ICollection<RecipeStepModel> Steps
 );
