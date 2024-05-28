@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.stepNumber {
+  margin: 0 0 20px 0;
+  font-weight: 500;
+}
+
+.image {
+  width: 400px;
+  height: auto;
+  align-self: center;
+  display: block;
+  margin-bottom: 30px;
+  border-radius: 20px;
+}
+
+.image:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.inputContainer{
+  display: flex;
+}
+
+.inputField {
+  border: 1px solid #FFFFFF;
+  border-radius: 10px;
+  background-color: inherit;
+  padding: 10px;
+
+  font-size: inherit;
+  color: inherit;
+  width: 97%;
+  height: 150px;
+  resize: none;
+}
+
+.closeButton {
+  background-color: inherit;
+  color: #FFFFFF;
+  border: none;
+  align-self: start;
+}
+
+.closeButton:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}

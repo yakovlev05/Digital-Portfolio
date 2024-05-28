@@ -8,7 +8,8 @@ const CreateRecipeIngredientComponent = ({
                                              onInputUnit,
                                              onDelete,
                                              onAdd,
-                                             addButtonVisible
+                                             addButtonVisible,
+                                             deleteIsVisible
                                          }) => {
 
     return (
@@ -35,7 +36,10 @@ const CreateRecipeIngredientComponent = ({
                     value={ingredient.unit}
                     onInput={e => onInputUnit(e, index)}
                 />
-                <button className={styles.closeButton} onClick={() => onDelete(index)}>X</button>
+                {
+                    deleteIsVisible &&
+                    <button className={styles.closeButton} onClick={() => onDelete(index)}>X</button>
+                }
             </div>
             {
                 addButtonVisible &&

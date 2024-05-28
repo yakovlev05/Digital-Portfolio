@@ -5,9 +5,9 @@ class RecipeStepEntity {
             this.description = json.description;
             this.imageName = json.imageName;
         } else {
-            this.stepNumber = null;
-            this.description = null;
-            this.imageName = null;
+            this.stepNumber = 1;
+            this.description = '';
+            this.imageName = '';
         }
     }
 }

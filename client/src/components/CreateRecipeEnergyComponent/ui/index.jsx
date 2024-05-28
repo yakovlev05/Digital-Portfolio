@@ -11,7 +11,7 @@ const CreateRecipeEnergyComponent = ({recipe, setRecipe}) => {
     }
 
     return (
-        <div>
+        <div className={styles.container}>
             <p className={styles.mainLabel}>Энергетическая ценность*</p>
             <ul className={styles.energyList}>
                 <li>

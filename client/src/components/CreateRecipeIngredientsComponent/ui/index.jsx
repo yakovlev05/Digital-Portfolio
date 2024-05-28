@@ -50,6 +50,7 @@ const CreateRecipeIngredientsComponent = ({recipe, setRecipe}) => {
                         onDelete={onDelete}
                         onAdd={onAdd}
                         addButtonVisible={index === recipe.ingredients.length - 1}
+                        deleteIsVisible={index > 0}
                     />
                 )
             }
