@@ -20,6 +20,7 @@ const CreateRecipeStepsComponent = ({recipe, setRecipe}) => {
     const onDelete = (indexRemove) => {
         if (recipe.steps.length === 1) return;
         const newSteps = recipe.steps.filter((step, index) => index !== indexRemove);
+        newSteps.forEach((step, index) => step.stepNumber = index + 1);
         setRecipe(new RecipeModel({...recipe, steps: newSteps}));
     }
 
