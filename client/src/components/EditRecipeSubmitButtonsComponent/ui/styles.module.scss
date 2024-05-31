@@ -1,0 +1,35 @@
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  width: 170px;
+  height: 40px;
+  border-radius: 75px;
+  border: none;
+  font: inherit;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+
+.saveButton {
+  @extend .button;
+  background-color: #32B857;
+}
+
+.saveButton:hover {
+  cursor: pointer;
+  background: #2A8C4F;
+}
+
+.deleteButton {
+  @extend .button;
+  background: #C52E2E;
+  box-shadow: none !important;
+}
+
+.deleteButton:hover{
+  background: #912424 !important;
+}

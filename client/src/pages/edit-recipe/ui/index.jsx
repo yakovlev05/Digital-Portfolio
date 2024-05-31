@@ -13,6 +13,7 @@ import MainHeaderComponent from "../../../components/mainHeader";
 import FooterComponent from "../../../components/footer";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
+import EditRecipeComponent from "../../../components/EditRecipeComponent";
 
 const EditRecipePage = () => {
     const {recipeNameUrl} = useParams();
@@ -84,6 +85,11 @@ const EditRecipePage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
+                        <EditRecipeComponent
+                            recipe={recipe}
+                            setRecipe={setRecipe}
+                            recipeUrl={recipeNameUrl}
+                        />
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>
