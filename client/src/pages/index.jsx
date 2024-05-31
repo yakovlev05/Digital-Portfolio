@@ -9,6 +9,7 @@ import ProfilePage from "./profile";
 import ProfileEditPage from "./profile-edit";
 import RecipePage from "./recipe-page";
 import CreateRecipePage from "./create-recipe";
+import EditRecipePage from "./edit-recipe";
 
 const AppRouter = () => {
     return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
                     <Route exact path='/:username' element={<ProfilePage/>}/>
                     <Route exact path='/recipe/new' element={<CreateRecipePage/>}/>
                     <Route excat path='/recipe/:recipeNameUrl' element={<RecipePage/>}/>
+                    <Route excat path='/recipe/:recipeNameUrl/edit' element={<EditRecipePage/>}/>
                 </Routes>
             </Router>
         </>

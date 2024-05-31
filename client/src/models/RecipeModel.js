@@ -6,7 +6,7 @@ class RecipeModel {
     constructor(json) {
         if (json) {
             this.name = json.name;
-            this.mainImageName = json.mainImageName;
+            this.mainImageName = json.mainImageName ? json.mainImageName : json.imageName;
             this.category = json.category;
             this.cookingTimeInMinutes = json.cookingTimeInMinutes;
             this.description = json.description;
