@@ -9,6 +9,7 @@ import MainHeaderComponent from "../../../components/mainHeader";
 import FooterComponent from "../../../components/footer";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
+import MainPageComponent from "../../../components/MainPageComponent";
 
 const MainPage = () => {
     const token = localStorage.getItem('token');
@@ -54,6 +55,10 @@ const MainPage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
+                        <MainPageComponent
+                            isLogged={auth.logged}
+                            userLogin={myInfo?.login}
+                        />
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>

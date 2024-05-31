@@ -1,0 +1,90 @@
+.mainContainer {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 30px;
+
+  max-width: 1310px;
+  width: 100%;
+
+  align-self: center;
+
+  margin: 72px 0 0 0;
+}
+
+.mainTitle {
+  font-size: 100px;
+  line-height: 125.7px;
+  letter-spacing: -0.02em;
+  text-align: center;
+
+  margin: 0 0 124px 0;
+}
+
+.cardFirst {
+  padding: 83px 0 114px 66px;
+  border-radius: 30px;
+  background: #F2D6D6 url("./img/meat1.png") no-repeat right;
+  margin: 0 0 85px 0;
+  height: 420px;
+  box-sizing: border-box;
+}
+
+.cardFirstTitle {
+  max-width: 861px;
+  width: 100%;
+  margin: 0 0 auto 0;
+  line-height: 45px;
+}
+
+.cardFirstDescription {
+  max-width: 866px;
+  width: 100%;
+}
+
+.cardSecond {
+  display: flex;
+  justify-content: end;
+  border-radius: 30px;
+  background: #F2D6D6 url("./img/meat2.png") no-repeat 55px;
+
+  height: 420px;
+  box-sizing: border-box;
+  margin-bottom: 60px;
+}
+
+.cardSecondTitle {
+  max-width: 270px;
+  width: 100%;
+  line-height: 45.25px;
+  margin: 0 0 0 0;
+}
+
+.cardSecondCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 50px 126px 64px 0;
+}
+
+.cardSecondList {
+  margin: 0 0 0 27px;
+  padding: 0;
+
+  max-width: 412px;
+  width: 100%;
+}
+
+.recipeContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.recipeTitle {
+  margin: 0 0 60px;
+  font-size: 36px;
+  line-height: 45px;
+}
