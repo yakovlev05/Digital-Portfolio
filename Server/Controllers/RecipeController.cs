@@ -134,7 +134,7 @@ public class RecipeController : Controller
         var recipe = user.Recipes.FirstOrDefault(x => x.NameUrl == recipeUrl);
         if (recipe is null) return BadRequest("Recipe not found");
 
-        recipe.NameUrl = _urlService.GetUrlFromString(request.Name);
+        recipe.NameUrl = recipe.Name == request.Name ? recipe.NameUrl : _urlService.GetUrlFromString(request.Name);
         recipe.Name = request.Name;
         recipe.MainImageName = request.MainImageName;
         recipe.Category = request.Category;
