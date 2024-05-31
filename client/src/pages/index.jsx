@@ -1,5 +1,4 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import App from "../App";
 import LoginPage from "./login";
 import RegistrationPage from "./registration";
 import ResetPasswordPage from "./reset-password";
@@ -10,13 +9,15 @@ import ProfileEditPage from "./profile-edit";
 import RecipePage from "./recipe-page";
 import CreateRecipePage from "./create-recipe";
 import EditRecipePage from "./edit-recipe";
+import MainPage from "./main-page";
 
 const AppRouter = () => {
     return (
         <>
             <Router>
                 <Routes>
-                    <Route path='/' element={<App/>}/>
+                    {/*<Route path='/' element={<App/>}/>*/}
+                    <Route path='/' element={<MainPage/>}/>
                     <Route path='/login' element={<LoginPage/>}/>
                     <Route path='/registration' element={<RegistrationPage/>}/>
                     <Route path='/reset-password' element={<ResetPasswordPage/>}/>
