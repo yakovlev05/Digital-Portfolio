@@ -38,11 +38,12 @@ const CreateRecipeStepComponent = ({step, index, onUpdateImage, onUpdateDescript
                 style={{display: 'none'}}
                 ref={fileInputRef}
                 onChange={onFileUpload}
-                value={step.description}
-                onInput={(e) => onUpdateDescription(e.target.value, index)}
             />
             <div className={styles.inputContainer}>
-                <textarea placeholder='Описание шага' className={styles.inputField}></textarea>
+                <textarea placeholder='Описание шага' className={styles.inputField}
+                          onInput={(e) => onUpdateDescription(e.target.value, index)}
+                          value={step.description}
+                ></textarea>
                 {
                     deleteIsVisible &&
                     <button className={styles.closeButton} onClick={() => onDelete(index)}>X</button>
