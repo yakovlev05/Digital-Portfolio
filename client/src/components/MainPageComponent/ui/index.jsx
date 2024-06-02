@@ -30,9 +30,9 @@ const MainPageComponent = ({isLogged, userLogin}) => {
                 <h3 className={styles.recipeTitle}>Рецепты</h3>
                 <RecipesCardsComponent
                     isAuthorized={isLogged}
-                    isAnother={true}
-                    isPortfolio={true}
+                    isSearch={true}
                     userRequest={userLogin}
+                    isPortfolio={true}
                 />
             </div>
         </div>

@@ -8,11 +8,13 @@ import GetMyRecipesRequestApi from "../../../apiServices/User/GetMyRecipesReques
 import GetUserRecipesRequestApi from "../../../apiServices/User/GetUserRecipesRequestApi";
 import GetMyBookmarksRequestApi from "../../../apiServices/User/GetMyBookmarksRequestApi";
 import {toast} from "react-toastify";
+import SearchRecipesRequestApi from "../../../apiServices/Recipe/SearchRecipesRequestApi";
 
 
 const RecipesCardsComponent = ({
                                    isPortfolio = false,
                                    isBookmarks = false,
+                                   isSearch = false,
                                    isAuthorized = false,
                                    isAnother = false,
                                    userRequest = null,
@@ -37,6 +39,9 @@ const RecipesCardsComponent = ({
                 response = GetMyBookmarksRequestApi(token, page, count);
             } else if (isAnother) {
                 response = response = GetUserRecipesRequestApi(userRequest, page, count);
+            } else if (isSearch) {
+                response = SearchRecipesRequestApi(
+                    {page: page, count: count})
             } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
 
             response
@@ -57,7 +62,7 @@ const RecipesCardsComponent = ({
 
         fetchData()
             .catch(() => toast.error('Непредвиденная ошибка при загрузке рецептов'))
-    }, [count, page, token, username]);
+    }, [count, isAnother, isBookmarks, isPortfolio, isSearch, page, token, userRequest, username]);
 
     return (
         <>
