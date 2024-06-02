@@ -32,7 +32,7 @@ const RecipesCardsComponent = ({
         const fetchData = async () => {
             setIsLoading(true);
             let response = null;
-            if (isPortfolio && !isAnother) {
+            if (isPortfolio && !isAnother && !isSearch) {
                 if (username === undefined) response = GetMyRecipesRequestApi(token, page, count);
                 else response = GetUserRecipesRequestApi(username, page, count);
             } else if (isBookmarks) {
