@@ -97,7 +97,7 @@ public class RecipeController : Controller
             recipe.User.ProfilePhoto,
             recipe.User.Recipes.Count,
             recipe.Category,
-            recipe.CookingTimeInMinutes.Minutes,
+            (int)recipe.CookingTimeInMinutes.TotalMinutes,
             recipe.Description,
             recipe.Ingredients.Select(x => new RecipeIngredientModel(x.Name, x.Quantity, x.Unit)).ToList(),
             new RecipeEnergyModel(
@@ -255,7 +255,8 @@ public class RecipeController : Controller
 
     [AllowAnonymous]
     [HttpGet("search")]
-    public async Task<ActionResult<List<MyRecipe>>> SearchRecipes(string? name, string? category, int? minRating,
+    public async Task<ActionResult<GetUserRecipesResponse>> SearchRecipes(string? name, string? category,
+        int? minRating,
         int? maxRating, int? minCookingTimeInMinutes, int? maxCookingTimeInMinutes,
         SortOptions sort = SortOptions.ByDateCreate, bool orderByDescending = false, int page = 1, int count = 10)
     {
@@ -267,9 +268,9 @@ public class RecipeController : Controller
         if (minRating is not null) recipes = recipes.Where(x => x.Rating >= minRating);
         if (maxRating is not null) recipes = recipes.Where(x => x.Rating <= maxRating);
         if (minCookingTimeInMinutes is not null)
-            recipes = recipes.Where(x => x.CookingTimeInMinutes.Minutes >= minCookingTimeInMinutes);
+            recipes = recipes.Where(x => x.CookingTimeInMinutes.TotalMinutes >= minCookingTimeInMinutes);
         if (maxCookingTimeInMinutes is not null)
-            recipes = recipes.Where(x => x.CookingTimeInMinutes.Minutes < maxCookingTimeInMinutes);
+            recipes = recipes.Where(x => x.CookingTimeInMinutes.TotalMinutes < maxCookingTimeInMinutes);
 
         switch (sort)
         {
@@ -299,8 +300,8 @@ public class RecipeController : Controller
 
         var result = recipes.Select(x => new MyRecipe(x.Name, x.MainImageName, x.Rating,
             (int)x.CookingTimeInMinutes.TotalMinutes, x.Ingredients.Count, x.Category, x.NameUrl));
-
-        return await result.ToListAsync();
+        
+        return new GetUserRecipesResponse(await result.ToListAsync());
     }
 }
 

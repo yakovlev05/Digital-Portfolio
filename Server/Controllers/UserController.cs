@@ -205,7 +205,7 @@ public class UserController : Controller
                 x.Name,
                 x.MainImageName,
                 x.Rating,
-                x.CookingTimeInMinutes.Minutes,
+                (int)x.CookingTimeInMinutes.TotalMinutes,
                 x.Ingredients.Count,
                 x.Category,
                 x.NameUrl))
@@ -233,7 +233,7 @@ public class UserController : Controller
                 x.Name,
                 x.MainImageName,
                 x.Rating,
-                x.CookingTimeInMinutes.Minutes,
+                (int)x.CookingTimeInMinutes.TotalMinutes,
                 x.Ingredients.Count,
                 x.Category,
                 x.NameUrl))
@@ -263,7 +263,7 @@ public class UserController : Controller
                 x.Recipe.Name,
                 x.Recipe.MainImageName,
                 x.Recipe.Rating,
-                x.Recipe.CookingTimeInMinutes.Minutes,
+                (int)x.Recipe.CookingTimeInMinutes.TotalMinutes,
                 x.Recipe.Ingredients.Count,
                 x.Recipe.Category,
                 x.NameUrl))
