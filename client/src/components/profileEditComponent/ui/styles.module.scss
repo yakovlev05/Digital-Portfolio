@@ -1,11 +1,11 @@
 .body {
-  background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
+  //background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
   flex: 1;
 
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #090606;
 
   font-size: 16px;
   line-height: 24px;
@@ -17,7 +17,7 @@
 
 .formsContainer {
   margin: 20px 0 20px 0;
-  background: #0D3B66;
+  background: rgba(235, 129, 124, 0.5);
   border-radius: 5%;
   padding: 30px;
   height: 600px;
@@ -57,18 +57,19 @@
 
 .updatePhotoButton {
   border: none;
-  background: #32B857;
+  background: #CC4740;
   border-radius: 75px;
   width: 170px;
   height: 40px;
   font-size: inherit;
   line-height: inherit;
-  color: inherit;
+  color: #FFFFFF;
   font-weight: inherit;
 }
 
 .updatePhotoButton:hover {
-  background: #2A8C4F;
+  background: #F6564D;
+  cursor: pointer;
 }
 
 .backCont {
@@ -83,14 +84,14 @@
   text-decoration: none;
   font-size: inherit;
   line-height: inherit;
-  color: #32B857;
+  color: #090606;
   font-weight: inherit;
   margin: auto;
   cursor: pointer;
 }
 
 .url:hover {
-  color: #25873f;
+  color: #F6564D;
 }
 
 .inputField {
@@ -100,17 +101,17 @@
   width: 70%;
   max-width: 260px;
   height: 30px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 12px;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #090606;
 
   font-size: 16px;
   line-height: 24px;
 }
 
 .inputField::placeholder {
-  color: #9e9c9c;
+  color: #090606;
 }
 
 .nameCont {
@@ -143,86 +144,86 @@
   width: 80% !important;
   height: 85px !important;
   min-height: 100px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 12px;
   font-weight: 400;
-  color: #FFFFFF;
+  color: #090606;
 
   font-size: 16px;
   line-height: 20px;
 }
 
 .aboutTextArea::placeholder {
-  color: #9e9c9c;
+  color: #090606;
 }
 
 .changePassword {
   grid-area: changePassword;
 
-  background: #ca8521;
+  background: #CC4740;
   border-radius: 75px;
   width: 270px;
   height: 40px;
-  
+
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 700;
   color: #FFFFFF;
   font-size: 16px;
   line-height: 24px;
-  
-  margin: auto;
-  
-  box-shadow: none !important;
-  &:hover{
-    background: #9e6b1b !important;
-  }
-}
 
-.exit {
-  grid-area: exit;
+  margin: auto;
+
+  box-shadow: none !important;
+
+  &:hover {
+    background: #F6564D !important;
+  }
 }
 
 .save {
   grid-area: save;
   border: none;
-  background: #32B857;
+  background: #CC4740;
   border-radius: 75px;
   width: 270px;
   height: 40px;
   font-size: inherit;
   line-height: inherit;
-  color: inherit;
+  color: #FFFFFF;
   font-weight: inherit;
   margin: auto;
 }
 
 .save:hover {
-  background: #25873f;
+  background: #F6564D;
+  cursor: pointer;
+}
+
+.exit {
+  @extend .save;
+  grid-area: exit;
 }
 
 .delete {
   grid-area: delete;
   border: none;
-  background: #C52E2E;
+  background: #CC4740;
   border-radius: 75px;
   width: 270px;
   height: 40px;
-  
+
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 700;
   color: #FFFFFF;
   font-size: 16px;
   line-height: 24px;
-  
+
   margin: auto;
   box-shadow: none !important;
-  &:hover{
-    background: #912424 !important;
+
+  &:hover {
+    background: #F6564D !important;
   }
 }
-
-//.delete:hover {
-//  background: #912424;
-//}

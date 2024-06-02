@@ -1,5 +1,5 @@
 .body {
-    background: linear-gradient(180deg, #3853B4 0%, #00145A 100%) no-repeat;
+    /*background: linear-gradient(180deg, #3853B4 0%, #00145A 100%) no-repeat;*/
     /*min-height: 100vh;*/
     /*background: #190E64;*/
     font-family: "Montserrat", sans-serif;
@@ -19,12 +19,12 @@
     align-items: center;
 }
 
-.photoElement{
+.photoElement {
     border-radius: 113px;
 }
 
 .loginForm {
-    background: #FFFFFF;
+    background: rgba(235, 129, 124, 0.5);
     border-radius: 113px;
     width: 80vw;
     display: flex;
@@ -106,7 +106,7 @@
     color: dimgrey;
 }
 
-.passwordQuestion{
+.passwordQuestion {
     padding-top: 20px;
 }
 
@@ -114,7 +114,7 @@
     background: #217336;
 }
 
-.errorLabel{
+.errorLabel {
     color: red;
     font-weight: 500;
     font-size: 20px;

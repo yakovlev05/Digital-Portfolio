@@ -1,16 +1,18 @@
 .footer {
-  background: #0D3B66;
+  //background: rgba(235, 129, 124, 0.5);
 
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #090606;
   
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  border-top: 2px solid #F6564D;
 }
 
 .listNavigation {
@@ -19,8 +21,8 @@
   display: flex;
   justify-content: space-between;
   margin: 0 15% 0 0;
-
-  //max-width: 1300px;
+  
+  max-width: 1350px;
   min-width: 280px;
   width: 100%;
 }
@@ -32,7 +34,7 @@
 }
 
 .url:hover{
-  color: #32B857;
+  color: #EB817C;
 }
 
 //.listElement{
@@ -40,7 +42,15 @@
 //}
 
 .photoUrl{
-  margin-left: 50px;
-  margin-right: 50px;
+  margin: 5px 50px;
+  background: #EB817C;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
 }
 
+.photo{
+  display: block;
+  width: 80px;
+  height: 80px;
+}

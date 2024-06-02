@@ -34,12 +34,16 @@ const ProfileComponent = () => {
             </div>)}
             <ul className={styles.navList}>
                 <li className={styles.navElement}
-                    onClick={() => setCurrentNavElement('Портфолио')}>Портфолио/
+                    onClick={() => setCurrentNavElement('Портфолио')}>Портфолио
                 </li>
+                <li className={styles.navSep}> /</li>
                 {auth.canChange &&
-                <li className={styles.navElement}
-                    onClick={() => setCurrentNavElement('Избранное')}>Избранное/
-                </li>
+                    <>
+                        <li className={styles.navElement}
+                            onClick={() => setCurrentNavElement('Избранное')}>Избранное
+                        </li>
+                        <li className={styles.navSep}> /</li>
+                    </>
                 }
                 <li className={styles.navElement}
                     onClick={() => setCurrentNavElement('Обо мне')}>Обо мне

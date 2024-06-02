@@ -1,7 +1,7 @@
 .button {
   border: none;
   border-radius: 75px;
-  background: #32B857;
+  background: #CC4740;
   width: 150px;
   height: 50px;
   font-weight: 700;
@@ -11,7 +11,8 @@
 }
 
 .button:hover {
-  background: #2A8C4F
+  background: #F6564D;
+  cursor: pointer;
 }
 
 .container {

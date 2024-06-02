@@ -7,7 +7,7 @@ const FooterComponent = () => {
         <footer>
             <div className={styles.footer}>
                 <a className={styles.photoUrl} href={"/"}>
-                    <img src={logo} alt={"logo"} width="96" height="96"/>
+                    <img className={styles.photo} src={logo} alt={"logo"} width="96" height="96"/>
                 </a>
                 <ul className={styles.listNavigation}>
                     <li className={styles.listElement}>

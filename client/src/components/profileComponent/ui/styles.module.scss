@@ -1,24 +1,24 @@
 .profile {
-  background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
+  //background: linear-gradient(180deg, #C8D4FF 0%, #3853B4 100%);
   flex: 1;
 
   font-family: 'Montserrat', sans-serif;
   font-style: normal;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #090606;
 
   font-size: 16px;
   line-height: 24px;
-  
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   padding: 70px;
 }
 
-.image{
+.image {
   width: 200px;
   height: auto;
   border-radius: 50%;
@@ -26,23 +26,23 @@
   margin-bottom: 5px;
 }
 
-.username{
+.username {
   font-size: 35px;
   line-height: 49px;
 
   margin: 0;
   padding: 0;
-  
+
   margin-bottom: 10px;
 }
 
-.containerButtons{
+.containerButtons {
   display: flex;
   margin-bottom: 15px;
 }
 
-.button{
-  background: #0D3B66;
+.button {
+  background: #CC4740;
   border: none;
   border-radius: 75px;
   width: 150px;
@@ -53,24 +53,33 @@
   color: #FFFFFF;
 }
 
-.button:first-child{
-    margin-right: 20px;
+.button:first-child {
+  margin-right: 20px;
 }
 
-.button:hover{
-    background: #3853B4;
+.button:hover {
+  background: #F6564D;
+  cursor: pointer;
 }
 
-.navList{
+.navList {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: 2px solid #090606;
   margin-bottom: 30px;
 }
 
-.navElement{
+.navElement {
   cursor: pointer;
   padding: 5px;
+}
+
+.navSep {
+  padding: 5px;
+}
+
+.navElement:hover {
+  color: #EB817C;
 }

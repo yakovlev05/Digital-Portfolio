@@ -241,7 +241,7 @@ const ProfileEditComponent = () => {
                         titleButton={'Изменить пароль'}
                         timeout={0}
                     />
-                    <a className={`${styles.exit} ${styles.url}`} onClick={handleExit}>Выйти из аккаунта</a>
+                    <button className={styles.exit} onClick={handleExit}>Выйти из аккаунта</button>
                     <button className={styles.save} type={"submit"} onClick={handleButtonSave}>Сохранить изменения
                     </button>
                     {/*<button className={styles.delete} onClick={() => setShowModalDelete(true)}>Удалить аккаунт</button>*/}

@@ -30,7 +30,7 @@
 .inputField {
   border: 1px solid #FFFFFF;
   border-radius: 10px;
-  background-color: inherit;
+  background-color: transparent;
   padding: 10px;
 
   font-size: inherit;
@@ -41,7 +41,7 @@
 }
 
 .closeButton {
-  background-color: inherit;
+  background-color: rgba(235, 129, 124, 0.5);
   color: #FFFFFF;
   border: none;
   align-self: start;

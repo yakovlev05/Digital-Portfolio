@@ -5,13 +5,13 @@
   font-size: 16px;
   line-height: 24px;
 
-  color: #FFFFFF;
+  color: #090606;
 
   max-width: 700px;
   min-width: 630px;
   width: 100%;
 
-  background: #0D3B66;
+  background: rgba(235, 129, 124, 0.5);
   border-radius: 25px;
 
   display: grid;
@@ -39,12 +39,12 @@
   
   font-size: 19px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: inherit;
   text-decoration: none;
 }
 
 .name:hover{
-    color: #bababa;
+    color: #F6564D;
 }
 
 .rating {
@@ -82,25 +82,25 @@
   font-size: inherit;
   line-height: inherit;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #090606;
 
   width: 200px;
   height: 40px;
 
-  border: 3px solid #FFFFFF;
+  border: 2px solid #090606;
   border-radius: 25px;
-  background: inherit;
+  background: transparent;
 }
 
 .button:hover {
-  color: #bababa;
-  border-color: #bababa;
+  color: #F6564D;
+  border-color: #F6564D;
   cursor: pointer;
 }
 
 .buttonBookmark {
   @extend .button;
-  width: 250px;
+  width: 270px;
 
   background: url("./img/bookmark.png") no-repeat 10px center;
   text-align: end;
@@ -109,7 +109,7 @@
 
 .spinner{
   grid-area: button;
-  color: #FFFFFF;
+  color: #CC4740;
   text-align: start;
   margin-top: auto;
   margin-bottom: auto;

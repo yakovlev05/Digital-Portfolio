@@ -5,7 +5,8 @@ import styles from './styles.module.scss'
 const LoaderComponent = () => {
     return (
         <div className={styles.loader}>
-            <Spin indicator={<LoadingOutlined style={{fontSize: 56}} spin/>}/>
+            <Spin className={styles.spin}
+                  indicator={<LoadingOutlined style={{fontSize: 56}} color={'#CC4740 !important'} spin/>}/>
         </div>
     )
 }

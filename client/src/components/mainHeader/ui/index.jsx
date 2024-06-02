@@ -12,7 +12,7 @@ const MainHeaderComponent = () => {
     return (
         <header className={styles.header}>
             <a className={styles.logo} href='/'>
-                <img src={logo} alt='логотип' width='96' height='96'/>
+                <img className={styles.logoImg} src={logo} alt='логотип' width='96' height='96'/>
             </a>
             <ul className={styles.navList}>
                 <li className={styles.navElement}>
