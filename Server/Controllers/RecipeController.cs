@@ -300,7 +300,7 @@ public class RecipeController : Controller
 
         var result = recipes.Select(x => new MyRecipe(x.Name, x.MainImageName, x.Rating,
             (int)x.CookingTimeInMinutes.TotalMinutes, x.Ingredients.Count, x.Category, x.NameUrl));
-        
+
         return new GetUserRecipesResponse(await result.ToListAsync());
     }
 }
