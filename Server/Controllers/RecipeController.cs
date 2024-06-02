@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Server.DataBase;
 using Server.DataBase.Entities;
 using Server.Models;
@@ -251,4 +252,62 @@ public class RecipeController : Controller
 
         return new GetCommentsResponse(recipe.Comments.Count, comments);
     }
+
+    [AllowAnonymous]
+    [HttpGet("search")]
+    public async Task<ActionResult<List<MyRecipe>>> SearchRecipes(string? name, string? category, int? minRating,
+        int? maxRating, int? minCookingTimeInMinutes, int? maxCookingTimeInMinutes,
+        SortOptions sort = SortOptions.ByDateCreate, bool orderByDescending = false, int page = 1, int count = 10)
+    {
+        var recipes =
+            _dbContext.Recipes.AsQueryable(); // Следующие запорсы LINQ будут выполняться в базе данных, а не в памяти
+
+        if (!string.IsNullOrEmpty(name)) recipes = recipes.Where(x => x.Name.Contains(name));
+        if (!string.IsNullOrEmpty(category)) recipes = recipes.Where(x => x.Category == category);
+        if (minRating is not null) recipes = recipes.Where(x => x.Rating >= minRating);
+        if (maxRating is not null) recipes = recipes.Where(x => x.Rating <= maxRating);
+        if (minCookingTimeInMinutes is not null)
+            recipes = recipes.Where(x => x.CookingTimeInMinutes.Minutes >= minCookingTimeInMinutes);
+        if (maxCookingTimeInMinutes is not null)
+            recipes = recipes.Where(x => x.CookingTimeInMinutes.Minutes < maxCookingTimeInMinutes);
+
+        switch (sort)
+        {
+            case SortOptions.ByRating:
+                recipes = orderByDescending
+                    ? recipes.OrderByDescending(x => x.Rating)
+                    : recipes.OrderBy(x => x.Rating);
+                break;
+            case SortOptions.ByCookingTime:
+                recipes = orderByDescending
+                    ? recipes.OrderByDescending(x => x.CookingTimeInMinutes.TotalMinutes)
+                    : recipes.OrderBy(x => x.CookingTimeInMinutes.TotalMinutes);
+                break;
+            case SortOptions.ByDateCreate:
+                recipes = orderByDescending
+                    ? recipes.OrderByDescending(x => x.DateCreate)
+                    : recipes.OrderBy(x => x.DateCreate);
+                break;
+            case SortOptions.ByIngredientsCount:
+                recipes = orderByDescending
+                    ? recipes.OrderByDescending(x => x.Ingredients.Count)
+                    : recipes.OrderBy(x => x.Ingredients.Count);
+                break;
+        }
+
+        recipes = recipes.Skip((page - 1) * count).Take(count);
+
+        var result = recipes.Select(x => new MyRecipe(x.Name, x.MainImageName, x.Rating,
+            (int)x.CookingTimeInMinutes.TotalMinutes, x.Ingredients.Count, x.Category, x.NameUrl));
+
+        return await result.ToListAsync();
+    }
+}
+
+public enum SortOptions
+{
+    ByRating,
+    ByCookingTime,
+    ByDateCreate,
+    ByIngredientsCount,
 }
