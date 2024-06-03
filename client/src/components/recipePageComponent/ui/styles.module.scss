@@ -10,7 +10,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #090606;
 }
 
 .recipeContainer {
@@ -69,7 +69,7 @@
 }
 
 .cardInfo {
-  border: 3px solid rgba(255, 255, 255, 1);
+  border: 3px solid #090606;
   border-radius: 10px;
 
   padding: 10px 10px 10px 10px;
@@ -93,8 +93,8 @@
 }
 
 .cardAuthor:hover{
-  color: #bababa;
-  border-color: #bababa;
+  color: #F6564D;
+  border-color: #F6564D;
   cursor: pointer;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .loginAuthor:hover {
-  color: #bababa;
+  color: #F6564D;
 }
 
 .cardTime {
@@ -136,8 +136,8 @@
 }
 
 .cardBookmark:hover {
-  color: #bababa;
-  border-color: #bababa;
+  color: #F6564D;
+  border-color: #F6564D;
   cursor: pointer;
 }
 

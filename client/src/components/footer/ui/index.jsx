@@ -1,23 +1,24 @@
 import styles from './styles.module.scss';
 import logo from './img/logo.png';
+import {Link} from "react-router-dom";
 
 
 const FooterComponent = () => {
     return (
         <footer>
             <div className={styles.footer}>
-                <a className={styles.photoUrl} href={"/"}>
+                <Link to={'/'} className={styles.photoUrl}>
                     <img className={styles.photo} src={logo} alt={"logo"} width="96" height="96"/>
-                </a>
+                </Link>
                 <ul className={styles.listNavigation}>
                     <li className={styles.listElement}>
-                        <a className={styles.url} href={'/'}>Главная</a>
+                        <Link to={'/'} className={styles.url}>Главная</Link>
                     </li>
                     <li className={styles.listElement}>
-                        <a className={styles.url} href={'/'}>Рецепты</a>
+                        <Link to={'/recipes'} className={styles.url}>Рецепты</Link>
                     </li>
                     <li className={styles.listElement}>
-                        <a className={styles.url} href={'/profile'}>Портфолио</a>
+                        <Link to={'/me'} className={styles.url}>Портфолио</Link>
                     </li>
                 </ul>
             </div>

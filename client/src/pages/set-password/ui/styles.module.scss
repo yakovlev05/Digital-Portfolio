@@ -42,7 +42,7 @@
 .label {
   font-weight: 500;
   font-size: 20px;
-  color: dimgrey;
+  color: #090606;
   align-self: flex-start;
   margin-left: 52px;
 }
@@ -50,19 +50,24 @@
 .field {
   width: 398px;
   height: 48px;
-  border: 1px solid #696969;
+  border: 1px solid #090606;
   font-size: 32px;
   line-height: 39px;
   border-radius: 10px;
   margin-bottom: 25px;
 }
 
-.button{
+.field:focus {
+  outline: none;
+  border: 1px solid #F6564D !important;
+}
+
+.button {
   margin-top: 13px;
   border: none;
   width: 398px;
   height: 95px;
-  background: #32B857;
+  background: #CC4740;
   border-radius: 101px;
 
   font-weight: 700;
@@ -72,10 +77,11 @@
 }
 
 .button:hover {
-  background: #217336;
+  background: #F6564D;
+  cursor: pointer;
 }
 
-.errorLabel{
+.errorLabel {
   color: red;
   font-weight: 500;
   font-size: 20px;

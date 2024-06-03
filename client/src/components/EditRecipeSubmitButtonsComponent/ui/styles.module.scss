@@ -16,20 +16,20 @@
 
 .saveButton {
   @extend .button;
-  background-color: #32B857;
+  background-color: #CC4740;
 }
 
 .saveButton:hover {
   cursor: pointer;
-  background: #2A8C4F;
+  background: #F6564D;
 }
 
 .deleteButton {
   @extend .button;
-  background: #C52E2E;
+  background: #CC4740;
   box-shadow: none !important;
 }
 
-.deleteButton:hover{
-  background: #912424 !important;
+.deleteButton:hover {
+  background: #F6564D !important;
 }

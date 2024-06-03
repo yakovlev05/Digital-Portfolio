@@ -47,17 +47,22 @@
 .input {
     width: 398px;
     height: 48px;
-    border: 1px solid #696969;
+    border: 1px solid #090606;
     font-size: 32px;
     line-height: 39px;
     border-radius: 10px;
+}
+
+.input:focus{
+    outline: none;
+    border: 1px solid #F6564D !important;
 }
 
 .label {
     margin-left: 22px;
     font-weight: 500;
     font-size: 20px;
-    color: dimgrey;
+    color: #090606;
     align-self: flex-start
 }
 
@@ -65,7 +70,7 @@
     border: none;
     width: 398px;
     height: 95px;
-    background: #32B857;
+    background: #CC4740;
     border-radius: 101px;
 
     font-weight: 700;
@@ -81,10 +86,14 @@
 }
 
 .url {
-    color: #32B857;
+    color: #CC4740;
     text-decoration: none;
     font-size: 32px;
     line-height: 39px;
+}
+
+.url:hover{
+    color: #F6564D;
 }
 
 .field {
@@ -97,7 +106,8 @@
 }
 
 .button:hover {
-    background: #217336;
+    background: #F6564D;
+    cursor: pointer;
 }
 
 .errorLabel{

@@ -4,6 +4,7 @@ import {useContext} from "react";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
 import emptyProfilePhoto from '../../../img/emptyProfilePhoto.jpg'
+import {Link} from "react-router-dom";
 
 const MainHeaderComponent = () => {
     const userInfo = useContext(UserInfoContext);
@@ -11,32 +12,32 @@ const MainHeaderComponent = () => {
 
     return (
         <header className={styles.header}>
-            <a className={styles.logo} href='/'>
+            <Link to={'/'} className={styles.logo}>
                 <img className={styles.logoImg} src={logo} alt='логотип' width='96' height='96'/>
-            </a>
+            </Link>
             <ul className={styles.navList}>
                 <li className={styles.navElement}>
-                    <a className={styles.url} href='/'>Главная</a>
+                    <Link to={'/'} className={styles.url}>Главная</Link>
                 </li>
                 <li className={styles.navElement}>
-                    <a className={styles.url} href='/'>Рецепты</a>
+                    <Link to={'/recipes'} className={styles.url}>Рецепты</Link>
                 </li>
                 <li className={styles.navElement}>
-                    <a className={styles.url} href='/'>Портфолио</a>
+                    <Link to={'/me'} className={styles.url}>Портфолио</Link>
                 </li>
             </ul>
             <input className={styles.searchField} type='search' placeholder='Поиск'/>
             <div className={styles.auth} style={{display: auth.logged ? 'none' : 'block'}}>
-                <a className={styles.url} href={'/login'}>Вход</a>
+                <Link to={'/login'} className={styles.url}>Вход</Link>
                 /
-                <a className={styles.url} href={'/registration'}>Регистрация</a>
+                <Link to={'/registration'} className={styles.url}>Регистрация</Link>
             </div>
             <div style={{display: auth.logged ? 'block' : 'none'}}>
-                <a href={'/me'}>
+                <Link to={'/me'}>
                     <img className={styles.avatar}
                          src={auth.logged && userInfo.profilePhoto ? `/api/v1/content/image/${userInfo.profilePhoto}` : emptyProfilePhoto}
                          alt='аватар'></img>
-                </a>
+                </Link>
             </div>
         </header>
     )

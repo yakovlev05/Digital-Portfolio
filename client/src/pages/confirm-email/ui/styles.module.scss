@@ -42,7 +42,7 @@
   border: none;
   width: 398px;
   height: 95px;
-  background: #32B857;
+  background: #CC4740;
   border-radius: 101px;
 
   font-weight: 700;
@@ -51,15 +51,16 @@
   color: #FFFFFF;
   
   align-self: center;
+  cursor: pointer;
 }
 
 .button:hover {
-  background: #217336;
+  background: #F6564D;
 }
 
 .emailInfo {
   font-size: 32px;
   line-height: 39px;
-  color: #696969;
+  color: #090606;
   margin-top: 32px;
 }

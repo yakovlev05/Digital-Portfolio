@@ -64,7 +64,7 @@ const ProfileEditComponent = () => {
         response
             .then(async (response) => {
                 if (response.ok) {
-                    window.location.href = "/login";
+                    navigate('/login')
                 } else {
                     updateToast('error', 'Произошла ошибка', id)
                 }
@@ -108,7 +108,7 @@ const ProfileEditComponent = () => {
                 if (response.ok) {
                     updateToast('success', 'Выход выполнен', id)
                     localStorage.removeItem('token');
-                    window.location.href = "/login";
+                    navigate('/login')
                 } else {
                     updateToast('error', 'Произошла ошибка', id)
                 }

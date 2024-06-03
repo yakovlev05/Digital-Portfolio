@@ -25,7 +25,7 @@
 }
 
 .infoInputField{
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 10px;
   background-color: transparent;
   padding: 5px;
@@ -36,6 +36,11 @@
   font-size: inherit;
   font-weight: inherit;
   color: inherit;
+}
+
+.infoInputField:focus{
+  outline: none;
+  border: 1px solid #F6564D;
 }
 
 .inputLabel{

@@ -4,7 +4,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #090606;
 
   display: flex;
   flex-direction: column;
@@ -17,7 +17,7 @@
 .title {
   padding: 0;
   margin: 0 0 60px;
-  color: #0D3B66;
+  color: #090606;
 }
 
 .reviewsContainer {
@@ -33,7 +33,7 @@
 }
 
 .inputComment {
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 10px;
   resize: none;
 
@@ -44,16 +44,21 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #FFFFFF;
+  color: #090606;
 
   padding: 10px;
   margin-bottom: 20px;
 }
 
+.inputComment:focus{
+  outline: none;
+  border: 1px solid #F6564D;
+}
+
 .commentButton {
   border: none;
   border-radius: 75px;
-  background: #32B857;
+  background: #CC4740;
   width: 150px;
   height: 50px;
   font-weight: 700;
@@ -65,7 +70,7 @@
 }
 
 .commentButton:hover {
-  background: #2A8C4F;
+  background: #F6564D;
   cursor: pointer;
 }
 
@@ -90,7 +95,7 @@
 .spinner {
   margin-top: 50px;
   margin-bottom: 50px;
-  color: #FFFFFF;
+  color: #CC4740;
 }
 
 .moreButton {

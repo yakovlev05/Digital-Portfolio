@@ -52,7 +52,7 @@ const SetPasswordPage = () => {
                     updateToast('success', 'Пароль успешно изменён', id)
                 } else {
                     if (response.status === 401) {
-                        updateToast('error', 'Токен истёк, запорсите новую ссылку', id)
+                        updateToast('error', 'Токен истёк, запросите новую ссылку', id)
                         return;
                     }
                     const error = await response.json();

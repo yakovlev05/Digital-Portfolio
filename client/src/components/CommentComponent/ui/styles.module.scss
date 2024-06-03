@@ -4,10 +4,10 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #090606;
 
-  border-bottom: 1px solid #FFFFFF;
-  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #090606;
+  border-top: 1px solid #090606;
   margin-bottom: 30px;
 
   display: flex;
@@ -24,13 +24,13 @@
   margin: 20px 30px 20px 0;
   font-size: 20px;
   padding: 5px;
-  color: #FFFFFF;
+  color: #090606;
   text-decoration: none;
   font-weight: 500;
 }
 
 .authorLogin:hover {
-  color: #bababa;
+  color: #F6564D;
 }
 
 .commentDate {
@@ -45,12 +45,12 @@
   font-size: inherit;
   line-height: inherit;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #090606;
 
   width: 200px;
   height: 40px;
 
-  border: 3px solid #FFFFFF;
+  border: 2px solid #090606;
   border-radius: 25px;
   background: inherit;
 
@@ -59,8 +59,7 @@
 }
 
 .button:hover {
-  color: #bababa;
-  border-color: #bababa;
+  border-color: #F6564D;
   cursor: pointer;
 }
 
@@ -69,7 +68,7 @@
 }
 
 .inputComment {
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 10px;
   resize: none;
 
@@ -80,10 +79,15 @@
   font-weight: 400;
   font-size: inherit;
   line-height: 20px;
-  color: #FFFFFF;
+  color: #090606;
 
   padding: 10px;
   margin-bottom: 20px;
+}
+
+.inputComment:focus{
+  outline: none;
+  border: 1px solid #F6564D;
 }
 
 .submitButton {
@@ -97,10 +101,11 @@
 
 .deleteButton {
   @extend .button;
-  background: #C52E2E;
+  background: #CC4740;
   border: none;
+  color: #FFFFFF;
 
   &:hover {
-    background: #912424 !important;
+    background: #F6564D !important;
   }
 }

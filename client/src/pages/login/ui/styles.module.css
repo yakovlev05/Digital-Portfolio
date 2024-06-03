@@ -60,7 +60,7 @@
 .input {
     width: 398px;
     height: 48px;
-    border: 1px solid #696969;
+    border: 1px solid #090606;
     font-size: 32px;
     line-height: 39px;
     border-radius: 10px;
@@ -70,7 +70,7 @@
     border: none;
     width: 398px;
     height: 95px;
-    background: #32B857;
+    background: #CC4740;
     border-radius: 101px;
     font-weight: 700;
     font-size: 40px;
@@ -78,9 +78,18 @@
     color: #FFFFFF;
 }
 
+.buttonElement:hover {
+    background: #F6564D;
+    cursor: pointer;
+}
+
 .url {
-    color: #32B857;
+    color: #CC4740;
     text-decoration: none;
+}
+
+.url:hover {
+    color: #F6564D;
 }
 
 .email {
@@ -103,15 +112,11 @@
     margin-right: auto;
     font-weight: 500;
     font-size: 20px;
-    color: dimgrey;
+    color: #090606;
 }
 
 .passwordQuestion {
     padding-top: 20px;
-}
-
-.button button:hover {
-    background: #217336;
 }
 
 .errorLabel {
@@ -120,4 +125,9 @@
     font-size: 20px;
     margin: 0;
     padding: 0;
+}
+
+.input:focus{
+    outline: none;
+    border: 1px solid #F6564D !important;
 }

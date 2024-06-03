@@ -23,12 +23,12 @@
   cursor: pointer;
 }
 
-.inputContainer{
+.inputContainer {
   display: flex;
 }
 
 .inputField {
-  border: 1px solid #FFFFFF;
+  border: 1px solid #090606;
   border-radius: 10px;
   background-color: transparent;
   padding: 10px;
@@ -40,9 +40,14 @@
   resize: none;
 }
 
+.inputField:focus {
+  outline: none;
+  border: 1px solid #F6564D;
+}
+
 .closeButton {
-  background-color: rgba(235, 129, 124, 0.5);
-  color: #FFFFFF;
+  background-color: transparent;
+  color: #090606;
   border: none;
   align-self: start;
 }

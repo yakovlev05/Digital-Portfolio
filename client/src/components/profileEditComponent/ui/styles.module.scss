@@ -114,6 +114,11 @@
   color: #090606;
 }
 
+.inputField:focus {
+  outline: none;
+  border: 1px solid #F6564D;
+}
+
 .nameCont {
   grid-area: name;
 }
@@ -155,6 +160,11 @@
 
 .aboutTextArea::placeholder {
   color: #090606;
+}
+
+.aboutTextArea:focus {
+  outline: none;
+  border: 1px solid #F6564D;
 }
 
 .changePassword {
