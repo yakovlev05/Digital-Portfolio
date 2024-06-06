@@ -28,10 +28,20 @@ const ProfileComponent = () => {
                  alt={'avatar'}
                  width='200' height='200'/>
             <h1 className={styles.username}>{myUserInfo.login}</h1>
-            {auth.canChange && (<div className={styles.containerButtons}>
-                <button className={styles.button} onClick={handleShare}>Поделиться</button>
-                <button className={styles.button} onClick={() => navigate('/me/edit')}>Редактировать</button>
-            </div>)}
+            {auth.canChange &&
+                (
+                    <div className={styles.mainContainerButtons}>
+                        <div className={styles.containerButtons}>
+                            <button className={styles.button} onClick={handleShare}>Поделиться</button>
+                            <button className={styles.button} onClick={() => navigate('/me/edit')}>Редактировать
+                            </button>
+                        </div>
+                        {myUserInfo.recipesCount !== 0 &&
+                            <button className={styles.button} onClick={()=>navigate('/recipe/new')}>Опубликовать</button>
+                        }
+                    </div>
+                )
+            }
             <ul className={styles.navList}>
                 <li className={styles.navElement}
                     onClick={() => setCurrentNavElement('Портфолио')}>Портфолио

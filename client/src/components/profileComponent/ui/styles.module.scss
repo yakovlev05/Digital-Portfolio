@@ -41,6 +41,13 @@
   margin-bottom: 15px;
 }
 
+.mainContainerButtons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
 .button {
   background: #CC4740;
   border: none;
