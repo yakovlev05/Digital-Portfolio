@@ -77,9 +77,11 @@ const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false,
         <div className={styles.recipeCard}>
             <img className={styles.image} src={`/api/v1/content/image/${recipe.imageName}`} alt='блюдо' width='150'
                  height='150'/>
-            <a className={styles.name} href={`/recipe/${recipe.nameUrl}`}>{recipe.name}</a>
+            <a className={styles.name} href={`/recipe/${recipe.nameUrl}`}>
+                {recipe.name.length > 25 ? recipe.name.slice(0, 25) + '...' : recipe.name}
+            </a>
             <p className={styles.rating}>
-                <span>Рейтинг :</span>
+                <span>Рейтинг:</span>
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
                      style={{visibility: recipe.rating >= 1 ? 'visible' : 'hidden'}}/>
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
@@ -91,12 +93,13 @@ const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false,
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
                      style={{visibility: recipe.rating >= 5 ? 'visible' : 'hidden'}}/>
             </p>
-            <p className={styles.time}>Время: {recipe.cookingTimeInMinutes} минут</p>
-            <p className={styles.ingredients}>ингредиентов: {recipe.ingredientsCount}</p>
+            <p className={styles.time}>Время: {recipe.cookingTimeInMinutes} мин</p>
+            <p className={styles.ingredients}>Ингредиентов: {recipe.ingredientsCount}</p>
             <p className={styles.category}>{recipe.category}</p>
 
             {!isLoading && myRequirements.isMyRecipe && !isBookmarks &&
-                <button className={styles.button}>Редактировать</button>
+                <button className={styles.button}
+                        onClick={() => navigate(`/recipe/${recipe.nameUrl}/edit`)}>Редактировать</button>
             }
 
             {!isLoading && ((!isPortfolio && !myRequirements.isMyBookmark) || (isPortfolio && !myRequirements.isMyRecipe && !myRequirements.isMyBookmark)) &&

@@ -16,7 +16,7 @@
 
   display: grid;
   grid-template-areas: 
-          "image name rating rating"
+          "image name name rating"
           "image time ingredients category"
           "image button button button";
   grid-template-columns: auto 1fr 1fr 1fr;
