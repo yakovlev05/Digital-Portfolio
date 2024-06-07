@@ -40,8 +40,7 @@ const RecipesCardsComponent = ({
             } else if (isAnother) {
                 response = response = GetUserRecipesRequestApi(userRequest, page, count);
             } else if (isSearch) {
-                response = SearchRecipesRequestApi(
-                    {page: page, count: count})
+                response = SearchRecipesRequestApi({page: page, count: count})
             } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
 
             response

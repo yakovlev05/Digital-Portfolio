@@ -1,27 +1,15 @@
-const SearchRecipesRequestApi = async ({
-                                           name = null,
-                                           category = null,
-                                           minRating = null,
-                                           maxRating = null,
-                                           minCookingTimeInMinutes = null,
-                                           maxCookingTimeInMinutes = null,
-                                           sort = null,
-                                           orderByDescending = null,
-                                           page = null,
-                                           count = null
-                                       }
-) => {
+const SearchRecipesRequestApi = async (query) => {
     let url = '/api/v1/recipe/search?';
-    if (name) url += `name=${name}&`;
-    if (category) url += `category=${category}&`;
-    if (minRating) url += `minRating=${minRating}&`;
-    if (maxRating) url += `maxRating=${maxRating}&`;
-    if (minCookingTimeInMinutes) url += `minCookingTimeInMinutes=${minCookingTimeInMinutes}&`;
-    if (maxCookingTimeInMinutes) url += `maxCookingTimeInMinutes=${maxCookingTimeInMinutes}&`;
-    if (sort) url += `sort=${sort}&`;
-    if (orderByDescending) url += `orderByDescending=${orderByDescending}&`;
-    if (page) url += `page=${page}&`;
-    if (count) url += `count=${count}&`;
+    if (query.name) url += `name=${query.name}&`
+    if (query.category) url += `category=${query.category}&`
+    if (query.minRating) url += `minRating=${query.minRating}&`
+    if (query.maxRating) url += `maxRating=${query.maxRating}&`
+    if (query.minCookingTimeInMinutes) url += `minCookingTimeInMinutes=${query.minCookingTimeInMinutes}&`
+    if (query.maxCookingTimeInMinutes) url += `maxCookingTimeInMinutes=${query.maxCookingTimeInMinutes}&`
+    if (query.sort) url += `sort=${query.sort}&`
+    if (query.orderByDescending) url += `orderByDescending=${query.orderByDescending}&`
+    if (query.page) url += `page=${query.page}&`
+    if (query.count) url += `count=${query.count}&`
 
     return await fetch(url, {
         method: 'GET',
