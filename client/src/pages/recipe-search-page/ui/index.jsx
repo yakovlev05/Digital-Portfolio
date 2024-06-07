@@ -8,6 +8,7 @@ import AuthContext from "../../../contexts/AuthContext";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import MainHeaderComponent from "../../../components/mainHeader";
 import FooterComponent from "../../../components/footer";
+import SearchRecipeComponent from "../../../components/SearchRecipeComponent";
 
 const RecipeSearchPage = () => {
     const token = localStorage.getItem('token');
@@ -54,6 +55,7 @@ const RecipeSearchPage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
+                        <SearchRecipeComponent/>
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>

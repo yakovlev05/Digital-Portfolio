@@ -1,0 +1,124 @@
+.mainContainer {
+  flex: 1;
+
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #090606;
+  //display: flex;
+  //flex-direction: column;
+
+  margin-top: 100px;
+}
+
+.searchSettingsContainer {
+  margin-left: 5%;
+  margin-right: 20px;
+}
+
+.searchInputContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 800px;
+  height: 45px;
+
+  background: #EB817C url("img/search.png") no-repeat 10px center;
+  border-radius: 32px;
+  text-align: center;
+  padding: 0 10px 0 50px;
+
+  font: inherit;
+  font-weight: 700;
+
+  box-sizing: border-box;
+  border: 2px solid #EB817C;
+}
+
+.searchInput:focus {
+  outline: none;
+  border: #F6564D solid 2px;
+}
+
+.searchInputButton {
+  background: #CC4740;
+  border: none;
+  border-radius: 75px;
+  width: 150px;
+  height: 45px;
+  font: inherit;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.searchInputButton:hover {
+  background: #F6564D;
+  cursor: pointer;
+}
+
+.filtersMainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.label {
+  margin: 0 0 5px 0;
+}
+
+.inputNumberList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.inputNumber {
+  background: #EB817C;
+  border-radius: 8px;
+  width: 124px;
+  height: 40px;
+
+  font: inherit;
+  font-weight: 700;
+  text-align: center;
+
+  border: 2px solid #EB817C;
+  box-sizing: border-box;
+}
+
+.inputNumber:focus {
+  outline: none;
+  border: #F6564D solid 2px;
+}
+
+.sortLabel {
+  margin: 0 0 20px 0;
+}
+
+.sortList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sortOption {
+  margin: 0 5px 0 0;
+}
