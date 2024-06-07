@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import RecipesCardsComponent from "../../recipesCardsComponent";
 import {useLocation} from "react-router-dom";
 
