@@ -1,12 +1,14 @@
 import styles from './styles.module.scss';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import RecipesCardsComponent from "../../recipesCardsComponent";
+import {useLocation} from "react-router-dom";
 
 const SearchRecipeComponent = ({isAuthorized}) => {
+    const customQuery = new URLSearchParams(useLocation().search);
     const [key, setKey] = useState(0); // Чтобы при изменении ключа перерендерился компонент с карточками, костыли (но этот компонент уже часть корабля)
     const [queryForm, setQueryForm] = useState(
         {
-            name: null,
+            name: customQuery.get('name') ? customQuery.get('name') : null,
             category: null,
             minRating: null,
             maxRating: null,

@@ -1,15 +1,16 @@
 import styles from './styles.module.scss'
 import logo from './img/logo.png'
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import UserInfoContext from "../../../contexts/UserInfoContext";
 import AuthContext from "../../../contexts/AuthContext";
 import emptyProfilePhoto from '../../../img/emptyProfilePhoto.jpg'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const MainHeaderComponent = () => {
     const userInfo = useContext(UserInfoContext);
     const auth = useContext(AuthContext);
-
+    const navigate = useNavigate();
+    const [inputSearch, setInputSearch] = useState("");
     return (
         <header className={styles.header}>
             <Link to={'/'} className={styles.logo}>
@@ -20,13 +21,22 @@ const MainHeaderComponent = () => {
                     <Link to={'/'} className={styles.url}>Главная</Link>
                 </li>
                 <li className={styles.navElement}>
-                    <Link to={'/recipes'} className={styles.url}>Рецепты</Link>
+                    <Link to={'/search'} className={styles.url}>Рецепты</Link>
                 </li>
                 <li className={styles.navElement}>
                     <Link to={'/me'} className={styles.url}>Портфолио</Link>
                 </li>
             </ul>
-            <input className={styles.searchField} type='search' placeholder='Поиск'/>
+            <input
+                className={styles.searchField}
+                type='search'
+                placeholder='Поиск'
+                value={inputSearch}
+                onInput={(e) => setInputSearch(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') navigate(`/search?name=${inputSearch}`);
+                }}
+            />
             <div className={styles.auth} style={{display: auth.logged ? 'none' : 'block'}}>
                 <Link to={'/login'} className={styles.url}>Вход</Link>
                 /
