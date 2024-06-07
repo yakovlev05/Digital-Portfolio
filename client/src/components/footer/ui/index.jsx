@@ -15,7 +15,7 @@ const FooterComponent = () => {
                         <Link to={'/'} className={styles.url}>Главная</Link>
                     </li>
                     <li className={styles.listElement}>
-                        <Link to={'/recipes'} className={styles.url}>Рецепты</Link>
+                        <Link to={'/search'} className={styles.url}>Рецепты</Link>
                     </li>
                     <li className={styles.listElement}>
                         <Link to={'/me'} className={styles.url}>Портфолио</Link>
