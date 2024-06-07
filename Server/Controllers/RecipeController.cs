@@ -263,8 +263,8 @@ public class RecipeController : Controller
         var recipes =
             _dbContext.Recipes.AsQueryable(); // Следующие запорсы LINQ будут выполняться в базе данных, а не в памяти
 
-        if (!string.IsNullOrEmpty(name)) recipes = recipes.Where(x => x.Name.Contains(name));
-        if (!string.IsNullOrEmpty(category)) recipes = recipes.Where(x => x.Category == category);
+        if (!string.IsNullOrEmpty(name)) recipes = recipes.Where(x => x.Name.ToLower().Contains(name.ToLower()));
+        if (!string.IsNullOrEmpty(category)) recipes = recipes.Where(x => x.Category.ToLower() == category.ToLower());
         if (minRating is not null) recipes = recipes.Where(x => x.Rating >= minRating);
         if (maxRating is not null) recipes = recipes.Where(x => x.Rating <= maxRating);
         if (minCookingTimeInMinutes is not null)
