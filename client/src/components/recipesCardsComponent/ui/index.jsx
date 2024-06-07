@@ -22,8 +22,8 @@ const RecipesCardsComponent = ({
                                    querySearch = null
                                }) => {
     const {username} = useParams();
-    const [page, setPage] = useState(1);
-    const [count, setCount] = useState(3);
+    const [page, setPage] = useState(querySearch ? querySearch.page : 1);
+    const [count, setCount] = useState(querySearch ? querySearch.count : 3);
     const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isEnd, setIsEnd] = useState(false);
@@ -52,7 +52,6 @@ const RecipesCardsComponent = ({
                     if (response.ok) {
                         const data = await response.json();
                         if (data.recipes.length < count) setIsEnd(true);
-                        if (querySearch && data.recipes.length < querySearch.count) setIsEnd(true);
                         setRecipes(recipes => [...recipes, ...data.recipes]);
                         setTimeout(() => {
                             setIsLoading(false)
