@@ -10,6 +10,7 @@ import RecipePage from "./recipe-page";
 import CreateRecipePage from "./create-recipe";
 import EditRecipePage from "./edit-recipe";
 import MainPage from "./main-page";
+import RecipeSearchPage from "./recipe-search-page";
 
 const AppRouter = () => {
     return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
                     <Route path='/reset-password' element={<ResetPasswordPage/>}/>
                     <Route path='/set-password' element={<SetPasswordPage/>}/>
                     <Route path='/confirm-email' element={<ConfirmEmailPage/>}/>
+                    <Route path='/search' element={<RecipeSearchPage/>}/>
                     <Route path='/me' element={<ProfilePage/>}/>
                     <Route path='/me/edit' element={<ProfileEditPage/>}/>
                     <Route exact path='/:username' element={<ProfilePage/>}/>
