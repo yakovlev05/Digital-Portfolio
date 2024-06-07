@@ -18,7 +18,8 @@ const RecipesCardsComponent = ({
                                    isAuthorized = false,
                                    isAnother = false,
                                    userRequest = null,
-                                   filterNameUrl = null
+                                   filterNameUrl = null,
+                                   querySearch = null
                                }) => {
     const {username} = useParams();
     const [page, setPage] = useState(1);
@@ -40,7 +41,10 @@ const RecipesCardsComponent = ({
             } else if (isAnother) {
                 response = response = GetUserRecipesRequestApi(userRequest, page, count);
             } else if (isSearch) {
-                response = SearchRecipesRequestApi({page: page, count: count})
+                response = SearchRecipesRequestApi(querySearch ? {...querySearch, page: page} : {
+                    page: page,
+                    count: count
+                })
             } else (response = GetMyRecipesRequestApi(token, page, count)); //  Временно, убери
 
             response
@@ -48,6 +52,7 @@ const RecipesCardsComponent = ({
                     if (response.ok) {
                         const data = await response.json();
                         if (data.recipes.length < count) setIsEnd(true);
+                        if (querySearch && data.recipes.length < querySearch.count) setIsEnd(true);
                         setRecipes(recipes => [...recipes, ...data.recipes]);
                         setTimeout(() => {
                             setIsLoading(false)
@@ -61,7 +66,7 @@ const RecipesCardsComponent = ({
 
         fetchData()
             .catch(() => toast.error('Непредвиденная ошибка при загрузке рецептов'))
-    }, [count, isAnother, isBookmarks, isPortfolio, isSearch, page, token, userRequest, username]);
+    }, [count, isAnother, isBookmarks, isPortfolio, isSearch, page, token, userRequest, username, querySearch]);
 
     return (
         <>

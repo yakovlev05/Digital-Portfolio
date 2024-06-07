@@ -55,7 +55,9 @@ const RecipeSearchPage = () => {
                 <UserInfoContext.Provider value={myInfo}>
                     <div className={styles.container}>
                         <MainHeaderComponent/>
-                        <SearchRecipeComponent/>
+                        <SearchRecipeComponent
+                            isAuthorized={auth.logged}
+                        />
                         <FooterComponent/>
                     </div>
                 </UserInfoContext.Provider>
