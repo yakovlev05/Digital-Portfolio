@@ -13,7 +13,6 @@ import {useNavigate} from "react-router-dom";
 
 const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false, isPortfolio = false}) => {
     const navigate = useNavigate();
-    if (recipe.rating === 0) recipe.rating = 5;
     const [myRequirements, setMyRequirements] = useState({isMyRecipe: false, isMyBookmark: false});
     const [isLoading, setIsLoading] = useState(false);
     const token = localStorage.getItem('token');
@@ -82,6 +81,10 @@ const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false,
             </a>
             <p className={styles.rating}>
                 <span>Рейтинг:</span>
+                {
+                    recipe.rating===0 &&
+                    <span><b>&#8212;</b></span>
+                }
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
                      style={{visibility: recipe.rating >= 1 ? 'visible' : 'hidden'}}/>
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
