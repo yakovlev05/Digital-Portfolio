@@ -43,7 +43,7 @@ const EditRecipePage = () => {
                 const recipe = new RecipeModel(await response.json())
                 setRecipe(recipe);
             } else {
-                navigate('/me')
+                navigate('/search')
             }
         }
 

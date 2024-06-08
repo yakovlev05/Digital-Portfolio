@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 import AuthContext from "../../../contexts/AuthContext";
 import LoaderComponent from "../../../components/LoaderComponent";
 import RecipePageComponent from "../../../components/recipePageComponent";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import GetRecipeRequestResponse from "../../../apiServices/Recipe/GetRecipeRequestResponse";
 import GetMyInfoAboutRecipeRequestApi from "../../../apiServices/Recipe/GetMyInfoAboutRecipeRequestApi";
 import {Helmet} from "react-helmet";
@@ -24,6 +24,7 @@ const RecipePage = () => {
     const [auth, setAuth] = useState({logged: false, canChange: false});
     const [isLoaded, setIsLoaded] = useState(false);
     const token = localStorage.getItem('token')
+    const navigate = useNavigate();
 
     const getMyInfo = async () => {
         const response = GetMyInfoRequestApi(token);
@@ -47,6 +48,8 @@ const RecipePage = () => {
                 if (response.ok) {
                     const recipeInfo = await response.json();
                     setRecipeInfo(recipeInfo);
+                } else {
+                    navigate('/search')
                 }
             })
             .catch(() => toast.error('Ошибка загрузки данных о рецепте'))

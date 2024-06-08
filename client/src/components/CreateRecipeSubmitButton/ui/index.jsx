@@ -21,7 +21,7 @@ const CreateRecipeSubmitButton = ({recipe}) => {
                     navigate(`/recipe/${json.recipeUrl}`)
                 } else {
                     const error = await response.json();
-                    updateToast('error', `Ошибка: "${response.message}"`, id)
+                    updateToast('error', `Заполните все поля`, id)
                 }
             })
             .catch(() => updateToast('error', 'Непредвиденная ошибка при отправке запроса', id))
