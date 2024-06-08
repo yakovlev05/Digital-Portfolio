@@ -66,13 +66,17 @@ const RecipePageComponent = ({recipe, isMyRecipe = false, isMyBookmark = false, 
                         <li className={styles.cardInfo}>{recipe.category}</li>
                         <li className={styles.cardTime}>{recipe.cookingTimeInMinutes} минут</li>
                         {
-                            (!isAuthorized || !myRequirements.isMyBookmark) &&
+                            (!isAuthorized || !myRequirements.isMyBookmark) && !myRequirements.isMyRecipe &&
                             <li className={styles.cardBookmark} onClick={addBookmarkHandle}>Добавить в избранное</li>
                         }
                         {
-                            myRequirements.isMyBookmark &&
+                            myRequirements.isMyBookmark && !myRequirements.isMyRecipe &&
                             <li className={styles.cardBookmark} onClick={removeBookmarkHandle}>Удалить из
                                 избранного</li>
+                        }
+                        {
+                            myRequirements.isMyRecipe &&
+                            <li className={styles.cardEdit} onClick={() => navigate(`edit`)}>Редактировать</li>
                         }
                     </ul>
                 </div>

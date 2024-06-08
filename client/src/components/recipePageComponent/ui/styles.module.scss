@@ -92,7 +92,7 @@
   align-items: center;
 }
 
-.cardAuthor:hover{
+.cardAuthor:hover {
   color: #F6564D;
   border-color: #F6564D;
   cursor: pointer;
@@ -136,6 +136,16 @@
 }
 
 .cardBookmark:hover {
+  color: #F6564D;
+  border-color: #F6564D;
+  cursor: pointer;
+}
+
+.cardEdit {
+  @extend .cardInfo;
+}
+
+.cardEdit:hover {
   color: #F6564D;
   border-color: #F6564D;
   cursor: pointer;
