@@ -60,7 +60,7 @@ const CreateRecipeMainInfoComponent = ({recipe, setRecipe}) => {
                         />
                     </li>
                     <li className={styles.infoListElement}>
-                        <p className={styles.inputLabel}>Время приготовления*</p>
+                        <p className={styles.inputLabel}>Время приготовления в минутах*</p>
                         <input type={"text"}
                                placeholder={'Добавить время'}
                                className={styles.infoInputField}
