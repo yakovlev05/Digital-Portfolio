@@ -2,7 +2,8 @@ import styles from './index.module.css';
 import {Helmet} from "react-helmet";
 import {toast} from 'react-toastify';
 import RegistrationRequestApi from "../../../apiServices/Auth/registration";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const RegistrationPage = () => {
     const [formData, setFormData] = useState({
@@ -22,6 +23,13 @@ const RegistrationPage = () => {
         password: false,
         confirmPassword: false
     });
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/me")
+        }
+    }, [navigate]);
 
     const checkFields = () => {
         setInvalidForm({

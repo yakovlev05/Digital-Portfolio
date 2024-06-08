@@ -1,13 +1,21 @@
 import styles from './styles.module.css'
 import {Helmet} from "react-helmet";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoginRequestApi from '../../../apiServices/Auth/login'
+import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
     // Поля формы входа
     const [user, setUser] = useState({login: '', password: ''});
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/me")
+        }
+    }, [navigate]);
 
     const handlePasswordChange = (e) => {
         setUser({...user, password: e.target.value})
@@ -51,8 +59,7 @@ const LoginPage = () => {
                     const error = await response.json()
                     if (error.message === "User not found" || error.message === "Invalid password") {
                         updateToast('error', 'Неверный логин или пароль', id)
-                    }
-                    else if (error.message==="Email confirmation is required")
+                    } else if (error.message === "Email confirmation is required")
                         updateToast('error', 'Подтвердите почту', id)
                     else updateToast('error', `Error: ${error.message}`, id);
                 }

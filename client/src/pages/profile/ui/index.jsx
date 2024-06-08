@@ -54,7 +54,10 @@ const ProfilePage = () => {
                 setMyUserInfo(myUserInfo);
                 setUserInfo(myUserInfo);
 
-                if (!myUserInfo.login) navigate('/login')
+                if (!myUserInfo.login) {
+                    localStorage.removeItem('token')
+                    navigate('/login')
+                }
 
                 setAuth({logged: true, canChange: true});
                 setTimeout(() => setIsLoaded(true), 400);
