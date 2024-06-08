@@ -7,7 +7,7 @@ import ProfileComponent from "../../../components/profileComponent";
 import {useEffect, useState} from "react";
 import GetMyInfoRequestApi from "../../../apiServices/User/GetMyInfoRequestApi";
 import GetUserInfoRequestApi from "../../../apiServices/User/GetUserInfoRequestApi";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LoaderComponent from "../../../components/LoaderComponent";
 import UserInfo from "../../../models/UserInfo";
 import {Helmet} from "react-helmet";
@@ -18,6 +18,7 @@ const ProfilePage = () => {
     const [userInfo, setUserInfo] = useState(null); // Информация просто о пользователе, которого посетили
     const [myUserInfo, setMyUserInfo] = useState(null); // Информация обо мне
     const [isLoaded, setIsLoaded] = useState(false);
+    const navigate = useNavigate();
 
 
     const token = localStorage.getItem('token');
@@ -29,7 +30,7 @@ const ProfilePage = () => {
 
     const getUserInfo = async () => {
         const response = await GetUserInfoRequestApi(username);
-        if (!response.ok) window.location.href = '/me';
+        if (!response.ok) navigate('/me');
         return await response.json();
     }
 
@@ -42,7 +43,7 @@ const ProfilePage = () => {
                 setMyUserInfo(myUserInfo);
                 setUserInfo(userInfo);
 
-                if (!userInfo.login) window.location.href = '/me';
+                if (!userInfo.login) navigate('/me');
 
                 setAuth({logged: Boolean(myUserInfo.login), canChange: myUserInfo.login === userInfo.login});
 
@@ -53,7 +54,7 @@ const ProfilePage = () => {
                 setMyUserInfo(myUserInfo);
                 setUserInfo(myUserInfo);
 
-                if (!myUserInfo.login) window.location.href = '/login';
+                if (!myUserInfo.login) navigate('/login')
 
                 setAuth({logged: true, canChange: true});
                 setTimeout(() => setIsLoaded(true), 400);
@@ -61,7 +62,7 @@ const ProfilePage = () => {
         }
 
         loadData();
-    }, [])
+    }, [navigate, username])
 
     if (!isLoaded) {
         return <LoaderComponent/>;// или отрисовать загрузочный индикатор

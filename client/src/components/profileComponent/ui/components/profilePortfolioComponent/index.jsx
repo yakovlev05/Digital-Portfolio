@@ -3,9 +3,10 @@ import AuthContext from "../../../../../contexts/AuthContext";
 import userInfoContext from "../../../../../contexts/UserInfoContext";
 import {useContext} from "react";
 import RecipesCardsComponent from "../../../../recipesCardsComponent";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const ProfilePortfolioComponent = () => {
+    const {username} = useParams();
     const auth = useContext(AuthContext);
     const user = useContext(userInfoContext);
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const ProfilePortfolioComponent = () => {
             }
 
             {user.recipesCount !== 0 &&
-                <RecipesCardsComponent isPortfolio={true} isAuthorized={auth.logged}/>}
+                <RecipesCardsComponent isPortfolio={true} isAuthorized={auth.logged} key={username}/>}
         </>
     )
 }
