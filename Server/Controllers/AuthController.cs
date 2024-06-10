@@ -41,7 +41,7 @@ public class AuthController : Controller
 
         if (user.Status == UserStatus.Suspended) return BadRequest(new MessageModel("Email confirmation is required"));
 
-        var verifyPassword = _passwordService.VerifyPassword(request.Password, request.Login, user.HashedPassword);
+        var verifyPassword = _passwordService.VerifyPassword(request.Password, user.Login, user.HashedPassword);
         if (!verifyPassword) return BadRequest(new MessageModel("Invalid password"));
 
         var token = _tokenService.CreateAuthToken(user.Login, user.Id.ToString());
