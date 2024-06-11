@@ -20,24 +20,24 @@ const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false,
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
-            if (isAuthorized) IsMyBookmarkRequest(token, recipe.nameUrl);
+            if (!isAuthorized) return;
+
+            const response = await GetMyInfoAboutRecipeRequestApi(token, recipe.nameUrl);
+            if (response.ok) {
+                const json = await response.json();
+                setMyRequirements(json);
+            } else {
+                toast.error("Ошибка при проверке наличия в избранном");
+            }
         }
 
-        fetchData()
+        const promise = Promise.all([fetchData()]);
+
+        promise
             .then(() => setTimeout(() => setIsLoading(false), 500))
             .catch(() => toast.error('Ошибка при обращении к серверу'));
+
     }, [isAuthorized, recipe.nameUrl, token]);
-
-    const IsMyBookmarkRequest = async (token, recipeUrl) => {
-        const response = GetMyInfoAboutRecipeRequestApi(token, recipeUrl);
-
-        response
-            .then(async (response) => {
-                const json = await response.json();
-                if (response.ok) setMyRequirements(json);
-            })
-            .catch(() => toast.error("Ошибка при проверке наличия в избранном"));
-    }
 
     const handleButtonAddBookmark = () => {
         if (!isAuthorized) {
@@ -82,7 +82,7 @@ const RecipeCardComponent = ({recipe, isAuthorized = false, isBookmarks = false,
             <p className={styles.rating}>
                 <span>Рейтинг:</span>
                 {
-                    recipe.rating===0 &&
+                    recipe.rating === 0 &&
                     <span><b>&#8212;</b></span>
                 }
                 <img className={styles.star} src={star} alt='rating' width='20' height='20'
