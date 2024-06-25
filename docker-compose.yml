@@ -13,12 +13,12 @@ volumes:
     external: true
 
 services:
-  portfolioServer:
+  portfolio_server:
     build:
-      context: .
+      context: ./Server
       dockerfile: Dockerfile
     restart: always
-    container_name: portfolioServer
+    container_name: portfolio_server
     ports:
       - "8081:8080"
     environment:
@@ -33,8 +33,8 @@ services:
     networks:
       - digitalPortfolio
     depends_on:
-      - portfolioDB
-  portfolioDB:
+      - portfolio_db
+  portfolio_db:
     image: postgres:latest
     restart: always
     container_name: db
@@ -50,15 +50,15 @@ services:
       - digitalPortfolio
   portfolio_frontend:
     build:
-      context: ../client
+      context: ./client
       dockerfile: Dockerfile
       target: dev  # Запуск именно сервера (start) реакт, а не сборка (build). См. докерфайл реакта. Измените на prod в продакшене
     restart: always
-    container_name: portfolioFrontend
+    container_name: portfolio_frontend
     ports:
       - "8083:3000"
     volumes:
-      - ../client:/app
+      - ./client:/app
       - /app/node_modules
     environment:
       - WATCHPACK_POLLING=true # Обеспечивает работу hot reload
@@ -68,7 +68,7 @@ services:
     networks:
       - digitalPortfolio
     depends_on:
-      - portfolioServer
+      - portfolio_server
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -81,4 +81,4 @@ services:
     networks:
       - digitalPortfolio
     depends_on:
-      - portfolioServer
+      - portfolio_server
