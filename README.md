@@ -13,9 +13,6 @@
 
 ## Актуальный статус сервиса💓:
 
-[![Backend](https://github.com/Mino2k/Nah-we-d-make-web-repository/actions/workflows/backend.yml/badge.svg)](https://github.com/Mino2k/Nah-we-d-make-web-repository/actions/workflows/backend.yml)
-[![Frontend](https://github.com/Mino2k/Nah-we-d-make-web-repository/actions/workflows/frontend.yml/badge.svg)](https://github.com/Mino2k/Nah-we-d-make-web-repository/actions/workflows/frontend.yml)
-
 - Адрес нашего сервиса: [pp.yakovlev05.ru](https://pp.yakovlev05.ru/)
 - Документация по API: [pp.yakovlev05.ru/swagger](https://pp.yakovlev05.ru/swagger)
 
@@ -40,12 +37,12 @@ True
 
 Клонируем репозиторий 🍀
 ```
-git clone https://github.com/Mino2k/Nah-we-d-make-web-repository.git
+git clone https://github.com/yakovlev05/Digital-Portfolio.git
 ```
 
 Переходим в репозиторий 📁
 ```
-cd Nah-we-d-make-web-repository
+cd Digital-Portfolio
 ```
 
 Запускаем docker 
