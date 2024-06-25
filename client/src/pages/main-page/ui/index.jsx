@@ -48,7 +48,7 @@ const MainPage = () => {
     return (
         <>
             <Helmet>
-                <title>Chef's Gallery</title>
+                <title>Chef's Gallery(тестим деплой)</title>
             </Helmet>
 
             <AuthContext.Provider value={auth}>
