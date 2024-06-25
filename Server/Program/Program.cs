@@ -23,7 +23,7 @@ public static class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio API", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio API (ТЕСТ)", Version = "v1" });
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
