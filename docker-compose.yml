@@ -3,14 +3,11 @@
 name: digital_portfolio
 
 networks:
-  digitalPortfolio:
-    external: true
+  network:
 
 volumes:
-  digitalPortfolioDB:
-    external: true
-  digitalPortfolioFiles:
-    external: true
+  volume_db:
+  volume_files:
 
 services:
   portfolio_server:
@@ -29,9 +26,9 @@ services:
       - Email=${EMAIL}
       - EmailPassword=${EMAIL_PASSWORD}
     volumes:
-      - digitalPortfolioFiles:/files
+      - volume_files:/files
     networks:
-      - digitalPortfolio
+      - network
     depends_on:
       - portfolio_db
   portfolio_db:
@@ -45,9 +42,9 @@ services:
     ports:
       - "8082:5432"
     volumes:
-      - digitalPortfolioDB:/var/lib/postgresql/data
+      - volume_db:/var/lib/postgresql/data
     networks:
-      - digitalPortfolio
+      - network
   portfolio_frontend:
     build:
       context: ./client
@@ -63,10 +60,10 @@ services:
     environment:
       - WATCHPACK_POLLING=true # Обеспечивает работу hot reload
       - WDS_SOCKET_HOST=localhost #Следующие две настройки для работы hot reload
-      - WDS_SOCKET_PORT=80 # По умолчанию hot reload подключается к localhost:3000, измениьте эти перемнные, если у вас не так
+      - WDS_SOCKET_PORT=80 # По умолчанию hot reload подключается к localhost:3000, измените эти переменные, если у вас не так
     # nginx должен быть настроен, чтобы уметь проксировать вебсокеты
     networks:
-      - digitalPortfolio
+      - network
     depends_on:
       - portfolio_server
   nginx:
@@ -79,6 +76,6 @@ services:
     volumes:
       - ./:/etc/nginx/conf.d
     networks:
-      - digitalPortfolio
+      - network
     depends_on:
       - portfolio_server
